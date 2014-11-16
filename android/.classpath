@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="con" path="org.springsource.ide.eclipse.gradle.classpathcontainer"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
-	<classpathentry exported="true" kind="src" path="/my-gdx-game-core"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/baozi.wx/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-android/1.4.1/eca2621f18b162c03992bd3ecc226e8a477dc6f9/gdx-backend-android-1.4.1.jar" sourcepath="C:/Users/baozi.wx/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-backend-android/1.4.1/ed5d76e7b283896e10c7e622305338c263739b07/gdx-backend-android-1.4.1-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/baozi.wx/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d/1.4.1/9e6453d244896698694a7f3059f15ae509044101/gdx-box2d-1.4.1.jar" sourcepath="C:/Users/baozi.wx/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-box2d/1.4.1/fcf9d6a8c426f99e8755996fc1f96ab00a447219/gdx-box2d-1.4.1-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/baozi.wx/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-ai/1.4.0/f7532801d6c1526df4a609341fa145acb9e8eb3a/gdx-ai-1.4.0.jar" sourcepath="C:/Users/baozi.wx/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx-ai/1.4.0/7bc4832d138196172d4d453511dff7a3cc0f83f4/gdx-ai-1.4.0-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/baozi.wx/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.4.1/df470d263438048af74860ca51fc497c16a0c76a/gdx-1.4.1.jar" sourcepath="C:/Users/baozi.wx/.gradle/caches/modules-2/files-2.1/com.badlogicgames.gdx/gdx/1.4.1/a36f5d3e6a3b0fa3c625f8ce88216daf99435bce/gdx-1.4.1-sources.jar"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
-	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

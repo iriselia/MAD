@@ -1,0 +1,26 @@
+
+button.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+ok_disable
+  rotate: false
+  xy: 1, 1
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+ok_hover
+  rotate: false
+  xy: 43, 1
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+ok_normal
+  rotate: false
+  xy: 85, 1
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1

@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -86,10 +88,17 @@ public class MainMenuScreen implements Screen {
 		textButtonStyle.down = skin.getDrawable("default-rect-down");
 		textButtonStyle.pressedOffsetX = 1;
 		textButtonStyle.pressedOffsetY = -1;
-		BitmapFont buttonFont = new BitmapFont(
-				Gdx.files.internal("data/default.fnt"), 
-				Gdx.files.internal("data/default.png"), false);
-		buttonFont.scale(5);
+		//generate font
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("ui/ManilaSansBld.otf"));
+		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+		parameter.size = 80;
+		BitmapFont buttonFont = generator.generateFont(parameter); // font size 12 pixels
+		generator.dispose();
+		
+		//BitmapFont buttonFont = new BitmapFont(
+		//		Gdx.files.internal("data/default.fnt"), 
+		//		Gdx.files.internal("data/default.png"), false);
+		//buttonFont.scale(5);
 		//buttonFont.setColor(Color.BLACK);
 		textButtonStyle.font = buttonFont;
 		LabelStyle labelStyle = new LabelStyle(buttonFont, Color.BLACK);
