@@ -8,6 +8,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -15,10 +16,10 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Hanto;
@@ -30,14 +31,13 @@ public class GameScreen implements Screen {
 	Skin skin;
 	Table table;
     OrthographicCamera camera;
-    
+    Texture buttonTexture;
     
     public GameScreen(final Hanto gam) {
         this.game = gam;
-        //game.gameInstance = HantoGameFactory.getInstance().makeHantoGame(HantoGameID.DELTA_HANTO);
         stage = new Stage();
         //camera = new OrthographicCamera();
-        //camera.setToOrtho(false, 800, 480);
+        //camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
     }
 	@Override
@@ -45,8 +45,13 @@ public class GameScreen implements Screen {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         
+        game.gameInstance = HantoGameFactory.getInstance().makeHantoGame(HantoGameID.DELTA_HANTO);
+
         stage.act(delta);
         stage.draw();
+        game.batch.begin();
+		game.batch.draw(buttonTexture, 360, 640);
+		game.batch.end();
 	}
 
 	@Override
@@ -76,7 +81,7 @@ public class GameScreen implements Screen {
 		//generate font
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("ui/ManilaSansBld.otf"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-		parameter.size =50;
+		parameter.size =30;
 		BitmapFont buttonFont = generator.generateFont(parameter); // font size 12 pixels
 		generator.dispose();
 		textButtonStyle.font = buttonFont;
@@ -92,17 +97,24 @@ public class GameScreen implements Screen {
                 dispose();
             }
         });
-		//table.addActor(btnStart);
-		//table.row().height(400);
-		//table.add(titleLabel);
-		//table.row();
-		//table.add(btnReturn);
+		TextButton btnQuit = new TextButton("Quit Game", textButtonStyle);
+		btnQuit.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+            	game.gameInstance = null;
+                game.setScreen(new MainMenuScreen(game));
+                dispose();
+            }
+        });
+		
+		buttonTexture = new Texture(Gdx.files.internal("hexTiles/tileAutumn_tile.png"));
 		
 		
 	    table.add(titleLabel).width(500).expand().fillX(); // Sized to cell horizontally.
 	    //table.add(nameText).top();
 	    table.row();
 	    table.add(btnReturn).left();
+	    table.add(btnQuit).right();
 	    table.debug();
 		stage.addActor(table);
 	    //table.add(addressText).width(100);

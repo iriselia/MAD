@@ -35,8 +35,8 @@ public class MainMenuScreen implements Screen {
     public MainMenuScreen(final Hanto gam) {
         this.game = gam;
         stage = new Stage();
-        //camera = new OrthographicCamera();
-        //camera.setToOrtho(false, 800, 480);
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
     }
 
@@ -83,7 +83,7 @@ public class MainMenuScreen implements Screen {
         Label titleLabel = new Label( "Hanto", labelStyle);
 		
 		TextButton btnExit = new TextButton("Exit", textButtonStyle);
-		TextButton btnStart = new TextButton("Start Game", textButtonStyle);
+		TextButton btnStart = new TextButton("New Game", textButtonStyle);
 		btnExit.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -98,16 +98,31 @@ public class MainMenuScreen implements Screen {
 				dispose();
             }
 		});
+		TextButton btnBackToGame = null;
+		//if there's a game running, add a return to game button
+		if (game.gameInstance != null){
+			btnBackToGame = new TextButton("Resume Game", textButtonStyle);
+			btnBackToGame.addListener(new ClickListener() {
+				@Override
+	            public void clicked(InputEvent event, float x, float y) {
+					game.setScreen(new GameScreen(game));
+					dispose();
+	            }
+			});
+		}
 		//table.addActor(btnStart);
 		table.row().height(400);
 		table.add(titleLabel);
 		table.row();
+		if (btnBackToGame != null) {
+			table.add(btnBackToGame);
+			table.row();
+		}
 		table.add(btnStart);
 		table.row();
 		table.add(btnExit);
 		table.debug();
-		stage.addActor(table);
-		
+		stage.addActor(table);		
 	}
 
 	@Override
