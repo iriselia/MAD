@@ -1,5 +1,8 @@
 package com.mygdx.screen;
 
+import hanto.studentpren.HantoGameFactory;
+import hanto.util.HantoGameID;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -31,6 +34,7 @@ public class GameScreen implements Screen {
     
     public GameScreen(final Hanto gam) {
         this.game = gam;
+        //game.gameInstance = HantoGameFactory.getInstance().makeHantoGame(HantoGameID.DELTA_HANTO);
         stage = new Stage();
         //camera = new OrthographicCamera();
         //camera.setToOrtho(false, 800, 480);

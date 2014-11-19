@@ -1,5 +1,7 @@
 package com.mygdx.game;
 
+import hanto.common.HantoGame;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -11,6 +13,7 @@ public class Hanto extends Game {
 	public SpriteBatch batch;
 	// Texture img;
 	public BitmapFont font;
+	public HantoGame gameInstance;
 
 	/*
 	 * @Override public void create () { batch = new SpriteBatch(); //img = new
