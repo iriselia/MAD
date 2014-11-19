@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>MAD</name>
+	<name>w</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -17,7 +17,7 @@
 	</natures>
 	<filteredResources>
 		<filter>
-			<id>1416288931742</id>
+			<id>1416367196211</id>
 			<name></name>
 			<type>26</type>
 			<matcher>
@@ -25,11 +25,11 @@
 				<arguments>
 					<matcher>
 						<id>org.eclipse.ui.ide.multiFilter</id>
-						<arguments>1.0-projectRelativePath-equals-true-false-android</arguments>
+						<arguments>1.0-projectRelativePath-equals-true-false-core</arguments>
 					</matcher>
 					<matcher>
 						<id>org.eclipse.ui.ide.multiFilter</id>
-						<arguments>1.0-projectRelativePath-equals-true-false-core</arguments>
+						<arguments>1.0-projectRelativePath-equals-true-false-android</arguments>
 					</matcher>
 				</arguments>
 			</matcher>
