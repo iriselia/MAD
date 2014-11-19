@@ -52,7 +52,7 @@ public class Hanto extends Game {
 
 	@Override
 	public void dispose() {
-		//batch.dispose();
-		//font.dispose();
+		batch.dispose();
+		font.dispose();
 	}
 }
