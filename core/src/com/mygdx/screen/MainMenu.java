@@ -7,19 +7,15 @@ import aurelienribon.tweenengine.TweenManager;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Hanto;
 import com.mygdx.tween.ActorAccessor;
@@ -31,7 +27,6 @@ public class MainMenu implements Screen {
 	private TextButton buttonPlay, buttonExit;
 	private Label heading;
 	private Skin skin;
-	private BitmapFont white, black;
 	private TextureAtlas atlas;
 	private TweenManager tweenManager;
 	
@@ -59,51 +54,39 @@ public class MainMenu implements Screen {
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
 		atlas = new TextureAtlas("ui/button.pack");
-		skin = new Skin(atlas);
+		skin = new Skin(Gdx.files.internal("ui/mainmenuSkin.json"), atlas);
 		table = new Table(skin);
 		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		
-		//creating font
-		white = new BitmapFont(Gdx.files.internal("font/white.fnt"), false);
-		black = new BitmapFont(Gdx.files.internal("font/black.fnt"), false);
-		
+			
 		//creating buttons
-		TextButtonStyle textButtonStyle = new TextButtonStyle();
-		textButtonStyle.up = skin.getDrawable("button.up");
-		textButtonStyle.down = skin.getDrawable("button.down");
-		textButtonStyle.pressedOffsetX = 1;
-		textButtonStyle.pressedOffsetY = -1;
-		textButtonStyle.font = black;
-		
-		buttonExit = new TextButton("EXIT", textButtonStyle);
+		buttonExit = new TextButton("EXIT", skin);
 		buttonExit.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				Gdx.app.exit();
 			}
 		});
-		buttonExit.pad(20);
+		buttonExit.pad(50);
 		
-		buttonPlay = new TextButton("PLAY", textButtonStyle);
+		buttonPlay = new TextButton("PLAY", skin);
 		buttonPlay.addListener(new ClickListener(){
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				((Game) Gdx.app.getApplicationListener()).setScreen(new GameScreen());
 			}
 		});
-		buttonPlay.pad(20);
+		buttonPlay.pad(50);
 		
 		//creating heading 
-		LabelStyle headingStyle = new LabelStyle(white, Color.WHITE);
-		heading = new Label(Hanto.TITLE, headingStyle);
-		heading.setFontScale(3);
+		heading = new Label(Hanto.TITLE, skin);
+		heading.setFontScale(6);
 		
 		//putting stuff together
 		table.add(heading);
-		table.getCell(heading).spaceBottom(100);
+		table.getCell(heading).spaceBottom(300);
 		table.row();
 		table.add(buttonPlay);
-		table.getCell(buttonPlay).spaceBottom(20);
+		table.getCell(buttonPlay).spaceBottom(100);
 		table.row();
 		table.add(buttonExit);
 		//table.debug(); //TODO: remove it later
@@ -162,8 +145,6 @@ public class MainMenu implements Screen {
 		stage.dispose();
 		atlas.dispose();
 		skin.dispose();
-		white.dispose();
-		black.dispose();
 	}
 
 }
