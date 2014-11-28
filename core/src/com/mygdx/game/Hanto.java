@@ -16,7 +16,7 @@ public class Hanto extends Game {
 	}
 	
 	public void setMusic() {
-		backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/backgroundMusic.wav"));
+		backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/backgroundMusic.mp3"));
 	}
 
 	@Override
