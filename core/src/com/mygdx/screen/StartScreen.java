@@ -24,7 +24,7 @@ public class StartScreen implements Screen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-			
+					
 		batch.begin();
 		startScreen.draw(batch);
 		batch.end();
@@ -51,12 +51,13 @@ public class StartScreen implements Screen {
 				
 			}
 		}).start(tweenManager);
+		
+		tweenManager.update(Float.MIN_VALUE);
 	}
 
 	@Override
 	public void hide() {
-		// TODO Auto-generated method stub
-		
+		dispose();		
 	}
 
 	@Override

@@ -24,7 +24,7 @@ public class MainMenu implements Screen {
 
 	private Stage stage;
 	private Table table;
-	private TextButton buttonPlay, buttonExit;
+	private TextButton buttonPlay, buttonSettings, buttonExit;
 	private Label heading;
 	private Skin skin;
 	private TextureAtlas atlas;
@@ -34,12 +34,11 @@ public class MainMenu implements Screen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
-		tweenManager.update(delta);
-		
+				
 		stage.act(delta);
 		stage.draw();
-
+		
+		tweenManager.update(delta);
 	}
 
 	@Override
@@ -53,7 +52,7 @@ public class MainMenu implements Screen {
 	public void show() {
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
-		atlas = new TextureAtlas("ui/button.pack");
+		atlas = new TextureAtlas("ui/atlas.pack");
 		skin = new Skin(Gdx.files.internal("ui/mainmenuSkin.json"), atlas);
 		table = new Table(skin);
 		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -67,6 +66,15 @@ public class MainMenu implements Screen {
 			}
 		});
 		buttonExit.pad(50);
+		
+		buttonSettings = new TextButton("Settings", skin);
+		buttonSettings.addListener(new ClickListener(){
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				((Game) Gdx.app.getApplicationListener()).setScreen(new SettingsScreen());
+			}
+		});
+		buttonSettings.pad(50);
 		
 		buttonPlay = new TextButton("PLAY", skin);
 		buttonPlay.addListener(new ClickListener(){
@@ -87,6 +95,9 @@ public class MainMenu implements Screen {
 		table.row();
 		table.add(buttonPlay);
 		table.getCell(buttonPlay).spaceBottom(100);
+		table.row();
+		table.add(buttonSettings);
+		table.getCell(buttonSettings).spaceBottom(100);
 		table.row();
 		table.add(buttonExit);
 		//table.debug(); //TODO: remove it later
@@ -110,9 +121,11 @@ public class MainMenu implements Screen {
 		//heading and buttons fade-in
 		Timeline.createSequence().beginSequence()
 			.push(Tween.set(buttonPlay, ActorAccessor.ALPHA).target(0))
+			.push(Tween.set(buttonSettings, ActorAccessor.ALPHA).target(0))
 			.push(Tween.set(buttonExit, ActorAccessor.ALPHA).target(0))
 			.push(Tween.from(heading, ActorAccessor.ALPHA, 0.5f).target(0))
 			.push(Tween.to(buttonPlay, ActorAccessor.ALPHA, 0.25f).target(1))
+			.push(Tween.to(buttonSettings, ActorAccessor.ALPHA, 0.25f).target(1))
 			.push(Tween.to(buttonExit, ActorAccessor.ALPHA, 0.25f).target(1))
 			.end().start(tweenManager);
 		
@@ -120,11 +133,12 @@ public class MainMenu implements Screen {
 		Tween.from(table, ActorAccessor.ALPHA, 0.5f).target(0);
 		Tween.from(table, ActorAccessor.Y, 0.5f).target(Gdx.graphics.getHeight() / 8).start(tweenManager);
 		
+		tweenManager.update(Gdx.graphics.getDeltaTime());
 	}
 
 	@Override
 	public void hide() {
-		// TODO Auto-generated method stub
+		dispose();
 
 	}
 

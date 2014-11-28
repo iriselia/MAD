@@ -15,5 +15,8 @@
 	},
 	"com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
 		"default": { "up": "button.up", "down": "button.down", "font": black, "pressedOffsetX": 1, "pressedOffsetY": -1 }
+	},
+	"com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle": {
+		"default": { "font": white, "checkboxOn": checkbox.on, "checkboxOff": checkbox.off, "checkboxOver": checkbox.over }
 	}
 }
