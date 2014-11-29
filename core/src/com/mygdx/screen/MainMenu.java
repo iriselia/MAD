@@ -8,15 +8,14 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.mygdx.game.Assets;
 import com.mygdx.game.Hanto;
 import com.mygdx.tween.ActorAccessor;
 
@@ -26,8 +25,6 @@ public class MainMenu implements Screen {
 	private Table table;
 	private TextButton buttonPlay, buttonSettings, buttonExit;
 	private Label heading;
-	private Skin skin;
-	private TextureAtlas atlas;
 	private TweenManager tweenManager;
 	
 	@Override
@@ -52,13 +49,13 @@ public class MainMenu implements Screen {
 	public void show() {
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
-		atlas = new TextureAtlas("ui/atlas.pack");
-		skin = new Skin(Gdx.files.internal("ui/mainmenuSkin.json"), atlas);
-		table = new Table(skin);
+		Assets.loadMainMenuOrSettings();
+		table = new Table(Assets.skin);
+		table.setFillParent(true);
 		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 			
 		//creating buttons
-		buttonExit = new TextButton("EXIT", skin);
+		buttonExit = new TextButton("EXIT", Assets.skin);
 		buttonExit.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -67,7 +64,7 @@ public class MainMenu implements Screen {
 		});
 		buttonExit.pad(50);
 		
-		buttonSettings = new TextButton("Settings", skin);
+		buttonSettings = new TextButton("Settings", Assets.skin);
 		buttonSettings.addListener(new ClickListener(){
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -76,7 +73,7 @@ public class MainMenu implements Screen {
 		});
 		buttonSettings.pad(50);
 		
-		buttonPlay = new TextButton("PLAY", skin);
+		buttonPlay = new TextButton("PLAY", Assets.skin);
 		buttonPlay.addListener(new ClickListener(){
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -86,7 +83,7 @@ public class MainMenu implements Screen {
 		buttonPlay.pad(50);
 		
 		//creating heading 
-		heading = new Label(Hanto.TITLE, skin);
+		heading = new Label(Hanto.TITLE, Assets.skin);
 		heading.setFontScale(6);
 		
 		//putting stuff together
@@ -157,8 +154,7 @@ public class MainMenu implements Screen {
 	@Override
 	public void dispose() {
 		stage.dispose();
-		atlas.dispose();
-		skin.dispose();
+		Assets.disposeMainMenuOrSettings();
 	}
 
 }

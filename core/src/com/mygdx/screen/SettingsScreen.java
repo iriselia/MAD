@@ -3,25 +3,24 @@ package com.mygdx.screen;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.mygdx.game.Assets;
 import com.mygdx.game.Hanto;
 
 public class SettingsScreen implements Screen {
 
 	private Stage stage;
-	private Skin skin;
 	private Table table;
 	
 	public static boolean vSync() {
@@ -48,18 +47,18 @@ public class SettingsScreen implements Screen {
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
 		
-		skin = new Skin(Gdx.files.internal("ui/mainmenuSkin.json"), new TextureAtlas("ui/atlas.pack"));
+		Assets.loadMainMenuOrSettings();
 		
-		table = new Table(skin);
+		table = new Table(Assets.skin);
 		table.setFillParent(true);
 		
-		final CheckBox vSyncCheckBox = new CheckBox("vSync", skin);
+		final CheckBox vSyncCheckBox = new CheckBox("vSync", Assets.skin);
 		vSyncCheckBox.setChecked(vSync());
 		
-		final CheckBox audioCheckBox = new CheckBox("audio", skin);
+		final CheckBox audioCheckBox = new CheckBox("audio", Assets.skin);
 		audioCheckBox.setChecked(Hanto.backgroundMusic.isPlaying());
 
-		final TextButton backButton = new TextButton("BACK", skin);
+		final TextButton backButton = new TextButton("BACK", Assets.skin);
 		backButton.pad(50);
 		
 		
@@ -98,7 +97,7 @@ public class SettingsScreen implements Screen {
 		backButton.addListener(buttonHandler);	
 		
 		// putting everything in the table
-		final Label settingsLabel = new Label("SETTINGS", skin);
+		final Label settingsLabel = new Label("SETTINGS", Assets.skin);
 		table.add(settingsLabel).spaceBottom(100).colspan(3).expandX().row();
 		table.add().row();
 		table.add(vSyncCheckBox).top().expandY();
@@ -131,7 +130,7 @@ public class SettingsScreen implements Screen {
 	@Override
 	public void dispose() {
 		stage.dispose();
-		skin.dispose();
+		Assets.disposeMainMenuOrSettings();
 	}
 
 }
