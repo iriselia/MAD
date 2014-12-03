@@ -1,6 +1,8 @@
 package com.mygdx.screen;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -11,19 +13,42 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.mygdx.game.Assets;
+
 
 public class GameScreen implements Screen {
 
     static final int WORLD_WIDTH = 100;
     static final int WORLD_HEIGHT = 100;
     
+	//final Hanto game;
+	//private TextureAtlas atlas;
+    //private Texture buttonTexture;
+    
+    public GameScreen() {
+        //this.game = gam;
+        stage = new Stage();
+        camera = new OrthographicCamera();
+    }    
+    
 	private OrthographicCamera camera;
+	private OrthographicCamera btnCamera;
+
     private SpriteBatch batch;
 
     private Sprite mapSprite;
     
     private CameraController controller;
     GestureDetector gestureDetector;
+    
+    private Stage stage;
+    //private Skin skin;
+    private Table table;
     
 	class CameraController implements GestureListener {
 		float velX, velY;
@@ -105,17 +130,18 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-
+		Assets.loadMainMenuOrSettings();
 		controller.update();
         camera.update();
         batch.setProjectionMatrix(camera.combined);
-		
+
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        
         batch.begin();
         mapSprite.draw(batch);
         batch.end();
+        stage.act(delta);
+        stage.draw();
 	}
 
 	@Override
@@ -133,9 +159,16 @@ public class GameScreen implements Screen {
         
         controller = new CameraController();
         gestureDetector = new GestureDetector(100, 0.5f, 2, 0.15f, controller);
-        Gdx.input.setInputProcessor(gestureDetector);
+        //Gdx.input.setInputProcessor(gestureDetector);
         
         batch = new SpriteBatch();
+        addButtons();
+        //InputProcessor inputProcessorOne = new CustomInputProcessorOne();
+        //InputProcessor inputProcessorTwo = new CustomInputProcessorTwo();
+        InputMultiplexer inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(gestureDetector);
+        inputMultiplexer.addProcessor(stage);
+        Gdx.input.setInputProcessor(inputMultiplexer);
 	}
 	
 	@Override
@@ -166,6 +199,45 @@ public class GameScreen implements Screen {
         camera.viewportHeight = 30f * height/width;
         camera.update();
 		
+	}
+	
+	public void addButtons() {
+		//Gdx.input.setInputProcessor(stage);
+		table = new Table(Assets.skin);
+		table.setFillParent(true);
+		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        //Label titleLabel = new Label( "Game Screen", Assets.skin);
+		
+		TextButton btnReturn = new TextButton("Return", Assets.skin);
+		btnReturn.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+				((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu());
+                //game.setScreen(new MainMenu());
+                dispose();
+            }
+        });
+		btnReturn.pad(50);
+		TextButton btnQuit = new TextButton("Quit Game", Assets.skin);
+		btnQuit.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+            	//game.gameInstance = null;
+				((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu());
+                dispose();
+            }
+        });
+		btnQuit.pad(50);
+		
+		//buttonTexture = new Texture(Gdx.files.internal("hexTiles/testTile.png"));
+		
+		
+	    table.add(btnReturn).expand().top().fillX(); // Sized to cell horizontally.
+	    table.add(btnQuit).width(100).top();
+	    stage.addActor(table);
+	    //table.row();
+	    //table.add(addressLabel);
+	    //table.add(addressText).width(100);
 	}
 
 }
