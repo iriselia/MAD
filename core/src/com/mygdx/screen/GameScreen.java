@@ -12,7 +12,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.input.GestureDetector;
-import com.badlogic.gdx.input.GestureDetector.GestureListener;
+import com.badlogic.gdx.input.GestureDetector.GestureAdapter;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -57,7 +58,9 @@ public class GameScreen implements Screen {
     
     private Table table;
     
-	class CameraController implements GestureListener {
+    private DragAndDrop dragAndDrop;
+    
+	class CameraController extends GestureAdapter {
 		float velX, velY;
 		boolean flinging = false;
 		float initialScale = 1;
@@ -66,9 +69,9 @@ public class GameScreen implements Screen {
 		float effectiveViewportHeight = camera.viewportHeight * camera.zoom;
 
 		private void keepCameraWithinViewport() {
-		    //camera.zoom = MathUtils.clamp(camera.zoom, 0.1f, 100/camera.viewportWidth);
-		    //camera.position.x = MathUtils.clamp(camera.position.x, effectiveViewportWidth / 2f, 100 - effectiveViewportWidth / 2f);
-		    //camera.position.y = MathUtils.clamp(camera.position.y, effectiveViewportHeight / 2f, 100 - effectiveViewportHeight / 2f);
+		    camera.zoom = MathUtils.clamp(camera.zoom, 1.0f, 100/camera.viewportWidth);
+		    camera.position.x = MathUtils.clamp(camera.position.x, effectiveViewportWidth / 2f, 100 - effectiveViewportWidth / 2f);
+		    camera.position.y = MathUtils.clamp(camera.position.y, effectiveViewportHeight / 2f, 100 - effectiveViewportHeight / 2f);
 		}
 		
 		public boolean touchDown (float x, float y, int pointer, int button) {
@@ -90,14 +93,18 @@ public class GameScreen implements Screen {
 		@Override
 		public boolean fling (float velocityX, float velocityY, int button) {
 			flinging = true;
-			velX = camera.zoom * velocityX * 0.5f;
-			velY = camera.zoom * velocityY * 0.5f;
+			if(!dragAndDrop.isDragging()) {
+				velX = camera.zoom * velocityX * 0.5f;
+				velY = camera.zoom * velocityY * 0.5f;
+			}
 			return false;
 		}
 
 		@Override
 		public boolean pan (float x, float y, float deltaX, float deltaY) {
-			camera.position.add(-deltaX * camera.zoom * 0.1f, deltaY * camera.zoom * 0.1f, 0);
+			if(!dragAndDrop.isDragging()) {
+				camera.position.add(-deltaX * camera.zoom * 0.1f, deltaY * camera.zoom * 0.1f, 0);
+			}
 			return false;
 		}
 
@@ -108,9 +115,11 @@ public class GameScreen implements Screen {
 
 		@Override
 		public boolean zoom (float originalDistance, float currentDistance) {
-			float ratio = originalDistance / currentDistance;
-			camera.zoom = initialScale * ratio;
-			System.out.println(camera.zoom);
+			if(!dragAndDrop.isDragging()) {
+				float ratio = originalDistance / currentDistance;
+				camera.zoom = initialScale * ratio;
+				System.out.println(camera.zoom);
+			}
 			return false;
 		}
 
@@ -176,7 +185,10 @@ public class GameScreen implements Screen {
         inputMultiplexer.addProcessor(stage);
         Gdx.input.setInputProcessor(inputMultiplexer);
         
-        //trial
+        addTouchAndDrag();
+	}
+	
+	private void addTouchAndDrag() {
         Assets.skin.add("badlogic", new Texture("simple.png"));
 		Image sourceImage = new Image(Assets.skin, "badlogic");
 		sourceImage.setBounds(50, 125, 100, 100);
@@ -190,7 +202,7 @@ public class GameScreen implements Screen {
 		invalidTargetImage.setBounds(200, 200, 100, 100);
 		stage.addActor(invalidTargetImage);
 		
-		DragAndDrop dragAndDrop = new DragAndDrop();
+		dragAndDrop = new DragAndDrop();
 		dragAndDrop.addSource(new Source(sourceImage) {
 			public Payload dragStart (InputEvent event, float x, float y, int pointer) {
 				Payload payload = new Payload();
