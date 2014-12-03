@@ -1,0 +1,22 @@
+{
+	"com.badlogic.gdx.graphics.Color": {
+		"white": { "r": 1, "g": 1, "b": 1, "a": 1},
+		"black": { "r": 0, "g": 0, "b": 0, "a": 1},
+		"red":   { "r": 1, "g": 0, "b": 0, "a": 1},
+		"green": { "r": 0, "g": 1, "b": 0, "a": 1},
+		"blue":  { "r": 0, "g": 0, "b": 1, "a": 1}
+	},
+	"com.badlogic.gdx.graphics.g2d.BitmapFont": {
+		"white": { "file": "font/white.fnt" },
+		"black": { "file": "font/black.fnt" }
+	},
+	"com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
+		"default": { "font": white, "fontColor": white }
+	},
+	"com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle": {
+		"default": { "up": "butterfly", "down": "butterfly", "checked": "butterfly" },
+		"butterfly": { "up": "butterfly", "down": "butterfly", "checked": "butterfly" },
+		"crab": { "up": "crab", "down": "crab", "checked": "crab" },
+		"sparrow": { "up": "sparrow", "down": "sparrow", "checked": "sparrow" }
+	}
+} 

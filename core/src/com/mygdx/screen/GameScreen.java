@@ -10,13 +10,16 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -25,6 +28,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 import com.mygdx.game.Assets;
+import com.mygdx.game.Hanto;
+import com.mygdx.hanto.core.game.HantoGameDevelopment;
+import com.mygdx.hanto.util.HantoPlayerColor;
+
 
 
 public class GameScreen implements Screen {
@@ -159,12 +166,11 @@ public class GameScreen implements Screen {
         
         controller = new CameraController();
         gestureDetector = new GestureDetector(100, 0.5f, 2, 0.15f, controller);
-        //Gdx.input.setInputProcessor(gestureDetector);
         
         batch = new SpriteBatch();
         addButtons();
-        //InputProcessor inputProcessorOne = new CustomInputProcessorOne();
-        //InputProcessor inputProcessorTwo = new CustomInputProcessorTwo();
+        drawPieces();
+        stage.addActor(table);
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(gestureDetector);
         inputMultiplexer.addProcessor(stage);
@@ -263,18 +269,15 @@ public class GameScreen implements Screen {
 	}
 	
 	public void addButtons() {
-		//Gdx.input.setInputProcessor(stage);
 		table = new Table(Assets.skin);
 		table.setFillParent(true);
 		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        //Label titleLabel = new Label( "Game Screen", Assets.skin);
 		
 		TextButton btnReturn = new TextButton("Return", Assets.skin);
 		btnReturn.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
 				((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu());
-                //game.setScreen(new MainMenu());
                 dispose();
             }
         });
@@ -287,17 +290,33 @@ public class GameScreen implements Screen {
             	Gdx.app.exit();
             }
         });
-		btnQuit.pad(10);
-		
-		//buttonTexture = new Texture(Gdx.files.internal("hexTiles/testTile.png"));
-		
+		btnQuit.pad(10);		
 		
 	    table.add(btnReturn).expand().top().left(); // Sized to cell horizontally.
 	    table.add(btnQuit).expand().top().right();
-	    stage.addActor(table);
-	    //table.row();
-	    //table.add(addressLabel);
-	    //table.add(addressText).width(100);
+	    //stage.addActor(table);
+	}
+	
+	public void drawPieces() {
+		TextureAtlas pieceAtlas = new TextureAtlas("ui/pieces.pack");
+		Skin pieceSkin = new Skin(Gdx.files.internal("ui/gameSkin.json"), pieceAtlas);
+		Hanto.gameInstance = new HantoGameDevelopment();
+		Hanto.gameInstance.initialize(HantoPlayerColor.BLUE);
+		HantoPlayerColor currentPlayer = Hanto.gameInstance.getGameState().getPlayerOnMove();
+		Label lblPlayerColor = new Label (currentPlayer.toString(), Assets.skin);
+		if (!Hanto.gameInstance.getGameState().getBoard().isEmpty()) {
+			//TODO: create function drawPiecesOnBoard
+		}
+		ImageButton butterfly = new ImageButton(pieceSkin, "butterfly");
+		ImageButton crab = new ImageButton(pieceSkin, "crab");
+		ImageButton sparrow = new ImageButton(pieceSkin, "sparrow");
+		table.add(lblPlayerColor).top().center();
+		table.row();
+		table.add(butterfly).expand().bottom().left();
+		table.getCell(butterfly).spaceRight(30);
+		table.add(crab);
+		table.add(sparrow);
+		
 	}
 
 }

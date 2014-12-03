@@ -13,6 +13,8 @@ package com.mygdx.hanto.core.game;
 
 
 import com.mygdx.hanto.core.common.HantoGameImpl;
+import com.mygdx.hanto.core.common.HantoRuleSet;
+import com.mygdx.hanto.core.common.HantoState;
 import com.mygdx.hanto.util.HantoPlayerColor;
 
 
@@ -37,5 +39,14 @@ public class HantoGameDevelopment extends HantoGameImpl{
 		((HantoGameDevelopmentState) gameState).setBlueSparrowPlaced(0);
 		((HantoGameDevelopmentState) gameState).setRedSparrowPlaced(0);
 	}
+	
+	public HantoState getGameState() {
+		return gameState;
+	}
+	
+	public HantoRuleSet getGameRuleSet() {
+		return gameRuleSet;
+	}
+	
 }
 
