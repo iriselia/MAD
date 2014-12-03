@@ -162,7 +162,8 @@ public class GameScreen implements Screen {
 	@Override
 	public void show() {
 		Assets.loadMainMenuOrSettings();
-
+		Assets.loadPieces();
+		
         mapSprite = new Sprite(new Texture(Gdx.files.internal("world/map.png")));
         mapSprite.setPosition(0, 0);
         mapSprite.setSize(WORLD_WIDTH, WORLD_HEIGHT);
@@ -189,34 +190,36 @@ public class GameScreen implements Screen {
 	}
 	
 	private void addTouchAndDrag() {
-        Assets.skin.add("badlogic", new Texture("simple.png"));
-		Image sourceImage = new Image(Assets.skin, "badlogic");
-		sourceImage.setBounds(50, 125, 100, 100);
+        Assets.pieceSkin.add("position", new Texture("hexTiles/testTile.png"));
+        ImageButton sourceImage = new ImageButton(Assets.pieceSkin, "butterfly");
+		sourceImage.setBounds(0, 0, 200, 200);
 		stage.addActor(sourceImage);
 		
-		Image validTargetImage = new Image(Assets.skin, "badlogic");
-		validTargetImage.setBounds(200, 50, 100, 100);
+		Image validTargetImage = new Image(Assets.pieceSkin, "position");
+		validTargetImage.setBounds(Gdx.graphics.getWidth()/2 - 100, Gdx.graphics.getHeight()/2 - 100, 200, 200);
 		stage.addActor(validTargetImage);
 		
-		Image invalidTargetImage = new Image(Assets.skin, "badlogic");
-		invalidTargetImage.setBounds(200, 200, 100, 100);
+		Image invalidTargetImage = new Image(Assets.pieceSkin, "position");
+		invalidTargetImage.setBounds(Gdx.graphics.getWidth()/2 - 300, Gdx.graphics.getHeight()/2 - 100, 200, 200);
 		stage.addActor(invalidTargetImage);
 		
 		dragAndDrop = new DragAndDrop();
 		dragAndDrop.addSource(new Source(sourceImage) {
 			public Payload dragStart (InputEvent event, float x, float y, int pointer) {
 				Payload payload = new Payload();
-				payload.setObject("Some payload!");
+				payload.setObject("Butterfly");
+				
+				ImageButton draggable = new ImageButton(Assets.pieceSkin, "butterfly");
+				draggable.setSize(200, 200);
+				payload.setDragActor(draggable);
 
-				payload.setDragActor(new Label("Some payload!", Assets.skin));
+				ImageButton validImage = new ImageButton(Assets.pieceSkin, "butterfly");
+				validImage.setColor(0, 1, 0, 1);
+				payload.setValidDragActor(validImage);
 
-				Label validLabel = new Label("Some payload!", Assets.skin);
-				validLabel.setColor(0, 1, 0, 1);
-				payload.setValidDragActor(validLabel);
-
-				Label invalidLabel = new Label("Some payload!", Assets.skin);
-				invalidLabel.setColor(1, 0, 0, 1);
-				payload.setInvalidDragActor(invalidLabel);
+				ImageButton invalidImage = new ImageButton(Assets.pieceSkin, "butterfly");
+				invalidImage.setColor(1, 0, 0, 1);
+				payload.setInvalidDragActor(invalidImage);
 
 				return payload;
 			}
@@ -233,6 +236,10 @@ public class GameScreen implements Screen {
 
 			public void drop (Source source, Payload payload, float x, float y, int pointer) {
 				System.out.println("Accepted: " + payload.getObject() + " " + x + ", " + y);
+				ImageButton newPiece = new ImageButton(Assets.pieceSkin, "butterfly");
+				newPiece.setSize(200, 200);
+				newPiece.setPosition(Gdx.graphics.getWidth()/2 - 100, Gdx.graphics.getHeight()/2 - 100);
+				stage.addActor(newPiece);
 			}
 		});
 		dragAndDrop.addTarget(new Target(invalidTargetImage) {
@@ -269,7 +276,6 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void dispose() {
-
 	}
 
 	@Override
@@ -281,11 +287,11 @@ public class GameScreen implements Screen {
 	}
 	
 	public void addButtons() {
-		table = new Table(Assets.skin);
+		table = new Table(Assets.menuSkin);
 		table.setFillParent(true);
 		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
-		TextButton btnReturn = new TextButton("Return", Assets.skin);
+		TextButton btnReturn = new TextButton("Return", Assets.menuSkin);
 		btnReturn.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -295,7 +301,7 @@ public class GameScreen implements Screen {
         });
 		btnReturn.pad(10);
 		
-		TextButton btnQuit = new TextButton("Quit", Assets.skin);
+		TextButton btnQuit = new TextButton("Quit", Assets.menuSkin);
 		btnQuit.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -310,24 +316,22 @@ public class GameScreen implements Screen {
 	}
 	
 	public void drawPieces() {
-		TextureAtlas pieceAtlas = new TextureAtlas("ui/pieces.pack");
-		Skin pieceSkin = new Skin(Gdx.files.internal("ui/gameSkin.json"), pieceAtlas);
-		Hanto.gameInstance = new HantoGameDevelopment();
-		Hanto.gameInstance.initialize(HantoPlayerColor.BLUE);
-		HantoPlayerColor currentPlayer = Hanto.gameInstance.getGameState().getPlayerOnMove();
-		Label lblPlayerColor = new Label (currentPlayer.toString(), Assets.skin);
-		if (!Hanto.gameInstance.getGameState().getBoard().isEmpty()) {
-			//TODO: create function drawPiecesOnBoard
-		}
-		ImageButton butterfly = new ImageButton(pieceSkin, "butterfly");
-		ImageButton crab = new ImageButton(pieceSkin, "crab");
-		ImageButton sparrow = new ImageButton(pieceSkin, "sparrow");
-		table.add(lblPlayerColor).top().center();
-		table.row();
-		table.add(butterfly).expand().bottom().left();
-		table.getCell(butterfly).spaceRight(30);
-		table.add(crab);
-		table.add(sparrow);
+//		Hanto.gameInstance = new HantoGameDevelopment();
+//		Hanto.gameInstance.initialize(HantoPlayerColor.BLUE);
+//		HantoPlayerColor currentPlayer = Hanto.gameInstance.getGameState().getPlayerOnMove();
+//		Label lblPlayerColor = new Label (currentPlayer.toString(), Assets.skin);
+//		if (!Hanto.gameInstance.getGameState().getBoard().isEmpty()) {
+//			//TODO: create function drawPiecesOnBoard
+//		}
+//		ImageButton butterfly = new ImageButton(pieceSkin, "butterfly");
+//		ImageButton crab = new ImageButton(pieceSkin, "crab");
+//		ImageButton sparrow = new ImageButton(pieceSkin, "sparrow");
+//		table.add(lblPlayerColor).top().center();
+//		table.row();
+//		table.add(butterfly).expand().bottom().left();
+//		table.getCell(butterfly).spaceRight(30);
+//		table.add(crab);
+//		table.add(sparrow);
 		
 	}
 

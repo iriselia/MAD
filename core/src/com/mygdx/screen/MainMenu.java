@@ -50,12 +50,12 @@ public class MainMenu implements Screen {
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
 		Assets.loadMainMenuOrSettings();
-		table = new Table(Assets.skin);
+		table = new Table(Assets.menuSkin);
 		table.setFillParent(true);
 		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		// creating buttons
-		buttonExit = new TextButton("EXIT", Assets.skin);
+		buttonExit = new TextButton("EXIT", Assets.menuSkin);
 		buttonExit.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -64,7 +64,7 @@ public class MainMenu implements Screen {
 		});
 		buttonExit.pad(50);
 
-		buttonSettings = new TextButton("Settings", Assets.skin);
+		buttonSettings = new TextButton("Settings", Assets.menuSkin);
 		buttonSettings.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -74,7 +74,7 @@ public class MainMenu implements Screen {
 		});
 		buttonSettings.pad(50);
 
-		buttonPlay = new TextButton("PLAY", Assets.skin);
+		buttonPlay = new TextButton("PLAY", Assets.menuSkin);
 		buttonPlay.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -85,7 +85,7 @@ public class MainMenu implements Screen {
 		buttonPlay.pad(50);
 
 		// creating heading
-		heading = new Label(Hanto.TITLE, Assets.skin);
+		heading = new Label(Hanto.TITLE, Assets.menuSkin);
 		heading.setFontScale(6);
 
 		// putting stuff together

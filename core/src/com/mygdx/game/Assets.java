@@ -12,27 +12,39 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
  */
 public class Assets {
 
-	public static Skin skin;
+	public static Skin menuSkin;
+	public static Skin pieceSkin;
 	public static TextureAtlas menuAtlas;
 	public static TextureAtlas gameAtlas;
+	public static TextureAtlas pieceAtlas;
 
 	public static void loadMainMenuOrSettings() {
 		menuAtlas = new TextureAtlas("ui/atlas.pack");
-		skin = new Skin(Gdx.files.internal("ui/mainmenuSkin.json"), menuAtlas);
+		menuSkin = new Skin(Gdx.files.internal("ui/mainmenuSkin.json"), menuAtlas);
+	}
+	
+	public static void loadPieces() {
+		pieceAtlas = new TextureAtlas("ui/pieces.pack");
+		pieceSkin = new Skin(Gdx.files.internal("ui/gameSkin.json"), pieceAtlas);
 	}
 
 	public static void disposeMainMenuOrSettings() {
 		menuAtlas.dispose();
-		skin.dispose();
+		menuSkin.dispose();
+	}
+	
+	public static void disposePieces() {
+		pieceAtlas.dispose();
+		pieceSkin.dispose();
 	}
 
 	public static void loadGame() {
 		gameAtlas = new TextureAtlas(Gdx.files.internal(""));
-		skin = new Skin(Gdx.files.internal(""), gameAtlas);
+		menuSkin = new Skin(Gdx.files.internal(""), gameAtlas);
 	}
 
 	public static void disposeGame() {
 		gameAtlas.dispose();
-		skin.dispose();
+		menuSkin.dispose();
 	}
 }
