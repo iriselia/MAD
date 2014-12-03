@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,9 +16,15 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 import com.mygdx.game.Assets;
 
 
@@ -34,7 +41,6 @@ public class GameScreen implements Screen {
         //this.game = gam;
         stage = new Stage();
         camera = new OrthographicCamera();
-		Assets.loadMainMenuOrSettings();
     }    
     
 	private OrthographicCamera camera;
@@ -147,7 +153,8 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void show() {
-		
+		Assets.loadMainMenuOrSettings();
+
         mapSprite = new Sprite(new Texture(Gdx.files.internal("world/map.png")));
         mapSprite.setPosition(0, 0);
         mapSprite.setSize(WORLD_WIDTH, WORLD_HEIGHT);
@@ -170,6 +177,67 @@ public class GameScreen implements Screen {
         inputMultiplexer.addProcessor(gestureDetector);
         inputMultiplexer.addProcessor(stage);
         Gdx.input.setInputProcessor(inputMultiplexer);
+        
+        //trial
+        Assets.skin.add("badlogic", new Texture("simple.png"));
+		Image sourceImage = new Image(Assets.skin, "badlogic");
+		sourceImage.setBounds(50, 125, 100, 100);
+		stage.addActor(sourceImage);
+		
+		Image validTargetImage = new Image(Assets.skin, "badlogic");
+		validTargetImage.setBounds(200, 50, 100, 100);
+		stage.addActor(validTargetImage);
+		
+		Image invalidTargetImage = new Image(Assets.skin, "badlogic");
+		invalidTargetImage.setBounds(200, 200, 100, 100);
+		stage.addActor(invalidTargetImage);
+		
+		DragAndDrop dragAndDrop = new DragAndDrop();
+		dragAndDrop.addSource(new Source(sourceImage) {
+			public Payload dragStart (InputEvent event, float x, float y, int pointer) {
+				Payload payload = new Payload();
+				payload.setObject("Some payload!");
+
+				payload.setDragActor(new Label("Some payload!", Assets.skin));
+
+				Label validLabel = new Label("Some payload!", Assets.skin);
+				validLabel.setColor(0, 1, 0, 1);
+				payload.setValidDragActor(validLabel);
+
+				Label invalidLabel = new Label("Some payload!", Assets.skin);
+				invalidLabel.setColor(1, 0, 0, 1);
+				payload.setInvalidDragActor(invalidLabel);
+
+				return payload;
+			}
+		});
+		dragAndDrop.addTarget(new Target(validTargetImage) {
+			public boolean drag (Source source, Payload payload, float x, float y, int pointer) {
+				getActor().setColor(Color.GREEN);
+				return true;
+			}
+
+			public void reset (Source source, Payload payload) {
+				getActor().setColor(Color.WHITE);
+			}
+
+			public void drop (Source source, Payload payload, float x, float y, int pointer) {
+				System.out.println("Accepted: " + payload.getObject() + " " + x + ", " + y);
+			}
+		});
+		dragAndDrop.addTarget(new Target(invalidTargetImage) {
+			public boolean drag (Source source, Payload payload, float x, float y, int pointer) {
+				getActor().setColor(Color.RED);
+				return false;
+			}
+
+			public void reset (Source source, Payload payload) {
+				getActor().setColor(Color.WHITE);
+			}
+
+			public void drop (Source source, Payload payload, float x, float y, int pointer) {
+			}
+		});
 	}
 	
 	@Override
