@@ -130,7 +130,6 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-		Assets.loadMainMenuOrSettings();
 		controller.update();
         camera.update();
         batch.setProjectionMatrix(camera.combined);
@@ -146,7 +145,8 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void show() {
-		
+		Assets.loadMainMenuOrSettings();
+
         mapSprite = new Sprite(new Texture(Gdx.files.internal("world/map.png")));
         mapSprite.setPosition(0, 0);
         mapSprite.setSize(WORLD_WIDTH, WORLD_HEIGHT);
@@ -217,8 +217,9 @@ public class GameScreen implements Screen {
                 dispose();
             }
         });
-		btnReturn.pad(50);
-		TextButton btnQuit = new TextButton("Quit Game", Assets.skin);
+		btnReturn.pad(10);
+		
+		TextButton btnQuit = new TextButton("Quit", Assets.skin);
 		btnQuit.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -227,13 +228,13 @@ public class GameScreen implements Screen {
                 dispose();
             }
         });
-		btnQuit.pad(50);
+		btnQuit.pad(10);
 		
 		//buttonTexture = new Texture(Gdx.files.internal("hexTiles/testTile.png"));
 		
 		
-	    table.add(btnReturn).expand().top().fillX(); // Sized to cell horizontally.
-	    table.add(btnQuit).width(100).top();
+	    table.add(btnReturn).expand().top().left(); // Sized to cell horizontally.
+	    table.add(btnQuit).expand().top().right();
 	    stage.addActor(table);
 	    //table.row();
 	    //table.add(addressLabel);
