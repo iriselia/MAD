@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Assets;
+import com.mygdx.game.Hanto;
 
 
 public class GameScreen implements Screen {
@@ -194,7 +195,7 @@ public class GameScreen implements Screen {
 	}
 
 	@Override
-	public void resize(int width, int height) {
+	public void resize(int width, int height) { 
         camera.viewportWidth = 30f;
         camera.viewportHeight = 30f * height/width;
         camera.update();
@@ -223,9 +224,10 @@ public class GameScreen implements Screen {
 		btnQuit.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-            	//game.gameInstance = null;
-				((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu());
-                dispose();
+            	//Hanto.gameInstance = null;
+				//((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu());
+                //dispose();
+            	Gdx.app.exit();
             }
         });
 		btnQuit.pad(10);
