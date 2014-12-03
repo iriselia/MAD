@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -256,7 +255,7 @@ public class GameScreen implements Screen {
 	}
 
 	@Override
-	public void resize(int width, int height) {
+	public void resize(int width, int height) { 
         camera.viewportWidth = 30f;
         camera.viewportHeight = 30f * height/width;
         camera.update();
@@ -285,8 +284,7 @@ public class GameScreen implements Screen {
 		btnQuit.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-				((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu());
-                dispose();
+            	Gdx.app.exit();
             }
         });
 		btnQuit.pad(10);
