@@ -34,7 +34,6 @@ public class GameScreen implements Screen {
         //this.game = gam;
         stage = new Stage();
         camera = new OrthographicCamera();
-		Assets.loadMainMenuOrSettings();
     }    
     
 	private OrthographicCamera camera;
@@ -131,7 +130,7 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-
+		Assets.loadMainMenuOrSettings();
 		controller.update();
         camera.update();
         batch.setProjectionMatrix(camera.combined);
