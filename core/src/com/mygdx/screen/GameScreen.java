@@ -209,7 +209,7 @@ public class GameScreen implements Screen {
 		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         //Label titleLabel = new Label( "Game Screen", Assets.skin);
 		
-		TextButton btnReturn = new TextButton("Return to Main Menu", Assets.skin);
+		TextButton btnReturn = new TextButton("Return", Assets.skin);
 		btnReturn.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -233,13 +233,12 @@ public class GameScreen implements Screen {
 		//buttonTexture = new Texture(Gdx.files.internal("hexTiles/testTile.png"));
 		
 		
-	    //table.add(titleLabel).width(500).expand().fillX(); // Sized to cell horizontally.
-	    //table.add(nameText).top();
+	    table.add(btnReturn).expand().top().fillX(); // Sized to cell horizontally.
+	    table.add(btnQuit).width(100).top();
+	    stage.addActor(table);
 	    //table.row();
-	    table.add(btnReturn).left();
-	    table.add(btnQuit).right();
-	    table.debug();
-		stage.addActor(table);
+	    //table.add(addressLabel);
+	    //table.add(addressText).width(100);
 	}
 
 }
