@@ -15,9 +15,6 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class GameScreen implements Screen {
-	
-	private World world;
-	private Box2DDebugRenderer debugRenderer;
 
     static final int WORLD_WIDTH = 100;
     static final int WORLD_HEIGHT = 100;
@@ -114,7 +111,6 @@ public class GameScreen implements Screen {
 		controller.update();
         camera.update();
         batch.setProjectionMatrix(camera.combined);
-		debugRenderer.render(world, camera.combined);
 		
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -126,8 +122,6 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void show() {
-		world = new World(new Vector2(0, 0), true);
-		debugRenderer = new Box2DDebugRenderer();
 		
         mapSprite = new Sprite(new Texture(Gdx.files.internal("world/map.png")));
         mapSprite.setPosition(0, 0);
@@ -165,8 +159,7 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		world.dispose();
-		debugRenderer.dispose();
+
 	}
 
 	@Override

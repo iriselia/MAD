@@ -4,6 +4,6 @@
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="con" path="org.springsource.ide.eclipse.gradle.classpathcontainer"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="/my-gdx-game-android/libs/tween-engine-api.jar" sourcepath="/my-gdx-game-android/libs/tween-engine-api-sources.jar"/>
+	<classpathentry exported="true" kind="lib" path="/MAD/libs/tween-engine-api.jar" sourcepath="D:/android/MAD/libs/tween-engine-api-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
