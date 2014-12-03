@@ -33,18 +33,12 @@ public class GameScreen implements Screen {
     static final int WORLD_WIDTH = 100;
     static final int WORLD_HEIGHT = 100;
     
-	//final Hanto game;
-	//private TextureAtlas atlas;
-    //private Texture buttonTexture;
-    
     public GameScreen() {
-        //this.game = gam;
         stage = new Stage();
         camera = new OrthographicCamera();
     }    
     
 	private OrthographicCamera camera;
-	private OrthographicCamera btnCamera;
 
     private SpriteBatch batch;
 
@@ -54,7 +48,7 @@ public class GameScreen implements Screen {
     GestureDetector gestureDetector;
     
     private Stage stage;
-    //private Skin skin;
+    
     private Table table;
     
 	class CameraController implements GestureListener {
@@ -66,9 +60,9 @@ public class GameScreen implements Screen {
 		float effectiveViewportHeight = camera.viewportHeight * camera.zoom;
 
 		private void keepCameraWithinViewport() {
-		    camera.zoom = MathUtils.clamp(camera.zoom, 0.1f, 100/camera.viewportWidth);
-		    camera.position.x = MathUtils.clamp(camera.position.x, effectiveViewportWidth / 2f, 100 - effectiveViewportWidth / 2f);
-		    camera.position.y = MathUtils.clamp(camera.position.y, effectiveViewportHeight / 2f, 100 - effectiveViewportHeight / 2f);
+		    //camera.zoom = MathUtils.clamp(camera.zoom, 0.1f, 100/camera.viewportWidth);
+		    //camera.position.x = MathUtils.clamp(camera.position.x, effectiveViewportWidth / 2f, 100 - effectiveViewportWidth / 2f);
+		    //camera.position.y = MathUtils.clamp(camera.position.y, effectiveViewportHeight / 2f, 100 - effectiveViewportHeight / 2f);
 		}
 		
 		public boolean touchDown (float x, float y, int pointer, int button) {
@@ -291,7 +285,6 @@ public class GameScreen implements Screen {
 		btnQuit.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-            	//game.gameInstance = null;
 				((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu());
                 dispose();
             }
