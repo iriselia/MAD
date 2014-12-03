@@ -97,7 +97,6 @@ public class MainMenu implements Screen {
 		table.getCell(buttonSettings).spaceBottom(100);
 		table.row();
 		table.add(buttonExit);
-		//table.debug(); //TODO: remove it later
 		stage.addActor(table);
 		
 		//create animation
