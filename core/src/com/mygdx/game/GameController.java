@@ -15,7 +15,7 @@ import com.mygdx.screen.GameScreen;
 
 public class GameController {
 	
-    private DragAndDrop dragAndDrop;
+    public DragAndDrop dragAndDrop;
     private Stage stage;
     
     public GameController(Stage stage, DragAndDrop dragAndDrop){

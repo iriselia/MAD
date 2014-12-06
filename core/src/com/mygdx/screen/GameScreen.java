@@ -38,6 +38,7 @@ public class GameScreen implements Screen {
         stage = new Stage();
         camera = new OrthographicCamera();
         dragAndDrop = new DragAndDrop();
+        stage2 = new Stage();
     }    
     
     private Viewport viewport;
@@ -52,26 +53,29 @@ public class GameScreen implements Screen {
     GestureDetector gestureDetector;
     
     private Stage stage;
+    private Stage stage2;
     
     private Table table;
     
     private DragAndDrop dragAndDrop;
    
-    
+    private GameController gameController;
 
 
 	@Override
 	public void render(float delta) {
 		controller.update();
         camera.update();
-        batch.setProjectionMatrix(camera.combined);
+        //batch.setProjectionMatrix(camera.combined);
 
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        batch.begin();
+        //batch.begin();
         //mapSprite.draw(batch);
-        batch.end();
+        //batch.end();
         stage.act(delta);
+        stage2.act(delta);
+        stage2.draw();
         stage.draw();
 	}
 
@@ -80,17 +84,7 @@ public class GameScreen implements Screen {
 		Assets.loadMainMenuOrSettings();
 		Assets.loadPieces();
 		
-		GameController gameController = new GameController(stage, dragAndDrop);
-		
-		Group background = new Group();
-		background.setBounds(0, 0, Gdx.graphics.getWidth() *2, Gdx.graphics.getHeight() * 2);
-		
-		Group foreground = new Group();
-		foreground.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		
-		// Notice the order
-		stage.addActor(background);
-		stage.addActor(foreground);
+		gameController = new GameController(stage, dragAndDrop);
 		
         //mapSprite = new Sprite(new Texture(Gdx.files.internal("world/map.png")));
         //mapSprite.setPosition(0, 0);
@@ -98,32 +92,31 @@ public class GameScreen implements Screen {
 		
 		Image map = new Image(new Texture(Gdx.files.internal("world/map.png")));
 		map.setPosition(0, 0);
-		//map.setSize(WORLD_WIDTH, WORLD_HEIGHT);
+		map.setSize(WORLD_WIDTH, WORLD_HEIGHT);
 		
-        background.addActor(map);
+        stage2.addActor(map);
 
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
-        camera = new OrthographicCamera(3000, 3000 * (h / w));
+        camera = new OrthographicCamera(30, 30 * (h / w));
         camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
         camera.update();
         
         controller = new CameraController();
         gestureDetector = new GestureDetector(100, 0.5f, 2, 0.15f, controller);
         
+        stage2.getViewport().setCamera(camera);
+        
         batch = new SpriteBatch();
         addButtons();
         drawPieces();
         
-        foreground.addActor(table);
-        
-        viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
-        
-        stage.setViewport(viewport);
-  
+        stage.addActor(table);
+               
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(gestureDetector);
         inputMultiplexer.addProcessor(stage);
+        inputMultiplexer.addProcessor(stage2);
         Gdx.input.setInputProcessor(inputMultiplexer);
         
         gameController.addTouchAndDrag("butterfly");
@@ -251,7 +244,7 @@ public class GameScreen implements Screen {
 
 		@Override
 		public boolean pan (float x, float y, float deltaX, float deltaY) {
-			if(!dragAndDrop.isDragging()) {
+			if(!gameController.dragAndDrop.isDragging()) {
 				camera.position.add(-deltaX * camera.zoom * 0.1f, deltaY * camera.zoom * 0.1f, 0);
 			}
 			return false;
