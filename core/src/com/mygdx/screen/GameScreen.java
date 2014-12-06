@@ -4,21 +4,35 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.input.GestureDetector;
-import com.badlogic.gdx.input.GestureDetector.GestureListener;
+import com.badlogic.gdx.input.GestureDetector.GestureAdapter;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 import com.mygdx.game.Assets;
+import com.mygdx.game.Hanto;
+import com.mygdx.hanto.core.game.HantoGameDevelopment;
+import com.mygdx.hanto.util.HantoPlayerColor;
+
 
 
 public class GameScreen implements Screen {
@@ -26,18 +40,12 @@ public class GameScreen implements Screen {
     static final int WORLD_WIDTH = 100;
     static final int WORLD_HEIGHT = 100;
     
-	//final Hanto game;
-	//private TextureAtlas atlas;
-    //private Texture buttonTexture;
-    
     public GameScreen() {
-        //this.game = gam;
         stage = new Stage();
         camera = new OrthographicCamera();
     }    
     
 	private OrthographicCamera camera;
-	private OrthographicCamera btnCamera;
 
     private SpriteBatch batch;
 
@@ -47,10 +55,12 @@ public class GameScreen implements Screen {
     GestureDetector gestureDetector;
     
     private Stage stage;
-    //private Skin skin;
+    
     private Table table;
     
-	class CameraController implements GestureListener {
+    private DragAndDrop dragAndDrop;
+    
+	class CameraController extends GestureAdapter {
 		float velX, velY;
 		boolean flinging = false;
 		float initialScale = 1;
@@ -59,7 +69,7 @@ public class GameScreen implements Screen {
 		float effectiveViewportHeight = camera.viewportHeight * camera.zoom;
 
 		private void keepCameraWithinViewport() {
-		    camera.zoom = MathUtils.clamp(camera.zoom, 0.1f, 100/camera.viewportWidth);
+		    camera.zoom = MathUtils.clamp(camera.zoom, 1.0f, 100/camera.viewportWidth);
 		    camera.position.x = MathUtils.clamp(camera.position.x, effectiveViewportWidth / 2f, 100 - effectiveViewportWidth / 2f);
 		    camera.position.y = MathUtils.clamp(camera.position.y, effectiveViewportHeight / 2f, 100 - effectiveViewportHeight / 2f);
 		}
@@ -83,14 +93,18 @@ public class GameScreen implements Screen {
 		@Override
 		public boolean fling (float velocityX, float velocityY, int button) {
 			flinging = true;
-			velX = camera.zoom * velocityX * 0.5f;
-			velY = camera.zoom * velocityY * 0.5f;
+			if(!dragAndDrop.isDragging()) {
+				velX = camera.zoom * velocityX * 0.5f;
+				velY = camera.zoom * velocityY * 0.5f;
+			}
 			return false;
 		}
 
 		@Override
 		public boolean pan (float x, float y, float deltaX, float deltaY) {
-			camera.position.add(-deltaX * camera.zoom * 0.1f, deltaY * camera.zoom * 0.1f, 0);
+			if(!dragAndDrop.isDragging()) {
+				camera.position.add(-deltaX * camera.zoom * 0.1f, deltaY * camera.zoom * 0.1f, 0);
+			}
 			return false;
 		}
 
@@ -101,9 +115,11 @@ public class GameScreen implements Screen {
 
 		@Override
 		public boolean zoom (float originalDistance, float currentDistance) {
-			float ratio = originalDistance / currentDistance;
-			camera.zoom = initialScale * ratio;
-			System.out.println(camera.zoom);
+			if(!dragAndDrop.isDragging()) {
+				float ratio = originalDistance / currentDistance;
+				camera.zoom = initialScale * ratio;
+				System.out.println(camera.zoom);
+			}
 			return false;
 		}
 
@@ -130,7 +146,6 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-		Assets.loadMainMenuOrSettings();
 		controller.update();
         camera.update();
         batch.setProjectionMatrix(camera.combined);
@@ -146,6 +161,8 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void show() {
+		Assets.loadMainMenuOrSettings();
+		Assets.loadPieces();
 		
         mapSprite = new Sprite(new Texture(Gdx.files.internal("world/map.png")));
         mapSprite.setPosition(0, 0);
@@ -159,16 +176,85 @@ public class GameScreen implements Screen {
         
         controller = new CameraController();
         gestureDetector = new GestureDetector(100, 0.5f, 2, 0.15f, controller);
-        //Gdx.input.setInputProcessor(gestureDetector);
         
         batch = new SpriteBatch();
         addButtons();
-        //InputProcessor inputProcessorOne = new CustomInputProcessorOne();
-        //InputProcessor inputProcessorTwo = new CustomInputProcessorTwo();
+        drawPieces();
+        stage.addActor(table);
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(gestureDetector);
         inputMultiplexer.addProcessor(stage);
         Gdx.input.setInputProcessor(inputMultiplexer);
+        
+        addTouchAndDrag();
+	}
+	
+	private void addTouchAndDrag() {
+        Assets.pieceSkin.add("position", new Texture("hexTiles/testTile.png"));
+        ImageButton sourceImage = new ImageButton(Assets.pieceSkin, "butterfly");
+		sourceImage.setBounds(0, 0, 200, 200);
+		stage.addActor(sourceImage);
+		
+		Image validTargetImage = new Image(Assets.pieceSkin, "position");
+		validTargetImage.setBounds(Gdx.graphics.getWidth()/2 - 100, Gdx.graphics.getHeight()/2 - 100, 200, 200);
+		stage.addActor(validTargetImage);
+		
+		Image invalidTargetImage = new Image(Assets.pieceSkin, "position");
+		invalidTargetImage.setBounds(Gdx.graphics.getWidth()/2 - 300, Gdx.graphics.getHeight()/2 - 100, 200, 200);
+		stage.addActor(invalidTargetImage);
+		
+		dragAndDrop = new DragAndDrop();
+		dragAndDrop.addSource(new Source(sourceImage) {
+			public Payload dragStart (InputEvent event, float x, float y, int pointer) {
+				Payload payload = new Payload();
+				payload.setObject("Butterfly");
+				
+				ImageButton draggable = new ImageButton(Assets.pieceSkin, "butterfly");
+				draggable.setSize(200, 200);
+				payload.setDragActor(draggable);
+
+				ImageButton validImage = new ImageButton(Assets.pieceSkin, "butterfly");
+				validImage.setColor(0, 1, 0, 1);
+				payload.setValidDragActor(validImage);
+
+				ImageButton invalidImage = new ImageButton(Assets.pieceSkin, "butterfly");
+				invalidImage.setColor(1, 0, 0, 1);
+				payload.setInvalidDragActor(invalidImage);
+
+				return payload;
+			}
+		});
+		dragAndDrop.addTarget(new Target(validTargetImage) {
+			public boolean drag (Source source, Payload payload, float x, float y, int pointer) {
+				getActor().setColor(Color.GREEN);
+				return true;
+			}
+
+			public void reset (Source source, Payload payload) {
+				getActor().setColor(Color.WHITE);
+			}
+
+			public void drop (Source source, Payload payload, float x, float y, int pointer) {
+				System.out.println("Accepted: " + payload.getObject() + " " + x + ", " + y);
+				ImageButton newPiece = new ImageButton(Assets.pieceSkin, "butterfly");
+				newPiece.setSize(200, 200);
+				newPiece.setPosition(Gdx.graphics.getWidth()/2 - 100, Gdx.graphics.getHeight()/2 - 100);
+				stage.addActor(newPiece);
+			}
+		});
+		dragAndDrop.addTarget(new Target(invalidTargetImage) {
+			public boolean drag (Source source, Payload payload, float x, float y, int pointer) {
+				getActor().setColor(Color.RED);
+				return false;
+			}
+
+			public void reset (Source source, Payload payload) {
+				getActor().setColor(Color.WHITE);
+			}
+
+			public void drop (Source source, Payload payload, float x, float y, int pointer) {
+			}
+		});
 	}
 	
 	@Override
@@ -190,11 +276,10 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void dispose() {
-
 	}
 
 	@Override
-	public void resize(int width, int height) {
+	public void resize(int width, int height) { 
         camera.viewportWidth = 30f;
         camera.viewportHeight = 30f * height/width;
         camera.update();
@@ -202,42 +287,52 @@ public class GameScreen implements Screen {
 	}
 	
 	public void addButtons() {
-		//Gdx.input.setInputProcessor(stage);
-		table = new Table(Assets.skin);
+		table = new Table(Assets.menuSkin);
 		table.setFillParent(true);
 		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        //Label titleLabel = new Label( "Game Screen", Assets.skin);
 		
-		TextButton btnReturn = new TextButton("Return", Assets.skin);
+		TextButton btnReturn = new TextButton("Return", Assets.menuSkin);
 		btnReturn.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
 				((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu());
-                //game.setScreen(new MainMenu());
                 dispose();
             }
         });
-		btnReturn.pad(50);
-		TextButton btnQuit = new TextButton("Quit Game", Assets.skin);
+		btnReturn.pad(10);
+		
+		TextButton btnQuit = new TextButton("Quit", Assets.menuSkin);
 		btnQuit.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-            	//game.gameInstance = null;
-				((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu());
-                dispose();
+            	Gdx.app.exit();
             }
         });
-		btnQuit.pad(50);
+		btnQuit.pad(10);		
 		
-		//buttonTexture = new Texture(Gdx.files.internal("hexTiles/testTile.png"));
+	    table.add(btnReturn).expand().top().left(); // Sized to cell horizontally.
+	    table.add(btnQuit).expand().top().right();
+	    //stage.addActor(table);
+	}
+	
+	public void drawPieces() {
+//		Hanto.gameInstance = new HantoGameDevelopment();
+//		Hanto.gameInstance.initialize(HantoPlayerColor.BLUE);
+//		HantoPlayerColor currentPlayer = Hanto.gameInstance.getGameState().getPlayerOnMove();
+//		Label lblPlayerColor = new Label (currentPlayer.toString(), Assets.skin);
+//		if (!Hanto.gameInstance.getGameState().getBoard().isEmpty()) {
+//			//TODO: create function drawPiecesOnBoard
+//		}
+//		ImageButton butterfly = new ImageButton(pieceSkin, "butterfly");
+//		ImageButton crab = new ImageButton(pieceSkin, "crab");
+//		ImageButton sparrow = new ImageButton(pieceSkin, "sparrow");
+//		table.add(lblPlayerColor).top().center();
+//		table.row();
+//		table.add(butterfly).expand().bottom().left();
+//		table.getCell(butterfly).spaceRight(30);
+//		table.add(crab);
+//		table.add(sparrow);
 		
-		
-	    table.add(btnReturn).expand().top().fillX(); // Sized to cell horizontally.
-	    table.add(btnQuit).width(100).top();
-	    stage.addActor(table);
-	    //table.row();
-	    //table.add(addressLabel);
-	    //table.add(addressText).width(100);
 	}
 
 }

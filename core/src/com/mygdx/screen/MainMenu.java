@@ -26,15 +26,15 @@ public class MainMenu implements Screen {
 	private TextButton buttonPlay, buttonSettings, buttonExit;
 	private Label heading;
 	private TweenManager tweenManager;
-	
+
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-				
+
 		stage.act(delta);
 		stage.draw();
-		
+
 		tweenManager.update(delta);
 	}
 
@@ -50,12 +50,12 @@ public class MainMenu implements Screen {
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
 		Assets.loadMainMenuOrSettings();
-		table = new Table(Assets.skin);
+		table = new Table(Assets.menuSkin);
 		table.setFillParent(true);
 		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-			
-		//creating buttons
-		buttonExit = new TextButton("EXIT", Assets.skin);
+
+		// creating buttons
+		buttonExit = new TextButton("EXIT", Assets.menuSkin);
 		buttonExit.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -63,30 +63,32 @@ public class MainMenu implements Screen {
 			}
 		});
 		buttonExit.pad(50);
-		
-		buttonSettings = new TextButton("Settings", Assets.skin);
-		buttonSettings.addListener(new ClickListener(){
+
+		buttonSettings = new TextButton("Settings", Assets.menuSkin);
+		buttonSettings.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				((Game) Gdx.app.getApplicationListener()).setScreen(new SettingsScreen());
+				((Game) Gdx.app.getApplicationListener())
+						.setScreen(new SettingsScreen());
 			}
 		});
 		buttonSettings.pad(50);
-		
-		buttonPlay = new TextButton("PLAY", Assets.skin);
-		buttonPlay.addListener(new ClickListener(){
+
+		buttonPlay = new TextButton("PLAY", Assets.menuSkin);
+		buttonPlay.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				((Game) Gdx.app.getApplicationListener()).setScreen(new GameScreen());
+				((Game) Gdx.app.getApplicationListener())
+						.setScreen(new GameScreen());
 			}
 		});
 		buttonPlay.pad(50);
-		
-		//creating heading 
-		heading = new Label(Hanto.TITLE, Assets.skin);
+
+		// creating heading
+		heading = new Label(Hanto.TITLE, Assets.menuSkin);
 		heading.setFontScale(6);
-		
-		//putting stuff together
+
+		// putting stuff together
 		table.add(heading);
 		table.getCell(heading).spaceBottom(300);
 		table.row();
@@ -98,37 +100,49 @@ public class MainMenu implements Screen {
 		table.row();
 		table.add(buttonExit);
 		stage.addActor(table);
-		
-		//create animation
+
+		// create animation
 		tweenManager = new TweenManager();
 		Tween.registerAccessor(Actor.class, new ActorAccessor());
-		
-		//heading color animation
-		Timeline.createSequence().beginSequence()
-			.push(Tween.to(heading, ActorAccessor.RGB, 0.5f).target(0, 0, 1))
-			.push(Tween.to(heading, ActorAccessor.RGB, 0.5f).target(0, 1, 0))
-			.push(Tween.to(heading, ActorAccessor.RGB, 0.5f).target(1, 0, 0))
-			.push(Tween.to(heading, ActorAccessor.RGB, 0.5f).target(0, 1, 1))
-			.push(Tween.to(heading, ActorAccessor.RGB, 0.5f).target(1, 1, 0))
-			.push(Tween.to(heading, ActorAccessor.RGB, 0.5f).target(1, 0, 1))
-			.push(Tween.to(heading, ActorAccessor.RGB, 0.5f).target(1, 1, 1))
-			.end().repeat(Tween.INFINITY, 0).start(tweenManager);
-		
-		//heading and buttons fade-in
-		Timeline.createSequence().beginSequence()
-			.push(Tween.set(buttonPlay, ActorAccessor.ALPHA).target(0))
-			.push(Tween.set(buttonSettings, ActorAccessor.ALPHA).target(0))
-			.push(Tween.set(buttonExit, ActorAccessor.ALPHA).target(0))
-			.push(Tween.from(heading, ActorAccessor.ALPHA, 0.5f).target(0))
-			.push(Tween.to(buttonPlay, ActorAccessor.ALPHA, 0.25f).target(1))
-			.push(Tween.to(buttonSettings, ActorAccessor.ALPHA, 0.25f).target(1))
-			.push(Tween.to(buttonExit, ActorAccessor.ALPHA, 0.25f).target(1))
-			.end().start(tweenManager);
-		
-		//table fade-in
+
+		// heading color animation
+		Timeline.createSequence()
+				.beginSequence()
+				.push(Tween.to(heading, ActorAccessor.RGB, 0.5f)
+						.target(0, 0, 1))
+				.push(Tween.to(heading, ActorAccessor.RGB, 0.5f)
+						.target(0, 1, 0))
+				.push(Tween.to(heading, ActorAccessor.RGB, 0.5f)
+						.target(1, 0, 0))
+				.push(Tween.to(heading, ActorAccessor.RGB, 0.5f)
+						.target(0, 1, 1))
+				.push(Tween.to(heading, ActorAccessor.RGB, 0.5f)
+						.target(1, 1, 0))
+				.push(Tween.to(heading, ActorAccessor.RGB, 0.5f)
+						.target(1, 0, 1))
+				.push(Tween.to(heading, ActorAccessor.RGB, 0.5f)
+						.target(1, 1, 1)).end().repeat(Tween.INFINITY, 0)
+				.start(tweenManager);
+
+		// heading and buttons fade-in
+		Timeline.createSequence()
+				.beginSequence()
+				.push(Tween.set(buttonPlay, ActorAccessor.ALPHA).target(0))
+				.push(Tween.set(buttonSettings, ActorAccessor.ALPHA).target(0))
+				.push(Tween.set(buttonExit, ActorAccessor.ALPHA).target(0))
+				.push(Tween.from(heading, ActorAccessor.ALPHA, 0.5f).target(0))
+				.push(Tween.to(buttonPlay, ActorAccessor.ALPHA, 0.25f)
+						.target(1))
+				.push(Tween.to(buttonSettings, ActorAccessor.ALPHA, 0.25f)
+						.target(1))
+				.push(Tween.to(buttonExit, ActorAccessor.ALPHA, 0.25f)
+						.target(1)).end().start(tweenManager);
+
+		// table fade-in
 		Tween.from(table, ActorAccessor.ALPHA, 0.5f).target(0);
-		Tween.from(table, ActorAccessor.Y, 0.5f).target(Gdx.graphics.getHeight() / 8).start(tweenManager);
-		
+		Tween.from(table, ActorAccessor.Y, 0.5f)
+				.target(Gdx.graphics.getHeight() / 8).start(tweenManager);
+
 		tweenManager.update(Gdx.graphics.getDeltaTime());
 	}
 

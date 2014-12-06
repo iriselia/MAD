@@ -49,16 +49,16 @@ public class SettingsScreen implements Screen {
 		
 		Assets.loadMainMenuOrSettings();
 		
-		table = new Table(Assets.skin);
+		table = new Table(Assets.menuSkin);
 		table.setFillParent(true);
 		
-		final CheckBox vSyncCheckBox = new CheckBox("vSync", Assets.skin);
+		final CheckBox vSyncCheckBox = new CheckBox("vSync", Assets.menuSkin);
 		vSyncCheckBox.setChecked(vSync());
 		
-		final CheckBox audioCheckBox = new CheckBox("audio", Assets.skin);
+		final CheckBox audioCheckBox = new CheckBox("audio", Assets.menuSkin);
 		audioCheckBox.setChecked(Hanto.backgroundMusic.isPlaying());
 
-		final TextButton backButton = new TextButton("BACK", Assets.skin);
+		final TextButton backButton = new TextButton("BACK", Assets.menuSkin);
 		backButton.pad(50);
 		
 		
@@ -97,7 +97,7 @@ public class SettingsScreen implements Screen {
 		backButton.addListener(buttonHandler);	
 		
 		// putting everything in the table
-		final Label settingsLabel = new Label("SETTINGS", Assets.skin);
+		final Label settingsLabel = new Label("SETTINGS", Assets.menuSkin);
 		table.add(settingsLabel).spaceBottom(100).colspan(3).expandX().row();
 		table.add().row();
 		table.add(vSyncCheckBox).top().expandY();
