@@ -22,7 +22,8 @@ public class CameraController extends GestureAdapter {
 	}
 	
 	private void keepCameraWithinViewport() {
-	    camera.zoom = MathUtils.clamp(camera.zoom, 1.0f, 100/camera.viewportWidth);
+	    //camera.zoom = MathUtils.clamp(camera.zoom, 1.0f, 100/camera.viewportWidth);
+		camera.zoom = MathUtils.clamp(camera.zoom, 0.1f, 1.0f);
 	    camera.position.x = MathUtils.clamp(camera.position.x, effectiveViewportWidth / 2f, 100 - effectiveViewportWidth / 2f);
 	    camera.position.y = MathUtils.clamp(camera.position.y, effectiveViewportHeight / 2f, 100 - effectiveViewportHeight / 2f);
 	}

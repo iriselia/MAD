@@ -60,7 +60,7 @@ public class GameScreen implements Screen {
 		Assets.loadMainMenuOrSettings();
 		Assets.loadPieces();
 						
-		Image map = new Image(new Texture(Gdx.files.internal("world/map.png")));
+		Image map = new Image(new Texture(Gdx.files.internal("world/background.png")));
 		map.setPosition(0, 0);
 		map.setSize(WORLD_WIDTH, WORLD_HEIGHT);
 		
@@ -69,7 +69,8 @@ public class GameScreen implements Screen {
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
         camera = new OrthographicCamera(30, 30 * (h / w));
-        camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
+        //camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
+        camera.position.set(WORLD_WIDTH / 2f, WORLD_HEIGHT / 2f, 0);
         camera.update();
         
         camController = new CameraController(camera);
@@ -116,9 +117,9 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) { 
-        camera.viewportWidth = 30f;
-        camera.viewportHeight = 30f * height/width;
-        camera.update();
+        //camera.viewportWidth = 30f;
+        //camera.viewportHeight = 30f * height/width;
+        //camera.update();
 		
 	}
 	
