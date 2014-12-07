@@ -6,6 +6,7 @@ import com.badlogic.gdx.input.GestureDetector.GestureAdapter;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.GameController;
+import com.mygdx.screen.GameScreen;
 
 public class CameraController extends GestureAdapter {
 	private float velX, velY;
@@ -24,8 +25,8 @@ public class CameraController extends GestureAdapter {
 	private void keepCameraWithinViewport() {
 	    //camera.zoom = MathUtils.clamp(camera.zoom, 1.0f, 100/camera.viewportWidth);
 		camera.zoom = MathUtils.clamp(camera.zoom, 0.1f, 1.0f);
-	    camera.position.x = MathUtils.clamp(camera.position.x, effectiveViewportWidth / 2f, 100 - effectiveViewportWidth / 2f);
-	    camera.position.y = MathUtils.clamp(camera.position.y, effectiveViewportHeight / 2f, 100 - effectiveViewportHeight / 2f);
+	    camera.position.x = MathUtils.clamp(camera.position.x, effectiveViewportWidth / 2f, GameScreen.WORLD_WIDTH - effectiveViewportWidth / 2f);
+	    camera.position.y = MathUtils.clamp(camera.position.y, effectiveViewportHeight / 2f, GameScreen.WORLD_HEIGHT - effectiveViewportHeight / 2f);
 	}
 	
 	public boolean touchDown (float x, float y, int pointer, int button) {
