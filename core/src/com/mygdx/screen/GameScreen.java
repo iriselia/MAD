@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Assets;
-import com.mygdx.game.GameController;
+import com.mygdx.game.util.GameController;
 import com.mygdx.game.util.CameraController;
 
 
@@ -88,7 +88,7 @@ public class GameScreen implements Screen {
         inputMultiplexer.addProcessor(gameStage);
         Gdx.input.setInputProcessor(inputMultiplexer);
         
-        GameController.addTouchAndDrag(uiStage, "butterfly");
+        GameController.addTouchAndDrag(uiStage, gameStage, "butterfly");
 	}
 	
 

@@ -17,19 +17,23 @@ public class GameController {
 	
     public static DragAndDrop dragAndDrop = new DragAndDrop();
 
-	public static void addTouchAndDrag(final Stage stage, final String name) {
+	public static void addTouchAndDrag(final Stage stage, final Stage targetStage, final String name) {
         Assets.pieceSkin.add("position", new Texture("hexTiles/testTile.png"));
         ImageButton sourceImage = new ImageButton(Assets.pieceSkin, name);
 		sourceImage.setBounds(0, 0, 200, 200);
 		stage.addActor(sourceImage);
 		
 		Image validTargetImage = new Image(Assets.pieceSkin, "position");
-		validTargetImage.setBounds(Gdx.graphics.getWidth()/2 - 100, Gdx.graphics.getHeight()/2 - 100, 200, 200);
-		stage.addActor(validTargetImage);
+		//validTargetImage.setBounds(Gdx.graphics.getWidth()/2 - 100, Gdx.graphics.getHeight()/2 - 100, 200, 200);
+		//stage.addActor(validTargetImage);
+		validTargetImage.setBounds(300, 300, 150, 150);
+		targetStage.addActor(validTargetImage);
 		
 		Image invalidTargetImage = new Image(Assets.pieceSkin, "position");
-		invalidTargetImage.setBounds(Gdx.graphics.getWidth()/2 - 300, Gdx.graphics.getHeight()/2 - 100, 200, 200);
-		stage.addActor(invalidTargetImage);
+		//invalidTargetImage.setBounds(Gdx.graphics.getWidth()/2 - 300, Gdx.graphics.getHeight()/2 - 100, 200, 200);
+		//stage.addActor(invalidTargetImage);
+		validTargetImage.setBounds(150, 150, 150, 150);
+		targetStage.addActor(invalidTargetImage);
 		
 		dragAndDrop = new DragAndDrop();
 		dragAndDrop.addSource(new Source(sourceImage) {

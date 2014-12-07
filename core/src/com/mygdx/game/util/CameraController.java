@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.input.GestureDetector.GestureAdapter;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.GameController;
+import com.mygdx.game.util.GameController;
 import com.mygdx.screen.GameScreen;
 
 public class CameraController extends GestureAdapter {
