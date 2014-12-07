@@ -7,23 +7,16 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.input.GestureDetector.GestureAdapter;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.Assets;
 import com.mygdx.game.GameController;
 
@@ -35,30 +28,21 @@ public class GameScreen implements Screen {
     public static final int WORLD_HEIGHT = 100;
     
     public GameScreen() {
-        stage = new Stage();
+        uiStage = new Stage();
         camera = new OrthographicCamera();
-        dragAndDrop = new DragAndDrop();
-        stage2 = new Stage();
+        gameStage = new Stage();
     }    
-    
-    private Viewport viewport;
     
 	private OrthographicCamera camera;
 
-    private SpriteBatch batch;
-
-    private Sprite mapSprite;
-    
     private CameraController controller;
     GestureDetector gestureDetector;
     
-    private Stage stage;
-    private Stage stage2;
+    private Stage uiStage;
+    private Stage gameStage;
     
     private Table table;
-    
-    private DragAndDrop dragAndDrop;
-   
+     
     private GameController gameController;
 
 
@@ -73,10 +57,10 @@ public class GameScreen implements Screen {
         //batch.begin();
         //mapSprite.draw(batch);
         //batch.end();
-        stage.act(delta);
-        stage2.act(delta);
-        stage2.draw();
-        stage.draw();
+        uiStage.act(delta);
+        gameStage.act(delta);
+        gameStage.draw();
+        uiStage.draw();
 	}
 
 	@Override
@@ -84,17 +68,13 @@ public class GameScreen implements Screen {
 		Assets.loadMainMenuOrSettings();
 		Assets.loadPieces();
 		
-		gameController = new GameController(stage, dragAndDrop);
-		
-        //mapSprite = new Sprite(new Texture(Gdx.files.internal("world/map.png")));
-        //mapSprite.setPosition(0, 0);
-        //mapSprite.setSize(WORLD_WIDTH, WORLD_HEIGHT);
-		
+		gameController = new GameController();
+				
 		Image map = new Image(new Texture(Gdx.files.internal("world/map.png")));
 		map.setPosition(0, 0);
 		map.setSize(WORLD_WIDTH, WORLD_HEIGHT);
 		
-        stage2.addActor(map);
+        gameStage.addActor(map);
 
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
@@ -105,21 +85,20 @@ public class GameScreen implements Screen {
         controller = new CameraController();
         gestureDetector = new GestureDetector(100, 0.5f, 2, 0.15f, controller);
         
-        stage2.getViewport().setCamera(camera);
+        gameStage.getViewport().setCamera(camera);
         
-        batch = new SpriteBatch();
         addButtons();
         drawPieces();
         
-        stage.addActor(table);
+        uiStage.addActor(table);
                
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(gestureDetector);
-        inputMultiplexer.addProcessor(stage);
-        inputMultiplexer.addProcessor(stage2);
+        inputMultiplexer.addProcessor(uiStage);
+        inputMultiplexer.addProcessor(gameStage);
         Gdx.input.setInputProcessor(inputMultiplexer);
         
-        gameController.addTouchAndDrag("butterfly");
+        gameController.addTouchAndDrag(uiStage, "butterfly");
 	}
 	
 
@@ -235,7 +214,7 @@ public class GameScreen implements Screen {
 		@Override
 		public boolean fling (float velocityX, float velocityY, int button) {
 			flinging = true;
-			if(!dragAndDrop.isDragging()) {
+			if(!gameController.getDragAndDrop().isDragging()) {
 				velX = camera.zoom * velocityX * 0.5f;
 				velY = camera.zoom * velocityY * 0.5f;
 			}
@@ -244,7 +223,7 @@ public class GameScreen implements Screen {
 
 		@Override
 		public boolean pan (float x, float y, float deltaX, float deltaY) {
-			if(!gameController.dragAndDrop.isDragging()) {
+			if(!gameController.getDragAndDrop().isDragging()) {
 				camera.position.add(-deltaX * camera.zoom * 0.1f, deltaY * camera.zoom * 0.1f, 0);
 			}
 			return false;
@@ -257,7 +236,7 @@ public class GameScreen implements Screen {
 
 		@Override
 		public boolean zoom (float originalDistance, float currentDistance) {
-			if(!dragAndDrop.isDragging()) {
+			if(!gameController.getDragAndDrop().isDragging()) {
 				float ratio = originalDistance / currentDistance;
 				camera.zoom = initialScale * ratio;
 				System.out.println(camera.zoom);
