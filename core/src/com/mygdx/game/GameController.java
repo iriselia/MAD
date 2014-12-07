@@ -14,13 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 
 public class GameController {
 	
-    private DragAndDrop dragAndDrop;
-    
-    public GameController(){
-    	dragAndDrop = new DragAndDrop();
-    }
-	
-	public void addTouchAndDrag(final Stage stage, final String name) {
+    public static DragAndDrop dragAndDrop = new DragAndDrop();
+
+	public static void addTouchAndDrag(final Stage stage, final String name) {
         Assets.pieceSkin.add("position", new Texture("hexTiles/testTile.png"));
         ImageButton sourceImage = new ImageButton(Assets.pieceSkin, name);
 		sourceImage.setBounds(0, 0, 200, 200);
@@ -87,9 +83,4 @@ public class GameController {
 			}
 		});
 	}
-	
-	public DragAndDrop getDragAndDrop() {
-		return dragAndDrop;
-	}
-
 }
