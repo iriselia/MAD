@@ -11,6 +11,7 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -22,11 +23,15 @@ import com.mygdx.game.util.CameraController;
 
 public class GameScreen implements Screen {
 
-    public static final int WORLD_WIDTH = 100;
-    public static final int WORLD_HEIGHT = 100;
+    //public static final int WORLD_WIDTH = 2000;
+    //public static final int WORLD_HEIGHT = 2000;
+    public final static float w = Gdx.graphics.getWidth();
+    public final static float h = Gdx.graphics.getHeight();
+    public final static float aspectRatio = h / w;
+    public final static float WORLD_WIDTH = w * 3;
+    public final static float WORLD_HEIGHT = h * 3;
     
     public GameScreen() {
-        uiStage = new Stage();
         camera = new OrthographicCamera();
         gameStage = new Stage();
     }    
@@ -36,10 +41,13 @@ public class GameScreen implements Screen {
     private CameraController camController;
     GestureDetector gestureDetector;
     
-    private Stage uiStage;
     private Stage gameStage;
     
     private Table table;
+    
+    private ImageButton sourceImage;
+    
+    float last;
 
 	@Override
 	public void render(float delta) {
@@ -48,11 +56,15 @@ public class GameScreen implements Screen {
 
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        uiStage.act(delta);
+		
+		float left = gameStage.getCamera().position.x - w / 2;
+		float bottom = gameStage.getCamera().position.y - h / 2;
+				
+		sourceImage.setBounds(left, bottom, 200, 200);
+		table.setBounds(left, bottom, w, h);
+		
         gameStage.act(delta);
         gameStage.draw();
-        uiStage.draw();
 	}
 
 	@Override
@@ -66,9 +78,8 @@ public class GameScreen implements Screen {
 		
         gameStage.addActor(map);
 
-        float w = Gdx.graphics.getWidth();
-        float h = Gdx.graphics.getHeight();
-        camera = new OrthographicCamera(40, 40 * (h / w));
+        //camera = new OrthographicCamera(40, 40 * (h / w));
+        camera = new OrthographicCamera(w, h);
         camera.position.set(WORLD_WIDTH / 2f, WORLD_HEIGHT / 2f, 0);
         camera.update();
         
@@ -80,15 +91,19 @@ public class GameScreen implements Screen {
         addButtons();
         drawPieces();
         
-        uiStage.addActor(table);
-               
+        //uiStage.addActor(table);
+        gameStage.addActor(table);
+            
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
         inputMultiplexer.addProcessor(gestureDetector);
-        inputMultiplexer.addProcessor(uiStage);
+        //inputMultiplexer.addProcessor(uiStage);
         inputMultiplexer.addProcessor(gameStage);
         Gdx.input.setInputProcessor(inputMultiplexer);
         
-        GameController.addTouchAndDrag(uiStage, gameStage, "butterfly");
+        sourceImage = new ImageButton(Assets.pieceSkin, "butterfly");
+        
+        GameController.addTouchAndDrag(gameStage, "butterfly", sourceImage);
+        //GameController.addTouchAndDrag(uiStage, "butterfly");
 	}
 	
 
@@ -116,16 +131,16 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) { 
-        //camera.viewportWidth = 30f;
-        //camera.viewportHeight = 30f * height/width;
-        //camera.update();
+        camera.viewportWidth = w;
+        camera.viewportHeight = h;
+        camera.update();
 		
 	}
 	
 	public void addButtons() {
 		table = new Table(Assets.menuSkin);
 		table.setFillParent(true);
-		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		table.setBounds(0, 0, w, h);
 		
 		TextButton btnReturn = new TextButton("Return", Assets.menuSkin);
 		btnReturn.addListener(new ClickListener(){

@@ -1,38 +1,36 @@
 package com.mygdx.game.util;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
-import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
-import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
-import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 import com.mygdx.game.Assets;
+import com.mygdx.game.util.DragAndDrop.Payload;
+import com.mygdx.game.util.DragAndDrop.Source;
+import com.mygdx.game.util.DragAndDrop.Target;
 
 public class GameController {
 	
     public static DragAndDrop dragAndDrop = new DragAndDrop();
 
-	public static void addTouchAndDrag(final Stage stage, final Stage targetStage, final String name) {
+	public static void addTouchAndDrag(final Stage targetStage, final String name, ImageButton sourceImage) {
         Assets.pieceSkin.add("position", new Texture("hexTiles/testTile.png"));
-        ImageButton sourceImage = new ImageButton(Assets.pieceSkin, name);
-		sourceImage.setBounds(0, 0, 200, 200);
-		stage.addActor(sourceImage);
+        //ImageButton sourceImage = new ImageButton(Assets.pieceSkin, name);
+        //sourceImage.setBounds(0, 0, 200, 200);
+        targetStage.addActor(sourceImage);
 		
-		Image validTargetImage = new Image(Assets.pieceSkin, "position");
+		final Image validTargetImage = new Image(Assets.pieceSkin, "position");
 		//validTargetImage.setBounds(Gdx.graphics.getWidth()/2 - 100, Gdx.graphics.getHeight()/2 - 100, 200, 200);
 		//stage.addActor(validTargetImage);
-		validTargetImage.setBounds(300, 300, 150, 150);
+		validTargetImage.setBounds(1500, 1500, 200, 200);
 		targetStage.addActor(validTargetImage);
 		
 		Image invalidTargetImage = new Image(Assets.pieceSkin, "position");
 		//invalidTargetImage.setBounds(Gdx.graphics.getWidth()/2 - 300, Gdx.graphics.getHeight()/2 - 100, 200, 200);
 		//stage.addActor(invalidTargetImage);
-		validTargetImage.setBounds(150, 150, 150, 150);
+		invalidTargetImage.setBounds(600, 600, 200, 200);
 		targetStage.addActor(invalidTargetImage);
 		
 		dragAndDrop = new DragAndDrop();
@@ -70,8 +68,8 @@ public class GameController {
 				System.out.println("Accepted: " + payload.getObject() + " " + x + ", " + y);
 				ImageButton newPiece = new ImageButton(Assets.pieceSkin, name);
 				newPiece.setSize(200, 200);
-				newPiece.setPosition(Gdx.graphics.getWidth()/2 - 100, Gdx.graphics.getHeight()/2 - 100);
-				stage.addActor(newPiece);
+				newPiece.setPosition(validTargetImage.getX(), validTargetImage.getY());
+				targetStage.addActor(newPiece);
 			}
 		});
 		dragAndDrop.addTarget(new Target(invalidTargetImage) {
