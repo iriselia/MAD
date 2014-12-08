@@ -9,12 +9,11 @@
  * Contributors:
  *    feierqi
  *******************************************************************/
-package com.mygdx.hanto.core.common;
+package com.mygdx.hanto.implementation.common;
 import com.mygdx.hanto.common.HantoException;
 import com.mygdx.hanto.util.HantoPieceType;
 import com.mygdx.hanto.util.HantoPlayerColor;
 import com.mygdx.hanto.util.MoveResult;
-
 
 /**
  * This is the rule set for all the hanto games. All the rule set

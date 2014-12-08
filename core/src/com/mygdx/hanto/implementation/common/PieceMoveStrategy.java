@@ -9,7 +9,7 @@
  * Contributors:
  *    feierqi
  *******************************************************************/
-package com.mygdx.hanto.core.common;
+package com.mygdx.hanto.implementation.common;
 
 /**
  * This interface specifies the specific moving strategy behaviors for different

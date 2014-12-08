@@ -9,8 +9,7 @@
  * Contributors:
  *    feierqi
  *******************************************************************/
-package com.mygdx.hanto.core.common;
-
+package com.mygdx.hanto.implementation.common;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -9,9 +9,9 @@
  * Contributors:
  *    feierqi
  *******************************************************************/
-package com.mygdx.hanto.core;
+package com.mygdx.hanto.implementation;
 
-import com.mygdx.hanto.core.common.HantoPiece;
+import com.mygdx.hanto.implementation.common.HantoPiece;
 
 /**
  * All the Hanto Game should implement this interface, which provides a new 

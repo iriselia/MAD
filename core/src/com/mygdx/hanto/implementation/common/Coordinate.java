@@ -9,7 +9,7 @@
  * Contributors:
  *    feierqi
  *******************************************************************/
-package com.mygdx.hanto.core.common;
+package com.mygdx.hanto.implementation.common;
 
 import com.mygdx.hanto.util.HantoCoordinate;
 
@@ -37,7 +37,7 @@ public class Coordinate implements HantoCoordinate{
 	}
 
 	/**
-	 * @see com.mygdx.hanto.util.HantoCoordinate#getX()
+	 * @see hanto.util.HantoCoordinate#getX()
 	 */
 	@Override
 	public int getX() {
@@ -45,7 +45,7 @@ public class Coordinate implements HantoCoordinate{
 	}
 
 	/**
-	 * @see com.mygdx.hanto.util.HantoCoordinate#getY()
+	 * @see hanto.util.HantoCoordinate#getY()
 	 */
 	@Override
 	public int getY() {

@@ -3,7 +3,7 @@ package com.mygdx.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.mygdx.hanto.core.game.HantoGameDevelopment;
+import com.mygdx.hanto.implementation.core.HantoGameDevelopment;
 import com.mygdx.screen.StartScreen;
 
 public class Hanto extends Game {
