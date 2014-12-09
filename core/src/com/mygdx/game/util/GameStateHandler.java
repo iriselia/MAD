@@ -156,6 +156,7 @@ public class GameStateHandler {
 		}
 		return ownPieces;
 	}
+	
 
 	/**
 	 * This is the helper function to get the available hex for player to place pieces.
@@ -250,6 +251,18 @@ public class GameStateHandler {
 			thatOwnTypePieces = ownCrabs;
 		}
 		return thatOwnTypePieces;
+	}
+	
+	/**
+	 * This is the helper function to get the available hex for player to place pieces.
+	 * 
+	 * @return all the coordinate available for player to make a placement
+	 */
+	public List<HantoCoordinate> getValidPlacements(){
+		final List<Coordinate> coordinates = getAvailableCoordinateForPlace();
+		final List<HantoCoordinate> validPlacements = new ArrayList<HantoCoordinate>();
+		validPlacements.addAll(coordinates);
+		return validPlacements;
 	}
 	
 	public List<HantoCoordinate> getValidDestinations(HantoPieceType pieceType, HantoPlayerColor player,
@@ -348,6 +361,33 @@ public class GameStateHandler {
 			}
 		}
 		return flyPieceValidMoves;
+	}
+	
+	public List<HantoCoordinate> generatePiecesValidPlacements(HantoPieceType pieceType){
+		List<HantoCoordinate> validPlacements = new ArrayList<HantoCoordinate>();
+		final List<HantoCoordinate> validButterflyPlacements = new ArrayList<HantoCoordinate>();
+		final List<HantoCoordinate> validSparrowPlacements = new ArrayList<HantoCoordinate>();
+		final List<HantoCoordinate> validCrabPlacements = new ArrayList<HantoCoordinate>();
+	
+		final List<Coordinate> validPlaceCoords = getAvailableCoordinateForPlace();
+		
+		validButterflyPlacements.addAll(validPlaceCoords);
+		validSparrowPlacements.addAll(validPlaceCoords);
+		validCrabPlacements.addAll(validPlaceCoords);
+		
+		final int pieceTypeNum = gameState.getNumberTypeForPlayer(pieceType, playerColor);
+		if(pieceType == BUTTERFLY && pieceTypeNum != 1){
+			validPlacements = validButterflyPlacements;
+		}
+		else if(pieceType == SPARROW && pieceTypeNum != 4){
+			validPlacements = validSparrowPlacements;
+		}
+		else if(pieceType == CRAB && pieceTypeNum != 4){
+			validPlacements = validCrabPlacements;
+		}
+		else{
+		}
+		return validPlacements;
 	}
 
 	public HantoPlayerColor getPlayerColor() {
