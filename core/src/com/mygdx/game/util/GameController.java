@@ -67,7 +67,7 @@ public class GameController {
 		//Image invalidTargetImage = new Image(Assets.pieceSkin, "position");
 		//invalidTargetImage.setBounds(invalidPosition.x, invalidPosition.y, GameScreen.TILE_LENGTH, GameScreen.TILE_LENGTH);
 		//stage.addActor(invalidTargetImage);
-
+		
 		dragAndDrop.addSource(new Source(sourceImage) {
 			public Payload dragStart (InputEvent event, float x, float y, int pointer) {
 				Payload payload = new Payload();
@@ -98,8 +98,8 @@ public class GameController {
 
 				public void reset (Source source, Payload payload) {
 					getActor().setColor(Color.WHITE);
-					validGroups.remove();
-					ifADragCompleted = true;
+					//validGroups.remove();
+					//ifADragCompleted = true;
 				}
 
 				public void drop (Source source, Payload payload, float x, float y, int pointer) {
