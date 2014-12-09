@@ -23,7 +23,7 @@ public class MainMenu implements Screen {
 
 	private Stage stage;
 	private Table table;
-	private TextButton buttonPlay, buttonSettings, buttonExit;
+	private TextButton buttonPlay, buttonSettings, buttonExit, buttonHelp;
 	private Label heading;
 	private TweenManager tweenManager;
 
@@ -84,16 +84,29 @@ public class MainMenu implements Screen {
 		});
 		buttonPlay.pad(50);
 
+		buttonHelp = new TextButton("Help", Assets.menuSkin);
+		buttonHelp.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				((Game) Gdx.app.getApplicationListener())
+						.setScreen(new HelpScreen());
+			}
+		});
+		buttonHelp.pad(50);
+		
 		// creating heading
 		heading = new Label(Hanto.TITLE, Assets.menuSkin);
 		heading.setFontScale(6);
 
 		// putting stuff together
 		table.add(heading);
-		table.getCell(heading).spaceBottom(300);
+		table.getCell(heading).spaceBottom(200);
 		table.row();
 		table.add(buttonPlay);
 		table.getCell(buttonPlay).spaceBottom(100);
+		table.row();
+		table.add(buttonHelp);
+		table.getCell(buttonHelp).spaceBottom(100);
 		table.row();
 		table.add(buttonSettings);
 		table.getCell(buttonSettings).spaceBottom(100);
