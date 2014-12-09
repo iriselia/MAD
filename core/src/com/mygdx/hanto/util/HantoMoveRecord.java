@@ -22,6 +22,7 @@ public class HantoMoveRecord
 	private final HantoPieceType piece;
 	private final HantoCoordinate from;
 	private final HantoCoordinate to;
+	private HantoPlayerColor color = null;
 	
 	/**
 	 * Constructor
@@ -34,6 +35,18 @@ public class HantoMoveRecord
 		this.piece = piece;
 		this.from = from;
 		this.to = to;
+	}
+	
+	/**
+	 * Constructor
+	 * @param piece the Hanto piece type that moved
+	 * @param from the source hex
+	 * @param to the source hex
+	 */
+	public HantoMoveRecord(HantoPieceType piece, HantoCoordinate from, HantoCoordinate to, HantoPlayerColor color)
+	{
+		this(piece, from, to);
+		this.color = color;
 	}
 
 	/**
@@ -58,5 +71,9 @@ public class HantoMoveRecord
 	public HantoCoordinate getTo()
 	{
 		return to;
+	}
+	
+	public HantoPlayerColor getColor(){
+		return color;
 	}
 }
