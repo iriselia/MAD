@@ -30,18 +30,17 @@ public class GameController {
 	private static Map<ImageButton, HantoMoveRecord> buttonsColor = new HashMap<ImageButton, HantoMoveRecord>();
 	public static GameStateHandler gameHandlerYellow;
 	public static GameStateHandler gameHandlerBlue;
-	public static boolean ifADragCompleted = true;
+	private static Group validGroups = new Group();
 
 	public static DragAndDrop getDragAndDrop(){
 		return dragAndDrop;
 	}
 
 	public static void addTouchAndDrag(final Stage stage, final ImageButton sourceImage, final HantoCoordinate from, List<Pixels> validPositions) {
-		ifADragCompleted = false;
 		final String name = sourceImage.getName();
 		final boolean isYellow = Hanto.gameInstance.getGameState().getPlayerOnMove() == HantoPlayerColor.RED;
 
-		final Group validGroups = new Group();
+		validGroups = new Group();
 
 		if(Hanto.gameInstance.getGameState().getTurnNum() == 1){
 			if(!isYellow){
@@ -51,9 +50,8 @@ public class GameController {
 				validPositions.add(CoordinatesToPixels.getInitialPixelsForYellow());
 			}
 		}
-		
+
 		if(validPositions.size() == 0){
-			GameController.ifADragCompleted = true;
 			return;
 		}
 
@@ -98,8 +96,6 @@ public class GameController {
 
 				public void reset (Source source, Payload payload) {
 					getActor().setColor(Color.WHITE);
-					//validGroups.remove();
-					//ifADragCompleted = true;
 				}
 
 				public void drop (Source source, Payload payload, float x, float y, int pointer) {
@@ -145,26 +141,24 @@ public class GameController {
 					newPiece.addListener(new ClickListener(){
 						@Override
 						public void clicked(InputEvent event, float x, float y) {
-							if(GameController.ifADragCompleted){
-								final HantoMoveRecord piece = buttonsColor.get(newPiece);
-								final HantoCoordinate to = piece.getTo();
-								final HantoPlayerColor color = piece.getColor();
-								final HantoPieceType pieceType = piece.getPiece();
-								if(color == Hanto.gameInstance.getGameState().getPlayerOnMove()){
-									List<HantoCoordinate> availableMoves = getProperGameStateHandler(color).getValidDestinations(pieceType, color, to);
-									List<Pixels> availablePixels = new ArrayList<Pixels>();
-									for(HantoCoordinate coord : availableMoves){
-										availablePixels.add(CoordinatesToPixels.convertCooridnatesToPixels(coord));
-									}
-									addTouchAndDrag(stage, newPiece, to, availablePixels);
+							clearAll();
+							final HantoMoveRecord piece = buttonsColor.get(newPiece);
+							final HantoCoordinate to = piece.getTo();
+							final HantoPlayerColor color = piece.getColor();
+							final HantoPieceType pieceType = piece.getPiece();
+							if(color == Hanto.gameInstance.getGameState().getPlayerOnMove()){
+								List<HantoCoordinate> availableMoves = getProperGameStateHandler(color).getValidDestinations(pieceType, color, to);
+								List<Pixels> availablePixels = new ArrayList<Pixels>();
+								for(HantoCoordinate coord : availableMoves){
+									availablePixels.add(CoordinatesToPixels.convertCooridnatesToPixels(coord));
 								}
+								addTouchAndDrag(stage, newPiece, to, availablePixels);
 							}
 						}
 					});
 
 					validGroups.remove();
 					stage.addActor(newPiece);
-					ifADragCompleted = true;
 				}
 			});
 		}
@@ -184,7 +178,7 @@ public class GameController {
 		});
 		 */
 	}
-	
+
 	private static GameStateHandler getProperGameStateHandler(HantoPlayerColor color){
 		GameStateHandler result = null;
 		if(color == HantoPlayerColor.RED){
@@ -195,7 +189,7 @@ public class GameController {
 		}
 		return result;
 	}
-	
+
 	public static List<Pixels> generatePlacePixels(HantoPieceType pieceType){
 		final List<Pixels> pixelsList = new ArrayList<Pixels>();
 		final HantoPlayerColor player = Hanto.gameInstance.getGameState().getPlayerOnMove();
@@ -206,4 +200,9 @@ public class GameController {
 		}
 		return pixelsList;
 	}
+	
+	public static void clearAll(){
+		validGroups.remove();
+	}
+
 }

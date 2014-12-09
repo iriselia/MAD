@@ -106,9 +106,8 @@ public class GameScreen implements Screen {
 		yellowButterflyButton.addListener(new ClickListener(){
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if(GameController.ifADragCompleted){
-					GameController.addTouchAndDrag(stage, yellowButterflyButton, null, GameController.generatePlacePixels(HantoPieceType.BUTTERFLY));
-				}
+				GameController.clearAll();
+				GameController.addTouchAndDrag(stage, yellowButterflyButton, null, GameController.generatePlacePixels(HantoPieceType.BUTTERFLY));
 			}
 		});
 		yellowCrabButton = new ImageButton(Assets.pieceSkin, "yellowCrab");
@@ -116,9 +115,8 @@ public class GameScreen implements Screen {
 		yellowCrabButton.addListener(new ClickListener(){
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if(GameController.ifADragCompleted){
-					GameController.addTouchAndDrag(stage, yellowCrabButton, null, GameController.generatePlacePixels(HantoPieceType.CRAB));
-				}
+				GameController.clearAll();
+				GameController.addTouchAndDrag(stage, yellowCrabButton, null, GameController.generatePlacePixels(HantoPieceType.CRAB));
 			}
 		});
 		yellowSparrowButton = new ImageButton(Assets.pieceSkin, "yellowSparrow");
@@ -126,9 +124,9 @@ public class GameScreen implements Screen {
 		yellowSparrowButton.addListener(new ClickListener(){
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if(GameController.ifADragCompleted){
-					GameController.addTouchAndDrag(stage, yellowSparrowButton, null, GameController.generatePlacePixels(HantoPieceType.SPARROW));
-				}
+				GameController.clearAll();
+				GameController.addTouchAndDrag(stage, yellowSparrowButton, null, GameController.generatePlacePixels(HantoPieceType.SPARROW));
+
 			}
 		});
 
@@ -137,9 +135,8 @@ public class GameScreen implements Screen {
 		blueButterflyButton.addListener(new ClickListener(){
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if(GameController.ifADragCompleted){
-					GameController.addTouchAndDrag(stage, blueButterflyButton, null, GameController.generatePlacePixels(HantoPieceType.BUTTERFLY));
-				}
+				GameController.clearAll();
+				GameController.addTouchAndDrag(stage, blueButterflyButton, null, GameController.generatePlacePixels(HantoPieceType.BUTTERFLY));
 			}
 		});
 		blueCrabButton = new ImageButton(Assets.pieceSkin, "blueCrab");
@@ -147,9 +144,9 @@ public class GameScreen implements Screen {
 		blueCrabButton.addListener(new ClickListener(){
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if(GameController.ifADragCompleted){
-					GameController.addTouchAndDrag(stage, blueCrabButton, null, GameController.generatePlacePixels(HantoPieceType.CRAB));
-				}
+				GameController.clearAll();
+				GameController.addTouchAndDrag(stage, blueCrabButton, null, GameController.generatePlacePixels(HantoPieceType.CRAB));
+
 			}
 		});
 		blueSparrowButton = new ImageButton(Assets.pieceSkin, "blueSparrow"); 
@@ -157,9 +154,9 @@ public class GameScreen implements Screen {
 		blueSparrowButton.addListener(new ClickListener(){
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if(GameController.ifADragCompleted){
-					GameController.addTouchAndDrag(stage, blueSparrowButton, null, GameController.generatePlacePixels(HantoPieceType.SPARROW));
-				}
+				GameController.clearAll();
+				GameController.addTouchAndDrag(stage, blueSparrowButton, null, GameController.generatePlacePixels(HantoPieceType.SPARROW));
+
 			}
 		});
 
