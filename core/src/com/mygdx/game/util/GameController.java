@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Assets;
 import com.mygdx.game.Hanto;
@@ -23,6 +24,7 @@ import com.mygdx.hanto.util.HantoCoordinate;
 import com.mygdx.hanto.util.HantoMoveRecord;
 import com.mygdx.hanto.util.HantoPieceType;
 import com.mygdx.hanto.util.HantoPlayerColor;
+import com.mygdx.hanto.util.MoveResult;
 
 public class GameController {
 
@@ -31,6 +33,7 @@ public class GameController {
 	public static GameStateHandler gameHandlerYellow;
 	public static GameStateHandler gameHandlerBlue;
 	private static Group validGroups = new Group();
+	public static Label warningLabel = new Label("Please Butterfly!", Assets.menuSkin);
 
 	public static DragAndDrop getDragAndDrop(){
 		return dragAndDrop;
@@ -49,6 +52,14 @@ public class GameController {
 			else{
 				validPositions.add(CoordinatesToPixels.getInitialPixelsForYellow());
 			}
+		}
+		if(Hanto.gameInstance.getGameState().getTurnNum() == 4 
+				&& !(Hanto.gameInstance.getGameState().getNumberTypeForPlayer(HantoPieceType.BUTTERFLY, Hanto.gameInstance.getGameState().getPlayerOnMove()) == 1)
+				&& !name.contains("Butterfly")){
+			warningLabel.setPosition(stage.getCamera().position.x - Constants.w / 2, stage.getCamera().position.y);
+			warningLabel.setFontScale(3);
+			stage.addActor(warningLabel);
+			return;
 		}
 
 		if(validPositions.size() == 0){
@@ -132,7 +143,16 @@ public class GameController {
 					buttonsColor.put(newPiece, newPieceRecord);
 
 					try {
-						Hanto.gameInstance.makeMove(pieceType, from, to);
+						MoveResult moveResult = Hanto.gameInstance.makeMove(pieceType, from, to);
+						if(moveResult == MoveResult.BLUE_WINS){
+							//TODO: blue wins
+						}
+						else if(moveResult == MoveResult.RED_WINS){
+							//TODO: red wins
+						}
+						else if(moveResult == MoveResult.DRAW){
+							//TODO: draw
+						}
 					} catch (HantoException e) {
 						System.out.println(e.getMessage());
 						e.printStackTrace();
