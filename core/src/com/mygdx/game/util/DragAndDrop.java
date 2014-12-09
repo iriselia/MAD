@@ -36,8 +36,8 @@ public class DragAndDrop {
 	Actor dragActor;
 	Target target;
 	boolean isValidTarget;
-	Array<Target> targets = new Array();
-	ObjectMap<Source, DragListener> sourceListeners = new ObjectMap();
+	Array<Target> targets = new Array<Target>();
+	ObjectMap<Source, DragListener> sourceListeners = new ObjectMap<Source, DragListener>();
 	private float tapSquareSize = 8;
 	private int button;
 	float dragActorX = 14, dragActorY = -20;

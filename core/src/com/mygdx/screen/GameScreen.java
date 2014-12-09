@@ -1,5 +1,12 @@
 package com.mygdx.screen;
 
+import static com.mygdx.game.util.Constants.WORLD_HEIGHT;
+import static com.mygdx.game.util.Constants.WORLD_WIDTH;
+import static com.mygdx.game.util.Constants.h;
+import static com.mygdx.game.util.Constants.w;
+
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -16,21 +23,22 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Assets;
-import com.mygdx.game.util.GameController;
+import com.mygdx.game.Hanto;
 import com.mygdx.game.util.CameraController;
+import com.mygdx.game.util.Constants;
+import com.mygdx.game.util.GameController;
+import com.mygdx.game.util.GameStateHandler;
+import com.mygdx.game.util.Pixels;
+import com.mygdx.hanto.implementation.core.HantoGameDevelopment;
+import com.mygdx.hanto.util.HantoPlayerColor;
 
 
 
 public class GameScreen implements Screen {
 
-    public final static float w = Gdx.graphics.getWidth();
-    public final static float h = Gdx.graphics.getHeight();
-    public final static float aspectRatio = h / w;
-    public final static float WORLD_WIDTH = w * 3;
-    public final static float WORLD_HEIGHT = h * 3;
-    public final static int TILE_LENGTH = 200;
-    
     public GameScreen() {
+    	Hanto.gameInstance = new HantoGameDevelopment();
+    	GameController.gameHandler = new GameStateHandler(HantoPlayerColor.RED, Hanto.gameInstance.getGameState());
         camera = new OrthographicCamera();
         stage = new Stage();
     }    
@@ -44,8 +52,14 @@ public class GameScreen implements Screen {
     
     private Table table;
     
-    private ImageButton sourceImage;
+    private ImageButton yellowButterflyButton;
+    private ImageButton yellowCrabButton;
+    private ImageButton yellowSparrowButton;
+    private ImageButton blueButterflyButton;
+    private ImageButton blueCrabButton;
+    private ImageButton blueSparrowButton;
 
+    
 	@Override
 	public void render(float delta) {
 		camController.update();
@@ -54,11 +68,7 @@ public class GameScreen implements Screen {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		float left = stage.getCamera().position.x - w / 2;
-		float bottom = stage.getCamera().position.y - h / 2;
-				
-		sourceImage.setBounds(left, bottom, 200, 200);
-		table.setBounds(left, bottom, w, h);
+		updateUI();
 		
         stage.act(delta);
         stage.draw();
@@ -69,24 +79,12 @@ public class GameScreen implements Screen {
 		Assets.loadMainMenuOrSettings();
 		Assets.loadPieces();
 						
-		//Image map = new Image(new Texture(Gdx.files.internal("world/background.png")));
-		//map.setPosition(0, 0);
-		//map.setSize(WORLD_WIDTH, WORLD_HEIGHT);
-        //stage.addActor(map);
+		Image background = new Image(new Texture(Gdx.files.internal("world/background.png")));
+		background.setPosition(0, 0);
+		background.setSize(WORLD_WIDTH, WORLD_HEIGHT);
+        stage.addActor(background);
 		
-		for(int i = 0; i <= WORLD_WIDTH / 200; i++){
-			for(int j = 0; j < WORLD_HEIGHT / 200; j++){
-				Image tile = new Image(new Texture("hexTiles/testTile.png"));
-				if( j % 2 == 0){
-					tile.setBounds(i * 200, j * 200, 200, 200);
-				}
-				else{
-					tile.setBounds(100 + i * 200, j * 200, 200, 200);
-				}
-				stage.addActor(tile);
-			}
-		}
-		
+
         camera = new OrthographicCamera(w, h);
         camera.position.set(WORLD_WIDTH / 2f, WORLD_HEIGHT / 2f, 0);
         camera.update();
@@ -96,9 +94,7 @@ public class GameScreen implements Screen {
         
         stage.getViewport().setCamera(camera);
         
-        addButtons();
-        drawPieces();
-        
+        addButtons();        
         stage.addActor(table);
             
         InputMultiplexer inputMultiplexer = new InputMultiplexer();
@@ -106,11 +102,45 @@ public class GameScreen implements Screen {
         inputMultiplexer.addProcessor(stage);
         Gdx.input.setInputProcessor(inputMultiplexer);
         
-        sourceImage = new ImageButton(Assets.pieceSkin, "butterfly");
+        yellowButterflyButton = new ImageButton(Assets.pieceSkin, "yellowButterfly");
+        yellowCrabButton = new ImageButton(Assets.pieceSkin, "yellowCrab");
+        yellowSparrowButton = new ImageButton(Assets.pieceSkin, "yellowSparrow");
         
-        GameController.addTouchAndDrag(stage, "butterfly", sourceImage);
+        blueButterflyButton = new ImageButton(Assets.pieceSkin, "blueButterfly");
+        blueCrabButton = new ImageButton(Assets.pieceSkin, "blueCrab");
+        blueSparrowButton = new ImageButton(Assets.pieceSkin, "blueSparrow");  
+        
+        GameController.addTouchAndDrag(stage, "Butterfly", yellowButterflyButton, null, new ArrayList<Pixels>());
+        GameController.addTouchAndDrag(stage, "Crab", yellowCrabButton, null, new ArrayList<Pixels>());
+        GameController.addTouchAndDrag(stage, "Sparrow", yellowSparrowButton, null, new ArrayList<Pixels>());
+        GameController.addTouchAndDrag(stage, "Butterfly", blueButterflyButton, null, new ArrayList<Pixels>());
+        GameController.addTouchAndDrag(stage, "Crab", blueCrabButton, null, new ArrayList<Pixels>());
+        GameController.addTouchAndDrag(stage, "Sparrow", blueSparrowButton, null, new ArrayList<Pixels>());
 	}
 	
+	private void updateUI(){
+		final float left = stage.getCamera().position.x - w / 2;
+		final float bottom = stage.getCamera().position.y - h / 2;
+		
+		if(GameController.gameHandler.getGameState().getPlayerOnMove() == HantoPlayerColor.RED){
+			yellowButterflyButton.setBounds(left, bottom, Constants.TILE_LENGTH, Constants.TILE_LENGTH);
+			yellowCrabButton.setBounds(left + Constants.TILE_LENGTH, bottom, Constants.TILE_LENGTH, 200);
+			yellowSparrowButton.setBounds(left + Constants.TILE_LENGTH  * 2, bottom, Constants.TILE_LENGTH, Constants.TILE_LENGTH);
+			blueButterflyButton.setBounds(0, 0, 0, 0);
+			blueCrabButton.setBounds(0, 0, 0, 0);
+			blueSparrowButton.setBounds(0, 0, 0, 0);
+		}
+		else{
+			yellowButterflyButton.setBounds(0, 0, 0, 0);
+			yellowCrabButton.setBounds(0, 0, 0, 0);
+			yellowSparrowButton.setBounds(0, 0, 0, 0);
+			blueButterflyButton.setBounds(left, bottom, Constants.TILE_LENGTH, Constants.TILE_LENGTH);
+			blueCrabButton.setBounds(left + Constants.TILE_LENGTH, bottom, Constants.TILE_LENGTH, Constants.TILE_LENGTH);
+			blueSparrowButton.setBounds(left + Constants.TILE_LENGTH * 2, bottom, Constants.TILE_LENGTH, Constants.TILE_LENGTH);
+		}
+		
+		table.setBounds(left, bottom, w, h);
+	}
 
 	
 	@Override
@@ -169,25 +199,4 @@ public class GameScreen implements Screen {
 	    table.add(btnReturn).expand().top().left(); // Sized to cell horizontally.
 	    table.add(btnQuit).expand().top().right();
 	}
-	
-	public void drawPieces() {
-//		Hanto.gameInstance = new HantoGameDevelopment();
-//		Hanto.gameInstance.initialize(HantoPlayerColor.BLUE);
-//		HantoPlayerColor currentPlayer = Hanto.gameInstance.getGameState().getPlayerOnMove();
-//		Label lblPlayerColor = new Label (currentPlayer.toString(), Assets.skin);
-//		if (!Hanto.gameInstance.getGameState().getBoard().isEmpty()) {
-//			//TODO: create function drawPiecesOnBoard
-//		}
-//		ImageButton butterfly = new ImageButton(pieceSkin, "butterfly");
-//		ImageButton crab = new ImageButton(pieceSkin, "crab");
-//		ImageButton sparrow = new ImageButton(pieceSkin, "sparrow");
-//		table.add(lblPlayerColor).top().center();
-//		table.row();
-//		table.add(butterfly).expand().bottom().left();
-//		table.getCell(butterfly).spaceRight(30);
-//		table.add(crab);
-//		table.add(sparrow);
-		
-	}
-	
 }

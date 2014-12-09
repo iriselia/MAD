@@ -14,9 +14,13 @@
 		"default": { "font": white, "fontColor": white }
 	},
 	"com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle": {
-		"default": { "up": "butterfly", "down": "butterfly", "checked": "butterfly" },
-		"butterfly": { "up": "butterfly", "down": "butterfly", "checked": "butterfly" },
-		"crab": { "up": "crab", "down": "crab", "checked": "crab" },
-		"sparrow": { "up": "sparrow", "down": "sparrow", "checked": "sparrow" }
+		"default": { "up": "blank", "down": "blank", "checked": "blank" },
+		"blank": { "up": "blank", "down": "blank", "checked": "blank" },
+		"yellowButterfly": { "up": "butterfly1", "down": "butterfly1", "checked": "butterfly1" },
+		"yellowCrab": { "up": "crab1", "down": "crab1", "checked": "crab1" },
+		"yellowSparrow": { "up": "sparrow1", "down": "sparrow1", "checked": "sparrow1" },
+		"blueButterfly": { "up": "butterfly2", "down": "butterfly2", "checked": "butterfly2" },
+		"blueCrab": { "up": "crab2", "down": "crab2", "checked": "crab2" },
+		"blueSparrow": { "up": "sparrow2", "down": "sparrow2", "checked": "sparrow2" }
 	}
 } 
