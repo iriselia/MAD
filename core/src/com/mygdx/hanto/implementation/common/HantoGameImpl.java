@@ -9,15 +9,14 @@
  * Contributors:
  *    feierqi
  *******************************************************************/
-package com.mygdx.hanto.core.common;
+package com.mygdx.hanto.implementation.common;
 
 import com.mygdx.hanto.common.HantoException;
-import com.mygdx.hanto.core.InternalHantoGame;
+import com.mygdx.hanto.implementation.InternalHantoGame;
 import com.mygdx.hanto.util.HantoCoordinate;
 import com.mygdx.hanto.util.HantoPieceType;
 import com.mygdx.hanto.util.HantoPlayerColor;
 import com.mygdx.hanto.util.MoveResult;
-
 
 /**
  * This is the implementation of any Internal Hanto Game. And any specific
@@ -32,7 +31,7 @@ public abstract class HantoGameImpl implements InternalHantoGame{
 	protected HantoState gameState;
 		
 	/**
-	 * @see com.mygdx.hanto.common.HantoGame#initialize(com.mygdx.hanto.util.HantoPlayerColor)
+	 * @see hanto.common.HantoGame#initialize(hanto.util.HantoPlayerColor)
 	 */
 	public void initialize(HantoPlayerColor firstPlayer){
 		gameState.setInitialCoordinate(new Coordinate(0, 0));
@@ -46,8 +45,8 @@ public abstract class HantoGameImpl implements InternalHantoGame{
 	}
 
 	/**
-	 * @see com.mygdx.hanto.common.HantoGame#makeMove(com.mygdx.hanto.util.HantoPieceType, 
-	 * com.mygdx.hanto.util.HantoCoordinate, com.mygdx.hanto.util.HantoCoordinate)
+	 * @see hanto.common.HantoGame#makeMove(hanto.util.HantoPieceType, 
+	 * hanto.util.HantoCoordinate, hanto.util.HantoCoordinate)
 	 */
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws HantoException {
@@ -63,14 +62,14 @@ public abstract class HantoGameImpl implements InternalHantoGame{
 	}
 	
 	/**
-	 * @see com.mygdx.hanto.common.HantoGame#getPrintableBoard()
+	 * @see hanto.common.HantoGame#getPrintableBoard()
 	 */
 	public String getPrintableBoard() {
 		return gameState.getBoard().getPrintableBoard();
 	}
 
 	/**
-	 * @see com.mygdx.hanto.core.InternalHantoGame#getPieceAt(int, int)
+	 * @see hanto.studentpren.InternalHantoGame#getPieceAt(int, int)
 	 */
 	public HantoPiece getPieceAt(int x, int y) {
 		final HantoPiece piece;

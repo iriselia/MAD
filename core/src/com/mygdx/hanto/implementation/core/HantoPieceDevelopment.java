@@ -9,29 +9,50 @@
  * Contributors:
  *    feierqi
  *******************************************************************/
-package com.mygdx.hanto.core.game;
+package com.mygdx.hanto.implementation.core;
 
-import com.mygdx.hanto.core.common.Coordinate;
-import com.mygdx.hanto.core.common.HantoPiece;
+import com.mygdx.hanto.implementation.common.Coordinate;
+import com.mygdx.hanto.implementation.common.HantoPiece;
+import com.mygdx.hanto.implementation.common.PieceMoveStrategy;
 import com.mygdx.hanto.util.HantoCoordinate;
 import com.mygdx.hanto.util.HantoPieceType;
 import com.mygdx.hanto.util.HantoPlayerColor;
 
-
-
 /**
- * This class is used to specifiy a piece of Gamma Hanto and a hex on the board 
+ * This class is used to specifiy a piece of Delta Hanto and a hex on the board 
  * where the piece will be placed. This class is only used for testing purposes.
  * 
  * @author Peng Ren
- * @version Jan 20, 2013
+ * @version Feb 22, 2013
  */
-public class HantoGameDevelopmentPiece implements HantoPiece
-{
+public class HantoPieceDevelopment implements HantoPiece{
+
 	private final HantoPieceType piece;
 	private final HantoPlayerColor player;
-	private final HantoCoordinate coordinate;
+	private HantoCoordinate coordinate;
+	private PieceMoveStrategy moveStrategy;
 
+	/**
+	 * Constructor.
+	 * 
+	 * @param coordinate
+	 *            the hex where the piece will be placed
+	 * @param player
+	 *            the color of the player / piece
+	 * @param piece
+	 *            the piece type
+	 * @param moveStrategy
+	 * 			  the move strategy of the given hanto piece type
+	 */
+	
+	public HantoPieceDevelopment(HantoCoordinate coordinate, HantoPlayerColor player,
+			HantoPieceType piece, PieceMoveStrategy moveStrategy) {
+		this.coordinate = coordinate;
+		this.player = player;
+		this.piece = piece;
+		this.moveStrategy = moveStrategy;
+	}
+	
 	/**
 	 * Constructor.
 	 * 
@@ -43,11 +64,12 @@ public class HantoGameDevelopmentPiece implements HantoPiece
 	 *            the piece type
 	 */
 	
-	public HantoGameDevelopmentPiece(HantoCoordinate coordinate, HantoPlayerColor player,
+	public HantoPieceDevelopment(HantoCoordinate coordinate, HantoPlayerColor player,
 			HantoPieceType piece) {
 		this.coordinate = coordinate;
 		this.player = player;
 		this.piece = piece;
+		moveStrategy = null;
 	}
 	
 	/**
@@ -59,8 +81,9 @@ public class HantoGameDevelopmentPiece implements HantoPiece
 	 * @param piece 
 	 *           the piece type
 	 */
-	public HantoGameDevelopmentPiece(HantoPlayerColor player, HantoPieceType piece){
+	public HantoPieceDevelopment(HantoPlayerColor player, HantoPieceType piece){
 		coordinate = null;
+		moveStrategy = null;
 		this.player = player;
 		this.piece = piece;
 	}
@@ -88,11 +111,26 @@ public class HantoGameDevelopmentPiece implements HantoPiece
 	{
 		return piece;
 	}
+	
+	/**
+	 * @return the moveStrategy
+	 */
+	public PieceMoveStrategy getMoveStrategy() {
+		return moveStrategy;
+	}
 
 	/**
-	 * @see com.mygdx.hanto.core.common.HantoPiece#setCoordinate(com.mygdx.hanto.core.common.Coordinate)
+	 * @see hanto.studentpren.common.HantoPiece#setCoordinate(hanto.studentpren.common.Coordinate)
 	 */
 	@Override
 	public void setCoordinate(Coordinate c) {
+		coordinate = c;
+	}
+	
+	/**
+	 * set the movestrategy to the given piece
+	 */
+	public void setPieceMoveStrategy(PieceMoveStrategy moveStrategy){
+		this.moveStrategy = moveStrategy;
 	}
 }

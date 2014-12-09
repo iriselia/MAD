@@ -9,7 +9,7 @@
  * Contributors:
  *    feierqi
  *******************************************************************/
-package com.mygdx.hanto.core.common;
+package com.mygdx.hanto.implementation.common;
 
 import com.mygdx.hanto.util.HantoCoordinate;
 import com.mygdx.hanto.util.HantoPieceType;
