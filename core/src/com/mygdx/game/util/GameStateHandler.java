@@ -267,7 +267,11 @@ public class GameStateHandler {
 	
 	public List<HantoCoordinate> getValidDestinations(HantoPieceType pieceType, HantoPlayerColor player,
 			HantoCoordinate coord){
-		List<HantoCoordinate> result = null;
+		List<HantoCoordinate> result = new ArrayList<HantoCoordinate>();
+		final boolean butterflyPlaced = gameState.getNumberTypeForPlayer(HantoPieceType.BUTTERFLY, playerColor) == 1;
+		if(!butterflyPlaced){
+			return result;
+		}
 		final HantoPieceDevelopment newPiece;
 		PieceMoveStrategy moveStrategy = null;
 		if(pieceType == HantoPieceType.BUTTERFLY || pieceType == HantoPieceType.CRAB){
