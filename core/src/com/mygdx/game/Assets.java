@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.mygdx.game.util.Constants;
 
 
 /**
@@ -33,11 +34,15 @@ public class Assets {
 	}
 	
 	public static void loadHelp() {
-		helpImages = new TextureRegionDrawable[4];
-		helpImages[0] = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("help/1.png"))));
-		helpImages[1] = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("help/2.png"))));
-		helpImages[2] = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("help/3.png"))));
-		helpImages[3] = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("help/4.png"))));
+		helpImages = new TextureRegionDrawable[Constants.numberOfHelpImages];
+		for (int i = 0; i < Constants.numberOfHelpImages; i++) {
+			helpImages[i] = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("help/" + i + ".png"))));
+		}
+		//helpImages[0] = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("help/1.png"))));
+		//helpImages[1] = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("help/2.png"))));
+		//helpImages[2] = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("help/3.png"))));
+		//helpImages[3] = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("help/4.png"))));
+		
 	}
 
 	public static void disposeMainMenuOrSettings() {

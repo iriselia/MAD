@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Assets;
+import com.mygdx.game.util.Constants;
 
 public class HelpScreen implements Screen {
 	private Table table;
@@ -107,7 +108,7 @@ public class HelpScreen implements Screen {
 		btnNext.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-            	if (currentImageIndex >= 3) {
+            	if (currentImageIndex >= (Constants.numberOfHelpImages - 1)) {
             		return;
             	}
             	currentImageIndex += 1;
