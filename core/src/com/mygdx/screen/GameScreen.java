@@ -188,8 +188,16 @@ public class GameScreen implements Screen {
 			yellowCrabButton.setBounds(0, 0, 0, 0);
 			yellowSparrowButton.setBounds(0, 0, 0, 0);
 		}
+		
+		yellowButterflyButton.toFront();
+		yellowCrabButton.toFront();
+		yellowSparrowButton.toFront();
+		blueButterflyButton.toFront();
+		blueCrabButton.toFront();
+		blueSparrowButton.toFront();
 
 		table.setBounds(left, bottom, w, h);
+		table.toFront();
 	}
 
 
