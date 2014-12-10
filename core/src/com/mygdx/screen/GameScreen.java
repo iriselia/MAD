@@ -57,6 +57,14 @@ public class GameScreen implements Screen {
 	private ImageButton blueButterflyButton;
 	private ImageButton blueCrabButton;
 	private ImageButton blueSparrowButton;
+	
+	private boolean yellowButterflyButtonChanged;
+	private boolean yellowCrabButtonChanged;
+	private boolean yellowSparrowButtonChanged;
+	private boolean blueButterflyButtonChanged;
+	private boolean blueCrabButtonChanged;
+	private boolean blueSparrowButtonChanged;
+
 
 
 	@Override
@@ -159,7 +167,7 @@ public class GameScreen implements Screen {
 
 			}
 		});
-
+		
 		stage.addActor(yellowButterflyButton);
 		stage.addActor(yellowCrabButton);
 		stage.addActor(yellowSparrowButton);
@@ -169,9 +177,10 @@ public class GameScreen implements Screen {
 	}
 
 	private void updateUI(){
+		changeButtons();
 		final float left = stage.getCamera().position.x - w / 2;
 		final float bottom = stage.getCamera().position.y - h / 2;
-
+		
 		if(Hanto.gameInstance.getGameState().getPlayerOnMove() == HantoPlayerColor.RED){
 			yellowButterflyButton.setBounds(left, bottom, Constants.TILE_LENGTH, Constants.TILE_LENGTH);
 			yellowCrabButton.setBounds(left + Constants.TILE_LENGTH, bottom, Constants.TILE_LENGTH, 200);
@@ -199,6 +208,47 @@ public class GameScreen implements Screen {
 		table.setBounds(left, bottom, w, h);
 		table.toFront();
 	}
+	
+	private void changeButtons(){
+		if(!yellowButterflyButtonChanged && Hanto.gameInstance.getGameState().getRedButterflyPlaced() == 1){
+			yellowButterflyButton.remove();
+			yellowButterflyButton = new ImageButton(Assets.pieceSkin, "greyButterfly");
+			stage.addActor(yellowButterflyButton);
+			yellowButterflyButtonChanged = true;
+		}
+		else if(!yellowCrabButtonChanged && Hanto.gameInstance.getGameState().getNumberTypeForPlayer(HantoPieceType.CRAB, HantoPlayerColor.RED) == 4){
+			yellowCrabButton.remove();
+			yellowCrabButton = new ImageButton(Assets.pieceSkin, "greyCrab");
+			stage.addActor(yellowCrabButton);
+			yellowCrabButtonChanged = true;
+		}
+		else if(!yellowSparrowButtonChanged && Hanto.gameInstance.getGameState().getNumberTypeForPlayer(HantoPieceType.SPARROW, HantoPlayerColor.RED) == 4){
+			yellowSparrowButton.remove();
+			yellowSparrowButton = new ImageButton(Assets.pieceSkin, "greySparrow");
+			stage.addActor(yellowSparrowButton);
+			yellowSparrowButtonChanged = true;
+		}
+		else if(!blueButterflyButtonChanged && Hanto.gameInstance.getGameState().getBlueButterflyPlaced() == 1){
+			blueButterflyButton.remove();
+			blueButterflyButton = new ImageButton(Assets.pieceSkin, "greyButterfly");
+			stage.addActor(blueButterflyButton);
+			blueButterflyButtonChanged = true;
+		}
+		else if(!blueCrabButtonChanged && Hanto.gameInstance.getGameState().getNumberTypeForPlayer(HantoPieceType.CRAB, HantoPlayerColor.BLUE) == 4){
+			blueCrabButton.remove();
+			blueCrabButton = new ImageButton(Assets.pieceSkin, "greyCrab");
+			stage.addActor(blueCrabButton);
+			blueCrabButtonChanged = true;
+		}
+		else if(!blueSparrowButtonChanged && Hanto.gameInstance.getGameState().getNumberTypeForPlayer(HantoPieceType.SPARROW, HantoPlayerColor.BLUE) == 4){
+			blueSparrowButton.remove();
+			blueSparrowButton = new ImageButton(Assets.pieceSkin, "greySparrow");
+			stage.addActor(blueSparrowButton);
+			blueSparrowButtonChanged = true;
+		}
+	}
+	
+	
 
 
 	@Override
