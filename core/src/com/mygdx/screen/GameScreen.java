@@ -31,9 +31,17 @@ import com.mygdx.hanto.util.HantoPieceType;
 import com.mygdx.hanto.util.HantoPlayerColor;
 
 
-
+/**
+ * Screen for playing Hanto Game
+ * 
+ * @author Peng Ren, Xi Wen
+ *
+ */
 public class GameScreen implements Screen {
 
+	/**
+	 * default public constructor
+	 */
 	public GameScreen() {
 		Hanto.gameInstance = new HantoGameDevelopment();
 		GameController.gameHandlerYellow = new GameStateHandler(HantoPlayerColor.RED, Hanto.gameInstance.getGameState());
@@ -175,6 +183,9 @@ public class GameScreen implements Screen {
 		stage.addActor(blueSparrowButton);
 	}
 
+	/**
+	 * Updates the UI of game when switching turns
+	 */
 	private void updateUI(){
 		changeButtons();
 		final float left = stage.getCamera().position.x - w / 2;
@@ -279,7 +290,10 @@ public class GameScreen implements Screen {
 
 	}
 
-	public void addButtons() {
+	/**
+	 * Adds buttons (Return, Quit) to the GameScreen
+	 */
+	private void addButtons() {
 		table = new Table(Assets.hantoSkin);
 		table.setFillParent(true);
 		table.setBounds(0, 0, w, h);

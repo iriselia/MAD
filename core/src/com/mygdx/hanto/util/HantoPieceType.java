@@ -3,7 +3,6 @@ package com.mygdx.hanto.util;
 /**
  * This enumeration is used to define the pieces used in Hanto.
  * 
- * @version Jan 12, 2013
  */
 public enum HantoPieceType
 {

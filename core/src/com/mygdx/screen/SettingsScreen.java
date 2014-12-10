@@ -18,6 +18,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Assets;
 import com.mygdx.game.Hanto;
 
+/**
+ * Screen for altering Hanto game settings
+ * 
+ * @author Peng Ren
+ *
+ */
 public class SettingsScreen implements Screen {
 
 	private Stage stage;

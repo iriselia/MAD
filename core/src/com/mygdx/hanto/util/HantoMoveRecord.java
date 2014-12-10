@@ -4,8 +4,6 @@ package com.mygdx.hanto.util;
  * This class is a data structure that records the move by a
  * player in a Hanto game. It is used for tournament play with AI players.
  * 
- * @author gpollice
- * @version Feb 20, 2013
  */
 public class HantoMoveRecord
 {

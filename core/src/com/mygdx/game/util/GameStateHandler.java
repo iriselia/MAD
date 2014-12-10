@@ -17,6 +17,10 @@ import com.mygdx.hanto.util.HantoPieceType;
 import com.mygdx.hanto.util.HantoPlayerColor;
 
 /**
+ * Handles switching turns, generating valid piece placement coordinates, etc
+ * 
+ * @author Peng Ren
+ *
  */
 public class GameStateHandler {
 	
@@ -265,6 +269,13 @@ public class GameStateHandler {
 		return validPlacements;
 	}
 	
+	/**
+	 * generates a list of valid destinations for given piece
+	 * @param pieceType Type of the given piece
+	 * @param player PlayerColor of the given piece
+	 * @param coord Coordinate of the piece's current location
+	 * @return a list of HantoCoordinate with all valid destinations for the piece given
+	 */
 	public List<HantoCoordinate> getValidDestinations(HantoPieceType pieceType, HantoPlayerColor player,
 			HantoCoordinate coord){
 		List<HantoCoordinate> result = new ArrayList<HantoCoordinate>();
@@ -290,6 +301,11 @@ public class GameStateHandler {
 		return result;
 	}
 	
+	/**
+	 * Gets all valid destinations for the piece given if it were to walk on board
+	 * @param walkPiece piece that is going to walk
+	 * @return a list of HantoCoordinates that are valid destinations
+	 */
 	private List<HantoCoordinate> getWalkPieceValidMoveCoordinates(HantoPieceDevelopment walkPiece){
 		final List<HantoCoordinate> walkPieceValidCoordinates = new ArrayList<HantoCoordinate>();
 		final Coordinate pieceCoord = Coordinate.guarrenteedCoordinate(walkPiece.getCoordinate());
@@ -367,6 +383,11 @@ public class GameStateHandler {
 		return flyPieceValidMoves;
 	}
 	
+	/**
+	 * Generate all valid placement locations for the given piece type
+	 * @param pieceType the piece type to check
+	 * @return a list of HantoCoordinate that are valid placement locations for the given type
+	 */
 	public List<HantoCoordinate> generatePiecesValidPlacements(HantoPieceType pieceType){
 		List<HantoCoordinate> validPlacements = new ArrayList<HantoCoordinate>();
 		final List<HantoCoordinate> validButterflyPlacements = new ArrayList<HantoCoordinate>();
@@ -394,10 +415,18 @@ public class GameStateHandler {
 		return validPlacements;
 	}
 
+	/**
+	 * getter for current player color
+	 * @return play color of current turn
+	 */
 	public HantoPlayerColor getPlayerColor() {
 		return playerColor;
 	}
 
+	/**
+	 * getter for current game state
+	 * @return game state
+	 */
 	public HantoStateDevelopment getGameState() {
 		return gameState;
 	}
