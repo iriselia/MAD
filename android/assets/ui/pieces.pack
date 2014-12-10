@@ -1,0 +1,165 @@
+
+pieces.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+blank
+  rotate: false
+  xy: 1, 167
+  size: 64, 64
+  split: 0, 0, 0, 9
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+butterfly-blue-pressed
+  rotate: false
+  xy: 1, 101
+  size: 64, 64
+  split: 0, 0, 0, 9
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+butterfly-invalid
+  rotate: false
+  xy: 67, 167
+  size: 64, 64
+  split: 0, 0, 0, 9
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+butterfly-red-pressed
+  rotate: false
+  xy: 1, 35
+  size: 64, 64
+  split: 0, 0, 0, 9
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+butterfly1
+  rotate: false
+  xy: 67, 101
+  size: 64, 64
+  split: 0, 0, 0, 9
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+butterfly2
+  rotate: false
+  xy: 133, 167
+  size: 64, 64
+  split: 0, 0, 0, 9
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+crab-blue-pressed
+  rotate: false
+  xy: 67, 35
+  size: 64, 64
+  split: 0, 0, 0, 9
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+crab-invalid
+  rotate: false
+  xy: 133, 101
+  size: 64, 64
+  split: 0, 0, 0, 9
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+crab-red-pressed
+  rotate: false
+  xy: 199, 167
+  size: 64, 64
+  split: 0, 0, 0, 9
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+crab1
+  rotate: false
+  xy: 133, 35
+  size: 64, 64
+  split: 0, 0, 0, 9
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+crab2
+  rotate: false
+  xy: 199, 101
+  size: 64, 64
+  split: 0, 0, 0, 9
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+sparrow-blue-pressed
+  rotate: false
+  xy: 265, 167
+  size: 64, 64
+  split: 0, 0, 0, 9
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+sparrow-invalid
+  rotate: false
+  xy: 199, 35
+  size: 64, 64
+  split: 0, 0, 0, 9
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+sparrow-red-pressed
+  rotate: false
+  xy: 265, 101
+  size: 64, 64
+  split: 0, 0, 0, 9
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+sparrow1
+  rotate: false
+  xy: 331, 167
+  size: 64, 64
+  split: 0, 0, 0, 9
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+sparrow2
+  rotate: false
+  xy: 265, 35
+  size: 64, 64
+  split: 0, 0, 0, 9
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+button0
+  rotate: false
+  xy: 1, 1
+  size: 32, 32
+  split: 0, 0, 0, 0
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+button1
+  rotate: false
+  xy: 331, 133
+  size: 32, 32
+  split: 0, 0, 0, 0
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+checkbox0
+  rotate: false
+  xy: 397, 199
+  size: 32, 32
+  split: 0, 0, 0, 0
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+checkbox1
+  rotate: false
+  xy: 35, 1
+  size: 32, 32
+  split: 0, 0, 0, 0
+  orig: 32, 32
+  offset: 0, 0
+  index: -1

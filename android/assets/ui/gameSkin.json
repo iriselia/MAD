@@ -1,0 +1,35 @@
+{
+	"com.badlogic.gdx.graphics.Color": {
+		"white": { "r": 1, "g": 1, "b": 1, "a": 1},
+		"black": { "r": 0, "g": 0, "b": 0, "a": 1},
+		"red":   { "r": 1, "g": 0, "b": 0, "a": 1},
+		"green": { "r": 0, "g": 1, "b": 0, "a": 1},
+		"blue":  { "r": 0, "g": 0, "b": 1, "a": 1}
+	},
+	"com.badlogic.gdx.graphics.g2d.BitmapFont": {
+		"white": { "file": "font/white.fnt" },
+		"black": { "file": "font/black.fnt" }
+	},
+	"com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
+		"default": { "font": white, "fontColor": white }
+	},
+	"com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
+		"default": { "up": "button0", "down": "button1", "font": black, "pressedOffsetX": 1, "pressedOffsetY": -1 }
+	},
+	"com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle": {
+		"default": { "font": white, "checkboxOn": "checkbox1", "checkboxOff": "checkbox0"}
+	},
+	"com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle": {
+		"default": { "up": "blank", "down": "blank", "checked": "blank" },
+		"blank": { "up": "blank", "down": "blank", "checked": "blank" },
+		"yellowButterfly": { "up": "butterfly1", "down": "butterfly-red-pressed", "checked": "butterfly1" },
+		"yellowCrab": { "up": "crab1", "down": "crab-red-pressed", "checked": "crab1" },
+		"yellowSparrow": { "up": "sparrow1", "down": "sparrow-red-pressed", "checked": "sparrow1" },
+		"blueButterfly": { "up": "butterfly2", "down": "butterfly-blue-pressed", "checked": "butterfly2" },
+		"blueCrab": { "up": "crab2", "down": "crab-blue-pressed", "checked": "crab2" },
+		"blueSparrow": { "up": "sparrow2", "down": "sparrow-blue-pressed", "checked": "sparrow2" },
+		"greyButterfly": { "up": "butterfly-invalid", "down": "butterfly-invalid", "checked": "butterfly-invalid" },
+		"greyCrab": { "up": "crab-invalid", "down": "crab-invalid", "checked": "crab-invalid" },
+		"greySparrow": { "up": "sparrow-invalid", "down": "sparrow-invalid", "checked": "sparrow-invalid" }
+	}
+} 
