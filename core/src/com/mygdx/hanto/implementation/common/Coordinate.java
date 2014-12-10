@@ -35,7 +35,7 @@ public class Coordinate implements HantoCoordinate{
 	}
 
 	/**
-	 * @see hanto.util.HantoCoordinate#getX()
+	 * @see com.mygdx.hanto.util.HantoCoordinate#getX()
 	 */
 	@Override
 	public int getX() {
@@ -43,7 +43,7 @@ public class Coordinate implements HantoCoordinate{
 	}
 
 	/**
-	 * @see hanto.util.HantoCoordinate#getY()
+	 * @see com.mygdx.hanto.util.HantoCoordinate#getY()
 	 */
 	@Override
 	public int getY() {

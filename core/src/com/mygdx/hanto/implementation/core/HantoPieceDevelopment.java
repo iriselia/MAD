@@ -118,7 +118,7 @@ public class HantoPieceDevelopment implements HantoPiece{
 	}
 
 	/**
-	 * @see hanto.studentpren.common.HantoPiece#setCoordinate(hanto.studentpren.common.Coordinate)
+	 * @see com.mygdx.hanto.implementation.common.HantoPiece#setCoordinate
 	 */
 	@Override
 	public void setCoordinate(Coordinate c) {
