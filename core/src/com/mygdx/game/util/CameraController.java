@@ -6,6 +6,12 @@ import com.badlogic.gdx.input.GestureDetector.GestureAdapter;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * Updates the Camera when the game board is moved
+ * 
+ * @author Peng Ren
+ *
+ */
 public class CameraController extends GestureAdapter {
 	private float velX, velY;
 	private boolean flinging = false;
@@ -14,6 +20,10 @@ public class CameraController extends GestureAdapter {
 	private float effectiveViewportWidth;
 	private float effectiveViewportHeight;
 	
+	/**
+	 * default public constructor
+	 * @param camera Camera to be updated
+	 */
 	public CameraController(OrthographicCamera camera){
 		this.camera = camera;
 		//effectiveViewportWidth = camera.viewportWidth * camera.zoom;
@@ -29,6 +39,7 @@ public class CameraController extends GestureAdapter {
 	    camera.position.y = MathUtils.clamp(camera.position.y, effectiveViewportHeight / 2f, Constants.WORLD_HEIGHT - effectiveViewportHeight / 2f);
 	}
 	
+	@Override
 	public boolean touchDown (float x, float y, int pointer, int button) {
 		flinging = false;
 		//initialScale = camera.zoom;
@@ -83,6 +94,9 @@ public class CameraController extends GestureAdapter {
 		return false;
 	}
 
+	/**
+	 * updates camera position
+	 */
 	public void update () {
 		if (flinging) {
 			velX *= 0.98f;

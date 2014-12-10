@@ -19,6 +19,12 @@ import com.mygdx.game.Assets;
 import com.mygdx.game.Hanto;
 import com.mygdx.tween.ActorAccessor;
 
+/**
+ * Main Menu Screen of Hanto Game
+ * 
+ * @author Peng Ren, Xi Wen
+ *
+ */
 public class MainMenu implements Screen {
 
 	private Stage stage;

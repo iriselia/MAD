@@ -6,6 +6,12 @@ import com.badlogic.gdx.audio.Music;
 import com.mygdx.hanto.implementation.core.HantoGameDevelopment;
 import com.mygdx.screen.StartScreen;
 
+/**
+ * Main class for Hanto Game
+ * 
+ * @author Peng Ren
+ *
+ */
 public class Hanto extends Game {
 	
 	public static final String TITLE = "Hanto";
@@ -13,10 +19,17 @@ public class Hanto extends Game {
 	public static Music backgroundMusic;
 	public static HantoGameDevelopment gameInstance;
 	
+	/**
+	 * Called when game starts
+	 * @return The splash screen, followed by the MainMenu Screen
+	 */
 	public StartScreen getMainMenu() {
 		return new StartScreen();
 	}
 	
+	/**
+	 * sets the background music for game
+	 */
 	public void setMusic() {
 		backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("music/backgroundMusic.mp3"));
 	}

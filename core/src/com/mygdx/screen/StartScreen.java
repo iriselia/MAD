@@ -15,6 +15,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.tween.SpriteAccessor;
 
+/**
+ * Splash Screen of Hanto game
+ * 
+ * @author Peng Ren
+ *
+ */
 public class StartScreen implements Screen {
 
 	private SpriteBatch batch;
@@ -86,6 +92,12 @@ public class StartScreen implements Screen {
 	public void resize(int width, int height) {
 	}
 	
+	/**
+	 * Input processor that allows skipping the splash screen upon tapping
+	 * 
+	 * @author Peng Ren
+	 *
+	 */
 	class MyInputProcessor implements InputProcessor {
 		   @Override
 		   public boolean keyDown (int keycode) {

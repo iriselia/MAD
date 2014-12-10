@@ -1,7 +1,12 @@
 package com.mygdx.game.util;
 
 import com.badlogic.gdx.Gdx;
-
+/**
+ * Hold constants used for Hanto Game
+ * 
+ * @author Peng Ren
+ *
+ */
 public class Constants {
     public final static float w = Gdx.graphics.getWidth();
     public final static float h = Gdx.graphics.getHeight();

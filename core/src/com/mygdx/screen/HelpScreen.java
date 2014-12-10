@@ -16,12 +16,21 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Assets;
 import com.mygdx.game.util.Constants;
 
+/**
+ * Help Screen. Displays a series of instructions on how to play Hanto
+ * 
+ * @author Xi Wen
+ *
+ */
 public class HelpScreen implements Screen {
 	private Table table;
 	private Stage stage;
 	private int currentImageIndex;
 	private Image currentImage;
 	
+	/**
+	 * default public constructor of HelpScreen
+	 */
 	public HelpScreen () {
 		stage = new Stage();
 	}
@@ -76,6 +85,9 @@ public class HelpScreen implements Screen {
 
 	}
 	
+	/**
+	 * Add buttons (Return, Previous, Next) to the HelpScreen
+	 */
 	private void addButtons() {
 		table = new Table(Assets.menuSkin);
 		table.setFillParent(true);
