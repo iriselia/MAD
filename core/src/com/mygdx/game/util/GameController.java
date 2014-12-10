@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -25,6 +27,7 @@ import com.mygdx.hanto.util.HantoMoveRecord;
 import com.mygdx.hanto.util.HantoPieceType;
 import com.mygdx.hanto.util.HantoPlayerColor;
 import com.mygdx.hanto.util.MoveResult;
+import com.mygdx.screen.ResultScreen;
 
 public class GameController {
 
@@ -34,9 +37,6 @@ public class GameController {
 	public static GameStateHandler gameHandlerBlue;
 	private static Group validGroups = new Group();
 	public static Image warningButterfly = new Image(new Texture("tags/butterflymustbeplaced.png"));
-	private static Image blueWins = new Image(new Texture("tags/bluewins.png"));
-	private static Image yellowWins = new Image(new Texture("tags/yellowwins.png"));
-	private static Image draw = new Image(new Texture("tags/draw.png"));
 
 	public static DragAndDrop getDragAndDrop(){
 		return dragAndDrop;
@@ -60,7 +60,7 @@ public class GameController {
 				&& !(Hanto.gameInstance.getGameState().getNumberTypeForPlayer(HantoPieceType.BUTTERFLY, Hanto.gameInstance.getGameState().getPlayerOnMove()) == 1)
 				&& !name.contains("Butterfly")){
 			stage.addActor(warningButterfly);
-			warningButterfly.setBounds(stage.getCamera().position.x - warningButterfly.getImageWidth() / 2, stage.getCamera().position.y, Constants.w / 2, Constants.h / 5);
+			warningButterfly.setBounds(stage.getCamera().position.x - Constants.w / 5, stage.getCamera().position.y, Constants.w / 2, Constants.h / 5);
 			warningButterfly.setColor(Color.RED);
 			return;
 		}
@@ -148,22 +148,13 @@ public class GameController {
 					try {
 						MoveResult moveResult = Hanto.gameInstance.makeMove(pieceType, from, to);
 						if(moveResult == MoveResult.BLUE_WINS){
-							blueWins.setBounds(stage.getCamera().position.x - Constants.w / 2, stage.getCamera().position.y, Constants.w / 2, Constants.h / 5);
-							stage.clear();
-							stage.addActor(blueWins);
-							return;
+							((Game) Gdx.app.getApplicationListener()).setScreen(new ResultScreen("blue"));
 						}
 						else if(moveResult == MoveResult.RED_WINS){
-							yellowWins.setBounds(stage.getCamera().position.x - Constants.w / 2, stage.getCamera().position.y, Constants.w / 2, Constants.h / 5);
-							stage.clear();
-							stage.addActor(yellowWins);
-							return;
+							((Game) Gdx.app.getApplicationListener()).setScreen(new ResultScreen("yellow"));
 						}
 						else if(moveResult == MoveResult.DRAW){
-							draw.setBounds(stage.getCamera().position.x - Constants.w / 2, stage.getCamera().position.y, Constants.w / 2, Constants.h / 5);
-							stage.clear();
-							stage.addActor(draw);
-							return;
+							((Game) Gdx.app.getApplicationListener()).setScreen(new ResultScreen("draw"));
 						}
 					} catch (HantoException e) {
 						System.out.println(e.getMessage());
