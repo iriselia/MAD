@@ -19,8 +19,6 @@ import com.mygdx.hanto.util.HantoPlayerColor;
  * This inferface is used to specify a piece and a hex on the board where the piece will be
  * placed. This class is only used for testing purposes.
  * 
- * @author Peng Ren
- * @version Feb 22, 2013
  */
 public interface HantoPiece {
 

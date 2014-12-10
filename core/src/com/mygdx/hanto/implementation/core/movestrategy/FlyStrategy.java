@@ -21,8 +21,6 @@ import com.mygdx.hanto.implementation.core.HantoStateDevelopment;
 /**
  * This class specifies the fly rule that defined in the delta hanto game.
  * 
- * @author Peng Ren
- * @version Feb 22, 2013
  */
 public class FlyStrategy implements PieceMoveStrategy{
 	

@@ -27,8 +27,6 @@ import com.mygdx.hanto.util.HantoPlayerColor;
  * map to map the HantoPice with their coordinate on the current Hanto
  * Game.
  * 
- * @author Peng Ren
- * @version Feb 2, 2013
  */
 public class HantoBoard {
 

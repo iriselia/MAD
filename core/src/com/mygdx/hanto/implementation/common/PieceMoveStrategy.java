@@ -15,8 +15,6 @@ package com.mygdx.hanto.implementation.common;
  * This interface specifies the specific moving strategy behaviors for different
  * hanto pieces.
  * 
- * @author Peng Ren
- * @version Feb 22, 2013
  */
 public interface PieceMoveStrategy {
 

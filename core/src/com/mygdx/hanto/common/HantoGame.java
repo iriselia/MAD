@@ -1,13 +1,3 @@
-/*******************************************************************************
- * This files was developed for CS4233: Object-Oriented Analysis & Design.
- * The course was taken at Worcester Polytechnic Institute.
- *
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
-
 package com.mygdx.hanto.common;
 
 import com.mygdx.hanto.util.*;
@@ -17,8 +7,6 @@ import com.mygdx.hanto.util.*;
  * external (non-student written) code. Every version of Hanto will have a realization of
  * the HantoGame interface.
  * 
- * @author gpollice
- * @version Jan 12, 2013
  */
 public interface HantoGame
 {

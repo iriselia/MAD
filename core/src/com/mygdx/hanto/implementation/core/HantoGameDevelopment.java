@@ -23,8 +23,6 @@ import com.mygdx.hanto.util.MoveResult;
 /**
  * This is the delta version of hanto game.
  * 
- * @author Peng Ren
- * @version Feb 9, 2013
  */
 public class HantoGameDevelopment extends HantoGameImpl implements HantoGame{
 	

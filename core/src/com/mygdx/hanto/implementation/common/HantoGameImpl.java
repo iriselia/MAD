@@ -22,8 +22,6 @@ import com.mygdx.hanto.util.MoveResult;
  * This is the implementation of any Internal Hanto Game. And any specific
  * Hanto Game should be a subclass of this class.
  * 
- * @author Peng Ren
- * @version Feb 5, 2013
  */
 public abstract class HantoGameImpl implements InternalHantoGame{
 

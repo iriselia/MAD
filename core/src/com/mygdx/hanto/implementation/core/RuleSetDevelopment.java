@@ -27,8 +27,6 @@ import com.mygdx.hanto.util.MoveResult;
 /**
  * This is the rule set for the version of delta hanto game.
  * 
- * @author Peng Ren
- * @version Feb 3, 2013
  */
 public class RuleSetDevelopment extends HantoRuleSet{
 

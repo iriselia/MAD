@@ -22,8 +22,6 @@ import com.mygdx.hanto.util.HantoPlayerColor;
  * This class is used to specifiy a piece of Delta Hanto and a hex on the board 
  * where the piece will be placed. This class is only used for testing purposes.
  * 
- * @author Peng Ren
- * @version Feb 22, 2013
  */
 public class HantoPieceDevelopment implements HantoPiece{
 

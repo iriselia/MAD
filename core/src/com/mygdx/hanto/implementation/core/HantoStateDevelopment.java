@@ -19,8 +19,6 @@ import com.mygdx.hanto.util.HantoPlayerColor;
 /**
  * This class describes the delta game state.
  * 
- * @author Peng Ren
- * @version Feb 9, 2013
  */
 public class HantoStateDevelopment extends HantoState{
 	int blueSparrowPlaced;

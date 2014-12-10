@@ -19,8 +19,6 @@ import com.mygdx.hanto.util.HantoPlayerColor;
  * all the state classes of the specific hanto game should extend
  * this class.
  * 
- * @author Peng Ren
- * @version Feb 5, 2013
  */
 public abstract class HantoState {
 

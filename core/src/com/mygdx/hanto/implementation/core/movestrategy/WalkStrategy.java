@@ -23,8 +23,6 @@ import com.mygdx.hanto.implementation.core.HantoStateDevelopment;
 /**
  * This class specified the move rule that defined for the delta hanto game.
  * 
- * @author Peng Ren
- * @version Feb 22, 2013
  */
 public class WalkStrategy implements PieceMoveStrategy{
 	

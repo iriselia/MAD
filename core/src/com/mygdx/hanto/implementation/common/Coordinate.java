@@ -17,8 +17,6 @@ import com.mygdx.hanto.util.HantoCoordinate;
  * Implementation of HantoCoordinate that is used in the concrete HantoGame
  * implementations.
  * 
- * @author Peng Ren
- * @version Feb 2, 2013
  */
 public class Coordinate implements HantoCoordinate{
 
