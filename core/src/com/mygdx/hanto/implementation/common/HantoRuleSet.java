@@ -19,8 +19,6 @@ import com.mygdx.hanto.util.MoveResult;
  * This is the rule set for all the hanto games. All the rule set
  * for specific hanto game should implements this interface. 
  * 
- * @author Peng Ren
- * @version Feb 3, 2013
  */
 public abstract class HantoRuleSet {
 	protected HantoState state;
