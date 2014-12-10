@@ -47,18 +47,18 @@ public class SettingsScreen implements Screen {
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
 		
-		Assets.loadMainMenuOrSettings();
+		Assets.loadAssets();
 		
-		table = new Table(Assets.menuSkin);
+		table = new Table(Assets.hantoSkin);
 		table.setFillParent(true);
 		
-		final CheckBox vSyncCheckBox = new CheckBox("vSync", Assets.menuSkin);
+		final CheckBox vSyncCheckBox = new CheckBox("vSync", Assets.hantoSkin);
 		vSyncCheckBox.setChecked(vSync());
 		
-		final CheckBox audioCheckBox = new CheckBox("audio", Assets.menuSkin);
+		final CheckBox audioCheckBox = new CheckBox("audio", Assets.hantoSkin);
 		audioCheckBox.setChecked(Hanto.backgroundMusic.isPlaying());
 
-		final TextButton backButton = new TextButton("BACK", Assets.menuSkin);
+		final TextButton backButton = new TextButton("BACK", Assets.hantoSkin);
 		backButton.pad(50);
 		
 		
@@ -97,7 +97,7 @@ public class SettingsScreen implements Screen {
 		backButton.addListener(buttonHandler);	
 		
 		// putting everything in the table
-		final Label settingsLabel = new Label("SETTINGS", Assets.menuSkin);
+		final Label settingsLabel = new Label("SETTINGS", Assets.hantoSkin);
 		table.add(settingsLabel).spaceBottom(100).colspan(3).expandX().row();
 		table.add().row();
 		table.add(vSyncCheckBox).top().expandY();
@@ -130,7 +130,7 @@ public class SettingsScreen implements Screen {
 	@Override
 	public void dispose() {
 		stage.dispose();
-		Assets.disposeMainMenuOrSettings();
+		Assets.disposeAssets();
 	}
 
 }

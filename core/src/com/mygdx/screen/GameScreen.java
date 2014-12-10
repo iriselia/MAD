@@ -83,8 +83,7 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void show() {
-		Assets.loadMainMenuOrSettings();
-		Assets.loadPieces();
+		Assets.loadAssets();
 
 		Image background = new Image(new Texture(Gdx.files.internal("world/background.png")));
 		background.setPosition(0, 0);
@@ -109,7 +108,7 @@ public class GameScreen implements Screen {
 		inputMultiplexer.addProcessor(stage);
 		Gdx.input.setInputProcessor(inputMultiplexer);
 
-		yellowButterflyButton = new ImageButton(Assets.pieceSkin, "yellowButterfly");
+		yellowButterflyButton = new ImageButton(Assets.hantoSkin, "yellowButterfly");
 		yellowButterflyButton.setName("yellowButterfly");
 		yellowButterflyButton.addListener(new ClickListener(){
 			@Override
@@ -118,7 +117,7 @@ public class GameScreen implements Screen {
 				GameController.addTouchAndDrag(stage, yellowButterflyButton, null, GameController.generatePlacePixels(HantoPieceType.BUTTERFLY));
 			}
 		});
-		yellowCrabButton = new ImageButton(Assets.pieceSkin, "yellowCrab");
+		yellowCrabButton = new ImageButton(Assets.hantoSkin, "yellowCrab");
 		yellowCrabButton.setName("yellowCrab");
 		yellowCrabButton.addListener(new ClickListener(){
 			@Override
@@ -127,7 +126,7 @@ public class GameScreen implements Screen {
 				GameController.addTouchAndDrag(stage, yellowCrabButton, null, GameController.generatePlacePixels(HantoPieceType.CRAB));
 			}
 		});
-		yellowSparrowButton = new ImageButton(Assets.pieceSkin, "yellowSparrow");
+		yellowSparrowButton = new ImageButton(Assets.hantoSkin, "yellowSparrow");
 		yellowSparrowButton.setName("yellowSparrow");
 		yellowSparrowButton.addListener(new ClickListener(){
 			@Override
@@ -138,7 +137,7 @@ public class GameScreen implements Screen {
 			}
 		});
 
-		blueButterflyButton = new ImageButton(Assets.pieceSkin, "blueButterfly");
+		blueButterflyButton = new ImageButton(Assets.hantoSkin, "blueButterfly");
 		blueButterflyButton.setName("blueButterfly");
 		blueButterflyButton.addListener(new ClickListener(){
 			@Override
@@ -147,7 +146,7 @@ public class GameScreen implements Screen {
 				GameController.addTouchAndDrag(stage, blueButterflyButton, null, GameController.generatePlacePixels(HantoPieceType.BUTTERFLY));
 			}
 		});
-		blueCrabButton = new ImageButton(Assets.pieceSkin, "blueCrab");
+		blueCrabButton = new ImageButton(Assets.hantoSkin, "blueCrab");
 		blueCrabButton.setName("blueCrab");
 		blueCrabButton.addListener(new ClickListener(){
 			@Override
@@ -157,7 +156,7 @@ public class GameScreen implements Screen {
 
 			}
 		});
-		blueSparrowButton = new ImageButton(Assets.pieceSkin, "blueSparrow"); 
+		blueSparrowButton = new ImageButton(Assets.hantoSkin, "blueSparrow"); 
 		blueSparrowButton.setName("blueSparrow");
 		blueSparrowButton.addListener(new ClickListener(){
 			@Override
@@ -212,37 +211,37 @@ public class GameScreen implements Screen {
 	private void changeButtons(){
 		if(!yellowButterflyButtonChanged && Hanto.gameInstance.getGameState().getRedButterflyPlaced() == 1){
 			yellowButterflyButton.remove();
-			yellowButterflyButton = new ImageButton(Assets.pieceSkin, "greyButterfly");
+			yellowButterflyButton = new ImageButton(Assets.hantoSkin, "greyButterfly");
 			stage.addActor(yellowButterflyButton);
 			yellowButterflyButtonChanged = true;
 		}
 		else if(!yellowCrabButtonChanged && Hanto.gameInstance.getGameState().getNumberTypeForPlayer(HantoPieceType.CRAB, HantoPlayerColor.RED) == 4){
 			yellowCrabButton.remove();
-			yellowCrabButton = new ImageButton(Assets.pieceSkin, "greyCrab");
+			yellowCrabButton = new ImageButton(Assets.hantoSkin, "greyCrab");
 			stage.addActor(yellowCrabButton);
 			yellowCrabButtonChanged = true;
 		}
 		else if(!yellowSparrowButtonChanged && Hanto.gameInstance.getGameState().getNumberTypeForPlayer(HantoPieceType.SPARROW, HantoPlayerColor.RED) == 4){
 			yellowSparrowButton.remove();
-			yellowSparrowButton = new ImageButton(Assets.pieceSkin, "greySparrow");
+			yellowSparrowButton = new ImageButton(Assets.hantoSkin, "greySparrow");
 			stage.addActor(yellowSparrowButton);
 			yellowSparrowButtonChanged = true;
 		}
 		else if(!blueButterflyButtonChanged && Hanto.gameInstance.getGameState().getBlueButterflyPlaced() == 1){
 			blueButterflyButton.remove();
-			blueButterflyButton = new ImageButton(Assets.pieceSkin, "greyButterfly");
+			blueButterflyButton = new ImageButton(Assets.hantoSkin, "greyButterfly");
 			stage.addActor(blueButterflyButton);
 			blueButterflyButtonChanged = true;
 		}
 		else if(!blueCrabButtonChanged && Hanto.gameInstance.getGameState().getNumberTypeForPlayer(HantoPieceType.CRAB, HantoPlayerColor.BLUE) == 4){
 			blueCrabButton.remove();
-			blueCrabButton = new ImageButton(Assets.pieceSkin, "greyCrab");
+			blueCrabButton = new ImageButton(Assets.hantoSkin, "greyCrab");
 			stage.addActor(blueCrabButton);
 			blueCrabButtonChanged = true;
 		}
 		else if(!blueSparrowButtonChanged && Hanto.gameInstance.getGameState().getNumberTypeForPlayer(HantoPieceType.SPARROW, HantoPlayerColor.BLUE) == 4){
 			blueSparrowButton.remove();
-			blueSparrowButton = new ImageButton(Assets.pieceSkin, "greySparrow");
+			blueSparrowButton = new ImageButton(Assets.hantoSkin, "greySparrow");
 			stage.addActor(blueSparrowButton);
 			blueSparrowButtonChanged = true;
 		}
@@ -281,11 +280,11 @@ public class GameScreen implements Screen {
 	}
 
 	public void addButtons() {
-		table = new Table(Assets.menuSkin);
+		table = new Table(Assets.hantoSkin);
 		table.setFillParent(true);
 		table.setBounds(0, 0, w, h);
 
-		TextButton btnReturn = new TextButton("Return", Assets.menuSkin);
+		TextButton btnReturn = new TextButton("Return", Assets.hantoSkin);
 		btnReturn.addListener(new ClickListener(){
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -295,7 +294,7 @@ public class GameScreen implements Screen {
 		});
 		btnReturn.pad(10);
 
-		TextButton btnQuit = new TextButton("Quit", Assets.menuSkin);
+		TextButton btnQuit = new TextButton("Quit", Assets.hantoSkin);
 		btnQuit.addListener(new ClickListener(){
 			@Override
 			public void clicked(InputEvent event, float x, float y) {

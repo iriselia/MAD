@@ -13,6 +13,12 @@
 	"com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
 		"default": { "font": white, "fontColor": white }
 	},
+	"com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
+		"default": { "up": "button0", "down": "button1", "font": black, "pressedOffsetX": 1, "pressedOffsetY": -1 }
+	},
+	"com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle": {
+		"default": { "font": white, "checkboxOn": "checkbox1", "checkboxOff": "checkbox0"}
+	},
 	"com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle": {
 		"default": { "up": "blank", "down": "blank", "checked": "blank" },
 		"blank": { "up": "blank", "down": "blank", "checked": "blank" },

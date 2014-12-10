@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.Map;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Assets;
 import com.mygdx.game.Hanto;
@@ -33,7 +33,10 @@ public class GameController {
 	public static GameStateHandler gameHandlerYellow;
 	public static GameStateHandler gameHandlerBlue;
 	private static Group validGroups = new Group();
-	public static Label warningLabel = new Label("Please Butterfly!", Assets.menuSkin);
+	public static Image warningButterfly = new Image(new Texture("tags/butterflymustbeplaced.png"));
+	private static Image blueWins = new Image(new Texture("tags/bluewins.png"));
+	private static Image yellowWins = new Image(new Texture("tags/yellowwins.png"));
+	private static Image draw = new Image(new Texture("tags/draw.png"));
 
 	public static DragAndDrop getDragAndDrop(){
 		return dragAndDrop;
@@ -56,9 +59,9 @@ public class GameController {
 		if(Hanto.gameInstance.getGameState().getTurnNum() == 4 
 				&& !(Hanto.gameInstance.getGameState().getNumberTypeForPlayer(HantoPieceType.BUTTERFLY, Hanto.gameInstance.getGameState().getPlayerOnMove()) == 1)
 				&& !name.contains("Butterfly")){
-			warningLabel.setPosition(stage.getCamera().position.x - Constants.w / 2, stage.getCamera().position.y);
-			warningLabel.setFontScale(3);
-			stage.addActor(warningLabel);
+			stage.addActor(warningButterfly);
+			warningButterfly.setBounds(stage.getCamera().position.x - warningButterfly.getImageWidth() / 2, stage.getCamera().position.y, Constants.w / 2, Constants.h / 5);
+			warningButterfly.setColor(Color.RED);
 			return;
 		}
 
@@ -67,7 +70,7 @@ public class GameController {
 		}
 
 		for(Pixels pixels : validPositions){
-			final Image validTargetImage = new Image(Assets.pieceSkin, "blank");
+			final Image validTargetImage = new Image(Assets.hantoSkin, "blank");
 			validTargetImage.setBounds(pixels.x, pixels.y, Constants.TILE_LENGTH, Constants.TILE_LENGTH);
 			validGroups.addActor(validTargetImage);
 		}
@@ -82,15 +85,15 @@ public class GameController {
 				Payload payload = new Payload();
 				payload.setObject(sourceImage.getName());
 
-				ImageButton draggable = new ImageButton(Assets.pieceSkin, name);
+				ImageButton draggable = new ImageButton(Assets.hantoSkin, name);
 				draggable.setSize(Constants.TILE_LENGTH, Constants.TILE_LENGTH);
 				payload.setDragActor(draggable);
 
-				ImageButton validImage = new ImageButton(Assets.pieceSkin, name);
+				ImageButton validImage = new ImageButton(Assets.hantoSkin, name);
 				validImage.setColor(0, 1, 0, 1);
 				payload.setValidDragActor(validImage);
 
-				ImageButton invalidImage = new ImageButton(Assets.pieceSkin, name);
+				ImageButton invalidImage = new ImageButton(Assets.hantoSkin, name);
 				invalidImage.setColor(1, 0, 0, 1);
 				payload.setInvalidDragActor(invalidImage);
 
@@ -112,7 +115,7 @@ public class GameController {
 				public void drop (Source source, Payload payload, float x, float y, int pointer) {
 					System.out.println("Accepted: " + payload.getObject() + " " + x + ", " + y);
 					final String name = (String) payload.getObject(); 
-					final ImageButton newPiece = new ImageButton(Assets.pieceSkin, name);
+					final ImageButton newPiece = new ImageButton(Assets.hantoSkin, name);
 					newPiece.setName(name);
 					newPiece.setSize(Constants.TILE_LENGTH, Constants.TILE_LENGTH);
 					final int xPixel = (int) validTargetImage.getX();
@@ -145,13 +148,22 @@ public class GameController {
 					try {
 						MoveResult moveResult = Hanto.gameInstance.makeMove(pieceType, from, to);
 						if(moveResult == MoveResult.BLUE_WINS){
-							//TODO: blue wins
+							blueWins.setBounds(stage.getCamera().position.x - Constants.w / 2, stage.getCamera().position.y, Constants.w / 2, Constants.h / 5);
+							stage.clear();
+							stage.addActor(blueWins);
+							return;
 						}
 						else if(moveResult == MoveResult.RED_WINS){
-							//TODO: red wins
+							yellowWins.setBounds(stage.getCamera().position.x - Constants.w / 2, stage.getCamera().position.y, Constants.w / 2, Constants.h / 5);
+							stage.clear();
+							stage.addActor(yellowWins);
+							return;
 						}
 						else if(moveResult == MoveResult.DRAW){
-							//TODO: draw
+							draw.setBounds(stage.getCamera().position.x - Constants.w / 2, stage.getCamera().position.y, Constants.w / 2, Constants.h / 5);
+							stage.clear();
+							stage.addActor(draw);
+							return;
 						}
 					} catch (HantoException e) {
 						System.out.println(e.getMessage());
