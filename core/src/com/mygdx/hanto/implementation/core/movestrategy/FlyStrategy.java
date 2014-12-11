@@ -37,8 +37,7 @@ public class FlyStrategy implements PieceMoveStrategy{
 	}
 
 	/**
-	 * @see hanto.studentpren.common.PieceMoveStrategy#canIMove
-	 * (hanto.studentpren.common.Coordinate, hanto.studentpren.common.Coordinate)
+	 * @see com.mygdx.hanto.implementation.common.PieceMoveStrategy#canIMove
 	 */
 	@Override
 	public boolean canIMove(Coordinate from, Coordinate to) {

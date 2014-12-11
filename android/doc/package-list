@@ -1,0 +1,11 @@
+com.mygdx.game
+com.mygdx.game.android
+com.mygdx.game.util
+com.mygdx.hanto.common
+com.mygdx.hanto.implementation
+com.mygdx.hanto.implementation.common
+com.mygdx.hanto.implementation.core
+com.mygdx.hanto.implementation.core.movestrategy
+com.mygdx.hanto.util
+com.mygdx.screen
+com.mygdx.tween

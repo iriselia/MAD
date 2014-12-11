@@ -38,7 +38,7 @@ public class WalkStrategy implements PieceMoveStrategy{
 	}
 
 	/**
-	 * @see hanto.studentpren.common.PieceMoveStrategy#canIMove
+	 * @see com.mygdx.hanto.implementation.common.PieceMoveStrategy#canIMove
 	 * (hanto.studentpren.common.Coordinate, hanto.studentpren.common.Coordinate)
 	 */
 	@Override
