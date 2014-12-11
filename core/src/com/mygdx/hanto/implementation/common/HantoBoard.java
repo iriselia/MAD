@@ -113,7 +113,7 @@ public class HantoBoard {
 		final Coordinate[] neighbors = coordinate.getNeighbors();
 		boolean result = false;
 		for(Coordinate c : neighbors){
-			if(board.get(c) != null && !board.get(c).isEmpty()){
+			if(board.get(c) != null){
 				result = true;
 			}
 		}

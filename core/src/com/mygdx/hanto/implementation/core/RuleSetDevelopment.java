@@ -243,7 +243,7 @@ public class RuleSetDevelopment extends HantoRuleSet{
 		final Coordinate[] neighbors = coordinate.getNeighbors();
 		for(Coordinate c : neighbors){
 			Deque<HantoPiece> pieces = gameState.getBoard().getPieceAt(c);
-			if(pieces != null && !pieces.isEmpty()){
+			if(pieces != null){
 				final HantoPiece piece = pieces.peekFirst();
 				if(piece != null && piece.getPlayer() != gameState.getPlayerOnMove()){
 					result = false;

@@ -44,20 +44,26 @@ public class FlyStrategy implements PieceMoveStrategy{
 	public boolean canIMove(Coordinate from, Coordinate to) {
 		final boolean result;
 		final Deque<HantoPiece> pieceTo = gameState.getBoard().getPieceAt(to);
-		if(pieceTo != null && !pieceTo.isEmpty()){
+		if(pieceTo != null){
 			result = false;
 		}
 		else{
-			final HantoBoard virtualBoard = gameState.getBoard();
-			virtualBoard.movePiece(from, to);
-			if(virtualBoard.isConnected()){
-				result = true;
-			}
-			else{
-				result = false;
-			}
-			virtualBoard.movePiece(to, from);
+			result = ifConnectedAfterMove(from, to);
 		}
+		return result;
+	}
+	
+	private boolean ifConnectedAfterMove(Coordinate from, Coordinate to){
+		final boolean result;
+		final HantoBoard virtualBoard = gameState.getBoard();
+		virtualBoard.movePiece(from, to);
+		if(virtualBoard.isConnected()){
+			result = true;
+		}
+		else{
+			result = false;
+		}
+		virtualBoard.movePiece(to, from);
 		return result;
 	}
 

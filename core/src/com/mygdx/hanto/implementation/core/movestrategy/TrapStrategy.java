@@ -1,14 +1,3 @@
-/*******************************************************************
- * Copyright (c) 2013 Peng Ren
- * 
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    feierqi
- *******************************************************************/
 package com.mygdx.hanto.implementation.core.movestrategy;
 
 import java.util.ArrayList;
@@ -21,26 +10,18 @@ import com.mygdx.hanto.implementation.common.HantoPiece;
 import com.mygdx.hanto.implementation.common.PieceMoveStrategy;
 import com.mygdx.hanto.implementation.core.HantoStateDevelopment;
 
-/**
- * This class specified the move rule that defined for the delta hanto game.
- * 
- */
-public class WalkStrategy implements PieceMoveStrategy{
+public class TrapStrategy implements PieceMoveStrategy{
 	
 	private final HantoStateDevelopment gameState;
 	
 	/**
-	 * Constructor for the walkStratgy that import the game state of the game
-	 * @param gameState the current state of Delta hanto game
+	 * Constructor for the trapStratgy that import the game state of the game
+	 * @param gameState the current state of hanto game
 	 */
-	public WalkStrategy(HantoStateDevelopment gameState){
+	public TrapStrategy(HantoStateDevelopment gameState){
 		this.gameState = gameState;
 	}
 
-	/**
-	 * @see hanto.studentpren.common.PieceMoveStrategy#canIMove
-	 * (hanto.studentpren.common.Coordinate, hanto.studentpren.common.Coordinate)
-	 */
 	@Override
 	public boolean canIMove(Coordinate from, Coordinate to) {
 		final boolean result;
@@ -63,20 +44,38 @@ public class WalkStrategy implements PieceMoveStrategy{
 			jointPiece1 = gameState.getBoard().getPieceAt(jointNeighbors.get(0));
 			jointPiece2 = gameState.getBoard().getPieceAt(jointNeighbors.get(1));
 			if(jointPiece1 != null && jointPiece2 != null){
-				result = false;
-			}
-			else{
-				final HantoBoard virtualBoard = gameState.getBoard();
-				virtualBoard.movePiece(from, to);
-				if(virtualBoard.isConnected()){
-					result = true;
-				}
-				else{
+				final int currentStackSize = gameState.getBoard().getPieceAt(from).size();
+				final int toStackSize = gameState.getBoard().getPieceAt(to).size();
+				final int oneStackSize = jointPiece1.size();
+				final int anotherStackSize = jointPiece2.size();
+				if(toStackSize == 0 && oneStackSize > 0 && oneStackSize > 0){
 					result = false;
 				}
-				virtualBoard.movePiece(to, from);
+				else if(currentStackSize < oneStackSize && currentStackSize < anotherStackSize){
+					result = false;
+				}
+				else{
+					result = ifConnectedAfterMove(from, to);
+				}
+			}
+			else{
+				result = ifConnectedAfterMove(from, to);
 			}
 		}
+		return result;
+	}
+	
+	private boolean ifConnectedAfterMove(Coordinate from, Coordinate to){
+		final boolean result;
+		final HantoBoard virtualBoard = gameState.getBoard();
+		virtualBoard.movePiece(from, to);
+		if(virtualBoard.isConnected()){
+			result = true;
+		}
+		else{
+			result = false;
+		}
+		virtualBoard.movePiece(to, from);
 		return result;
 	}
 

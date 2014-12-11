@@ -40,7 +40,7 @@ public abstract class HantoRuleSet {
 		ensurePieceIsValid(pieceType);
 		ensurePieceIsAvailable(pieceType, from);
 		checkMoveIsLegal(pieceType, from, to);
-		checkValidDestination(to);
+		checkValidDestination(pieceType, to);
 	}
 
 	/**
@@ -159,10 +159,11 @@ public abstract class HantoRuleSet {
 	/**
 	 * If this is the first move, make sure it's at (0, 0), otherwise it must be
 	 * adjacent to a piece. For this version, the destination must be empty.
+	 * @param pieceType 
 	 * @param to the destination coordinate
 	 * @throws HantoException
 	 */
-	protected void checkValidDestination(final Coordinate to) throws HantoException
+	protected void checkValidDestination(final HantoPieceType pieceType, final Coordinate to) throws HantoException
 	{
 		if (state.getBoard().isEmpty()) {
 			if (to.getX() != 0 || to.getY() != 0) {
@@ -170,12 +171,11 @@ public abstract class HantoRuleSet {
 			}
 		} else {
 			if (!state.getBoard().hasPieceAdjacentTo(to)) {
-				throw new HantoException(
-						"Piece was not placed adjacent to another piece");
+				throw new HantoException("Piece was not placed adjacent to another piece");
 			}
 		}
-		if (state.getBoard().getPieceAt(to) != null) {
-			throw new HantoException("You cannot put a piece on top of another piece");
+		if (state.getBoard().getPieceAt(to) != null && pieceType != HantoPieceType.CRANE) {
+			throw new HantoException("You cannot put a piece on top of another piece unless you use Crane");
 		}
 	}
 
@@ -192,7 +192,7 @@ public abstract class HantoRuleSet {
 			{
 		if (from != null) {
 			final Deque<HantoPiece> pieces = state.getBoard().getPieceAt(from);
-			if (pieces == null || pieces.isEmpty()) {
+			if (pieces == null) {
 				throw new HantoException("You cannot move from an unoccupied hex");
 			}
 		}

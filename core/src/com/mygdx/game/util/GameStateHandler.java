@@ -179,14 +179,14 @@ public class GameStateHandler {
 			for(Coordinate neighbor : pieceNeighbors){
 				boolean valid = true;
 				final Deque<HantoPiece> pieces = gameState.getBoard().getPieceAt(neighbor);
-				if(pieces != null && !pieces.isEmpty()){
+				if(pieces != null){
 					valid = false;
 				}
 				else{
 					final Coordinate[] secNeighbors = neighbor.getNeighbors();
 					for(Coordinate secNeighbor : secNeighbors){
 						final Deque<HantoPiece> secNeighborPieces = gameState.getBoard().getPieceAt(secNeighbor);
-						if(secNeighborPieces != null && !secNeighborPieces.isEmpty()){
+						if(secNeighborPieces != null){
 							if(secNeighborPieces.peekFirst().getPlayer() != gameState.getPlayerOnMove()){
 								valid = false;
 								break;
@@ -215,7 +215,7 @@ public class GameStateHandler {
 			Coordinate pieceCoord = Coordinate.guarrenteedCoordinate(piece.getCoordinate());
 			Coordinate[] neighbors = pieceCoord.getNeighbors();
 			for(Coordinate c : neighbors){
-				if((gameState.getBoard().getPieceAt(c) == null || gameState.getBoard().getPieceAt(c).isEmpty()) && !adjacentCoords.contains(c)){
+				if(gameState.getBoard().getPieceAt(c) == null && !adjacentCoords.contains(c)){
 					adjacentCoords.add(c);
 				}
 			}
