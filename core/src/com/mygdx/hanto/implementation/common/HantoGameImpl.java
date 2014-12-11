@@ -11,6 +11,8 @@
  *******************************************************************/
 package com.mygdx.hanto.implementation.common;
 
+import java.util.Deque;
+
 import com.mygdx.hanto.common.HantoException;
 import com.mygdx.hanto.implementation.InternalHantoGame;
 import com.mygdx.hanto.util.HantoCoordinate;
@@ -69,11 +71,11 @@ public abstract class HantoGameImpl implements InternalHantoGame{
 	/**
 	 * @see hanto.studentpren.InternalHantoGame#getPieceAt(int, int)
 	 */
-	public HantoPiece getPieceAt(int x, int y) {
-		final HantoPiece piece;
+	public Deque<HantoPiece> getPieceAt(int x, int y) {
+		final Deque<HantoPiece> pieces;
 		final HantoCoordinate coordinate;
 		coordinate = new Coordinate(x, y);
-		piece = gameState.getBoard().getPieceAt((Coordinate) coordinate);
-		return piece;
+		pieces = gameState.getBoard().getPieceAt((Coordinate) coordinate);
+		return pieces;
 	}
 }

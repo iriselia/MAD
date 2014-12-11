@@ -10,6 +10,8 @@
  *    feierqi
  *******************************************************************/
 package com.mygdx.hanto.implementation.common;
+import java.util.Deque;
+
 import com.mygdx.hanto.common.HantoException;
 import com.mygdx.hanto.util.HantoPieceType;
 import com.mygdx.hanto.util.HantoPlayerColor;
@@ -189,8 +191,8 @@ public abstract class HantoRuleSet {
 			final Coordinate to) throws HantoException
 			{
 		if (from != null) {
-			final HantoPiece piece = state.getBoard().getPieceAt(from);
-			if (piece == null) {
+			final Deque<HantoPiece> pieces = state.getBoard().getPieceAt(from);
+			if (pieces == null || pieces.isEmpty()) {
 				throw new HantoException("You cannot move from an unoccupied hex");
 			}
 		}

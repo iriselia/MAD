@@ -11,6 +11,8 @@
  *******************************************************************/
 package com.mygdx.hanto.implementation.core.movestrategy;
 
+import java.util.Deque;
+
 import com.mygdx.hanto.implementation.common.Coordinate;
 import com.mygdx.hanto.implementation.common.HantoBoard;
 import com.mygdx.hanto.implementation.common.HantoPiece;
@@ -41,8 +43,8 @@ public class FlyStrategy implements PieceMoveStrategy{
 	@Override
 	public boolean canIMove(Coordinate from, Coordinate to) {
 		final boolean result;
-		final HantoPiece pieceTo = gameState.getBoard().getPieceAt(to);
-		if(pieceTo != null){
+		final Deque<HantoPiece> pieceTo = gameState.getBoard().getPieceAt(to);
+		if(pieceTo != null && !pieceTo.isEmpty()){
 			result = false;
 		}
 		else{

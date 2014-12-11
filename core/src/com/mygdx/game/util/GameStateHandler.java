@@ -1,6 +1,7 @@
 package com.mygdx.game.util;
 
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 
 import static com.mygdx.hanto.util.HantoPieceType.*;
@@ -177,19 +178,21 @@ public class GameStateHandler {
 			final Coordinate[] pieceNeighbors = pieceCoord.getNeighbors();
 			for(Coordinate neighbor : pieceNeighbors){
 				boolean valid = true;
-				final HantoPieceDevelopment piece = 
-						(HantoPieceDevelopment) gameState.getBoard().getPieceAt(neighbor);
-				if(piece != null){
+				final Deque<HantoPiece> pieces = gameState.getBoard().getPieceAt(neighbor);
+				if(pieces != null && !pieces.isEmpty()){
 					valid = false;
 				}
 				else{
 					final Coordinate[] secNeighbors = neighbor.getNeighbors();
 					for(Coordinate secNeighbor : secNeighbors){
-						final HantoPieceDevelopment secNeighborPiece = 
-								(HantoPieceDevelopment) gameState.getBoard().getPieceAt(secNeighbor);
-						if(secNeighborPiece != null 
-								&& secNeighborPiece.getPlayer() != gameState.getPlayerOnMove()){
-							valid = false;
+						final Deque<HantoPiece> secNeighborPieces = gameState.getBoard().getPieceAt(secNeighbor);
+						if(secNeighborPieces != null){
+							for(HantoPiece secNeighborPiece : secNeighborPieces){
+								if(secNeighborPiece.getPlayer() != gameState.getPlayerOnMove()){
+									valid = false;
+									break;
+								}
+							}
 						}
 					}
 				}

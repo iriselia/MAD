@@ -12,6 +12,7 @@
 package com.mygdx.hanto.implementation.core.movestrategy;
 
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 
 import com.mygdx.hanto.implementation.common.Coordinate;
@@ -50,8 +51,8 @@ public class WalkStrategy implements PieceMoveStrategy{
 		else{
 			final Coordinate[] fromNeighbors = from.getNeighbors();
 			final Coordinate[] toNeighbors = to.getNeighbors();
-			final HantoPiece jointPiece1;
-			final HantoPiece jointPiece2;
+			final Deque<HantoPiece> jointPiece1;
+			final Deque<HantoPiece> jointPiece2;
 			for(Coordinate coord1 : fromNeighbors){
 				for(Coordinate coord2 : toNeighbors){
 					if(coord1.equals(coord2)){
@@ -61,7 +62,7 @@ public class WalkStrategy implements PieceMoveStrategy{
 			}
 			jointPiece1 = gameState.getBoard().getPieceAt(jointNeighbors.get(0));
 			jointPiece2 = gameState.getBoard().getPieceAt(jointNeighbors.get(1));
-			if(jointPiece1 != null && jointPiece2 != null){
+			if((jointPiece1 != null && !jointPiece1.isEmpty()) && (jointPiece2 != null && !jointPiece2.isEmpty())){
 				result = false;
 			}
 			else{

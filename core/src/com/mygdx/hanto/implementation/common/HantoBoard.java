@@ -13,7 +13,9 @@ package com.mygdx.hanto.implementation.common;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Deque;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -33,13 +35,13 @@ public class HantoBoard {
 	/**
 	 * The data structure to store hexpieces on board.
 	 */
-	private final Map<HantoCoordinate, HantoPiece> board;
+	private final Map<HantoCoordinate, Deque<HantoPiece>> board;
 
 	/**
 	 * Default constructor. Initializes an empty board.
 	 */
 	public HantoBoard(){
-		board = new HashMap<HantoCoordinate, HantoPiece>();
+		board = new HashMap<HantoCoordinate, Deque<HantoPiece>>();
 	}
 
 	/**
@@ -50,7 +52,15 @@ public class HantoBoard {
 	 * @param at The coordinate where the piece will be placed
 	 */
 	public void putPieceAt(HantoPiece piece, Coordinate at){
-		board.put(at, piece);
+		final Deque<HantoPiece> stack;
+		if(board.get(at) == null){
+			stack = new LinkedList<HantoPiece>();
+		}
+		else{
+			stack = board.get(at);
+		}			
+		stack.addFirst(piece);
+		board.put(at, stack);
 	}
 
 	/**
@@ -62,10 +72,20 @@ public class HantoBoard {
 	 */
 	public void movePiece(Coordinate from, Coordinate to){
 		final HantoPiece fromPiece;
-		fromPiece = board.get(from);
+		fromPiece = board.get(from).removeFirst();
 		fromPiece.setCoordinate(to);
-		board.put(to, fromPiece);
-		board.remove(from);
+		final Deque<HantoPiece> destStack;
+		if(board.get(to) == null){
+			destStack = new LinkedList<HantoPiece>();
+		}
+		else{
+			destStack = board.get(to);
+		}
+		destStack.addFirst(fromPiece);
+		board.put(to, destStack);
+		if(board.get(from).isEmpty()){
+			board.remove(from);
+		}
 	}
 
 	/**
@@ -75,10 +95,10 @@ public class HantoBoard {
 	 * @return returns the piece at the specified coordinate 
 	 *                 or null if there is no piece at that coordinate
 	 */
-	public HantoPiece getPieceAt(Coordinate coordinate){
-		final HantoPiece hantoPiece;
-		hantoPiece = board.get(coordinate);
-		return hantoPiece;
+	public Deque<HantoPiece> getPieceAt(Coordinate coordinate){
+		final Deque<HantoPiece> hantoPieces;
+		hantoPieces = board.get(coordinate);
+		return hantoPieces;
 	}
 
 	/**
@@ -207,7 +227,11 @@ public class HantoBoard {
 	 * @return an array of hexpiece that on board now
 	 */
 	public HantoPiece[] getPieceArray(){
-		final Collection<HantoPiece> allPieces = board.values();
+		final Collection<Deque<HantoPiece>> allStacks = board.values();
+		final List<HantoPiece> allPieces = new ArrayList<HantoPiece>();
+		for(Deque<HantoPiece> stack : allStacks){
+			allPieces.addAll(stack);
+		}
 		final HantoPiece[] arrayPieces = allPieces.toArray(new HantoPiece[0]);
 		return arrayPieces;
 	}
