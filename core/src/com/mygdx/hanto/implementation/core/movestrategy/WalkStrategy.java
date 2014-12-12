@@ -16,19 +16,17 @@ import java.util.Deque;
 import java.util.List;
 
 import com.mygdx.hanto.implementation.common.Coordinate;
-import com.mygdx.hanto.implementation.common.HantoBoard;
 import com.mygdx.hanto.implementation.common.HantoPiece;
 import com.mygdx.hanto.implementation.common.PieceMoveStrategy;
+import com.mygdx.hanto.implementation.common.PieceMoveStrategyImpl;
 import com.mygdx.hanto.implementation.core.HantoStateDevelopment;
 
 /**
  * This class specified the move rule that defined for the delta hanto game.
  * 
  */
-public class WalkStrategy implements PieceMoveStrategy{
-	
-	private final HantoStateDevelopment gameState;
-	
+public class WalkStrategy extends PieceMoveStrategyImpl implements PieceMoveStrategy{
+		
 	/**
 	 * Constructor for the walkStratgy that import the game state of the game
 	 * @param gameState the current state of Delta hanto game
@@ -66,18 +64,9 @@ public class WalkStrategy implements PieceMoveStrategy{
 				result = false;
 			}
 			else{
-				final HantoBoard virtualBoard = gameState.getBoard();
-				virtualBoard.movePiece(from, to);
-				if(virtualBoard.isConnected()){
-					result = true;
-				}
-				else{
-					result = false;
-				}
-				virtualBoard.movePiece(to, from);
+				result = ifConnectedAfterMove(from, to);
 			}
 		}
 		return result;
 	}
-
 }

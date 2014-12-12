@@ -43,6 +43,12 @@ public class HantoGameDevelopment extends HantoGameImpl implements HantoGame{
 		((HantoStateDevelopment) gameState).setRedSparrowPlaced(0);
 		((HantoStateDevelopment) gameState).setBlueCrabPlaced(0);
 		((HantoStateDevelopment) gameState).setRedCrabPlaced(0);
+		((HantoStateDevelopment) gameState).setBlueCranePlaced(0);
+		((HantoStateDevelopment) gameState).setRedCranePlaced(0);
+		((HantoStateDevelopment) gameState).setBlueHorsePlaced(0);
+		((HantoStateDevelopment) gameState).setRedHorsePlaced(0);
+		((HantoStateDevelopment) gameState).setBlueDovePlaced(0);
+		((HantoStateDevelopment) gameState).setRedDovePlaced(0);
 	}
 
 	

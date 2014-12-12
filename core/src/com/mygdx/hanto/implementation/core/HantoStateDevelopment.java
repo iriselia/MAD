@@ -25,6 +25,49 @@ public class HantoStateDevelopment extends HantoState{
 	int redSparrowPlaced;
 	int blueCrabPlaced;
 	int redCrabPlaced;
+	int blueCranePlaced;
+	int redCranePlaced;
+	int blueHorsePlaced;
+	int redHorsePlaced;
+	int blueDovePlaced;
+	int redDovePlaced;
+	
+	public int getBlueCranePlaced() {
+		return blueCranePlaced;
+	}
+	public void setBlueCranePlaced(int blueCranePlaced) {
+		this.blueCranePlaced = blueCranePlaced;
+	}
+	public int getRedCranePlaced() {
+		return redCranePlaced;
+	}
+	public void setRedCranePlaced(int redCranePlaced) {
+		this.redCranePlaced = redCranePlaced;
+	}
+	public int getBlueHorsePlaced() {
+		return blueHorsePlaced;
+	}
+	public void setBlueHorsePlaced(int blueHorsePlaced) {
+		this.blueHorsePlaced = blueHorsePlaced;
+	}
+	public int getRedHorsePlaced() {
+		return redHorsePlaced;
+	}
+	public void setRedHorsePlaced(int redHorsePlaced) {
+		this.redHorsePlaced = redHorsePlaced;
+	}
+	public int getBlueDovePlaced() {
+		return blueDovePlaced;
+	}
+	public void setBlueDovePlaced(int blueDovePlaced) {
+		this.blueDovePlaced = blueDovePlaced;
+	}
+	public int getRedDovePlaced() {
+		return redDovePlaced;
+	}
+	public void setRedDovePlaced(int redDovePlaced) {
+		this.redDovePlaced = redDovePlaced;
+	}
 	/**
 	 * @param blueSparrowPlaced the blueSparrowPlaced to set
 	 */
@@ -67,6 +110,15 @@ public class HantoStateDevelopment extends HantoState{
 			if(pieceType == HantoPieceType.SPARROW){
 				typeNum = blueSparrowPlaced;
 			}
+			if(pieceType == HantoPieceType.CRANE){
+				typeNum = blueCranePlaced;
+			}
+			if(pieceType == HantoPieceType.HORSE){
+				typeNum = blueHorsePlaced;
+			}
+			if(pieceType == HantoPieceType.DOVE){
+				typeNum = blueDovePlaced;
+			}
 		}
 		else{
 			if(pieceType == HantoPieceType.BUTTERFLY){
@@ -77,6 +129,15 @@ public class HantoStateDevelopment extends HantoState{
 			}
 			if(pieceType == HantoPieceType.SPARROW){
 				typeNum = redSparrowPlaced;
+			}
+			if(pieceType == HantoPieceType.CRANE){
+				typeNum = redCranePlaced;
+			}
+			if(pieceType == HantoPieceType.HORSE){
+				typeNum = redHorsePlaced;
+			}
+			if(pieceType == HantoPieceType.DOVE){
+				typeNum = redDovePlaced;
 			}
 		}
 		return typeNum;

@@ -11,12 +11,9 @@
  *******************************************************************/
 package com.mygdx.hanto.implementation.core.movestrategy;
 
-import java.util.Deque;
-
 import com.mygdx.hanto.implementation.common.Coordinate;
-import com.mygdx.hanto.implementation.common.HantoBoard;
-import com.mygdx.hanto.implementation.common.HantoPiece;
 import com.mygdx.hanto.implementation.common.PieceMoveStrategy;
+import com.mygdx.hanto.implementation.common.PieceMoveStrategyImpl;
 import com.mygdx.hanto.implementation.core.HantoStateDevelopment;
 
 
@@ -24,10 +21,8 @@ import com.mygdx.hanto.implementation.core.HantoStateDevelopment;
  * This class specifies the fly rule that defined in the delta hanto game.
  * 
  */
-public class FlyStrategy implements PieceMoveStrategy{
-	
-	private final HantoStateDevelopment gameState;
-	
+public class FlyStrategy extends PieceMoveStrategyImpl implements PieceMoveStrategy{
+
 	/**
 	 * Constructor for the walkStratgy that import the game state of the game
 	 * @param gameState the current state of Delta hanto game
@@ -42,28 +37,7 @@ public class FlyStrategy implements PieceMoveStrategy{
 	@Override
 	public boolean canIMove(Coordinate from, Coordinate to) {
 		final boolean result;
-		final Deque<HantoPiece> pieceTo = gameState.getBoard().getPieceAt(to);
-		if(pieceTo != null){
-			result = false;
-		}
-		else{
-			result = ifConnectedAfterMove(from, to);
-		}
+		result = ifConnectedAfterMove(from, to);
 		return result;
 	}
-	
-	private boolean ifConnectedAfterMove(Coordinate from, Coordinate to){
-		final boolean result;
-		final HantoBoard virtualBoard = gameState.getBoard();
-		virtualBoard.movePiece(from, to);
-		if(virtualBoard.isConnected()){
-			result = true;
-		}
-		else{
-			result = false;
-		}
-		virtualBoard.movePiece(to, from);
-		return result;
-	}
-
 }
