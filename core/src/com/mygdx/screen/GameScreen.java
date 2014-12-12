@@ -64,16 +64,28 @@ public class GameScreen implements Screen {
 	private ImageButton yellowButterflyButton;
 	private ImageButton yellowCrabButton;
 	private ImageButton yellowSparrowButton;
+	private ImageButton yellowCraneButton;
+	private ImageButton yellowHorseButton;
+	private ImageButton yellowDoveButton;
 	private ImageButton blueButterflyButton;
 	private ImageButton blueCrabButton;
 	private ImageButton blueSparrowButton;
+	private ImageButton blueCraneButton;
+	private ImageButton blueHorseButton;
+	private ImageButton blueDoveButton;
 	
 	private boolean yellowButterflyButtonChanged;
 	private boolean yellowCrabButtonChanged;
 	private boolean yellowSparrowButtonChanged;
+	private boolean yellowCraneButtonChanged;
+	private boolean yellowHorseButtonChanged;
+	private boolean yellowDoveButtonChanged;
 	private boolean blueButterflyButtonChanged;
 	private boolean blueCrabButtonChanged;
 	private boolean blueSparrowButtonChanged;
+	private boolean blueCraneButtonChanged;
+	private boolean blueHorseButtonChanged;
+	private boolean blueDoveButtonChanged;
 	
 	private Label turnLabel;
 
@@ -146,7 +158,36 @@ public class GameScreen implements Screen {
 
 			}
 		});
+		yellowCraneButton = new ImageButton(Assets.hantoSkin, "yellowCrane");
+		yellowCraneButton.setName("yellowCrane");
+		yellowCraneButton.addListener(new ClickListener(){
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				GameController.clearAll();
+				GameController.addTouchAndDrag(stage, yellowCraneButton, null, GameController.generatePlacePixels(HantoPieceType.CRANE));
 
+			}
+		});
+		yellowHorseButton = new ImageButton(Assets.hantoSkin, "yellowHorse");
+		yellowHorseButton.setName("yellowHorse");
+		yellowHorseButton.addListener(new ClickListener(){
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				GameController.clearAll();
+				GameController.addTouchAndDrag(stage, yellowHorseButton, null, GameController.generatePlacePixels(HantoPieceType.HORSE));
+
+			}
+		});
+		yellowDoveButton = new ImageButton(Assets.hantoSkin, "yellowDove");
+		yellowDoveButton.setName("yellowDove");
+		yellowDoveButton.addListener(new ClickListener(){
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				GameController.clearAll();
+				GameController.addTouchAndDrag(stage, yellowDoveButton, null, GameController.generatePlacePixels(HantoPieceType.DOVE));
+
+			}
+		});
 		blueButterflyButton = new ImageButton(Assets.hantoSkin, "blueButterfly");
 		blueButterflyButton.setName("blueButterfly");
 		blueButterflyButton.addListener(new ClickListener(){
@@ -176,13 +217,49 @@ public class GameScreen implements Screen {
 
 			}
 		});
+		blueCraneButton = new ImageButton(Assets.hantoSkin, "blueCrane"); 
+		blueCraneButton.setName("blueCrane");
+		blueCraneButton.addListener(new ClickListener(){
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				GameController.clearAll();
+				GameController.addTouchAndDrag(stage, blueCraneButton, null, GameController.generatePlacePixels(HantoPieceType.CRANE));
+
+			}
+		});
+		blueHorseButton = new ImageButton(Assets.hantoSkin, "blueHorse"); 
+		blueHorseButton.setName("blueHorse");
+		blueHorseButton.addListener(new ClickListener(){
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				GameController.clearAll();
+				GameController.addTouchAndDrag(stage, blueHorseButton, null, GameController.generatePlacePixels(HantoPieceType.HORSE));
+
+			}
+		});
+		blueDoveButton = new ImageButton(Assets.hantoSkin, "blueDove"); 
+		blueDoveButton.setName("blueDove");
+		blueDoveButton.addListener(new ClickListener(){
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				GameController.clearAll();
+				GameController.addTouchAndDrag(stage, blueDoveButton, null, GameController.generatePlacePixels(HantoPieceType.DOVE));
+
+			}
+		});
 		
 		stage.addActor(yellowButterflyButton);
 		stage.addActor(yellowCrabButton);
 		stage.addActor(yellowSparrowButton);
+		stage.addActor(yellowCraneButton);
+		stage.addActor(yellowHorseButton);
+		stage.addActor(yellowDoveButton);
 		stage.addActor(blueButterflyButton);
 		stage.addActor(blueCrabButton);
 		stage.addActor(blueSparrowButton);
+		stage.addActor(blueCraneButton);
+		stage.addActor(blueHorseButton);
+		stage.addActor(blueDoveButton);
 	}
 
 	/**
@@ -195,27 +272,45 @@ public class GameScreen implements Screen {
 		
 		if(Hanto.gameInstance.getGameState().getPlayerOnMove() == HantoPlayerColor.RED){
 			yellowButterflyButton.setBounds(left, bottom, Constants.TILE_LENGTH, Constants.TILE_LENGTH);
-			yellowCrabButton.setBounds(left + Constants.TILE_LENGTH, bottom, Constants.TILE_LENGTH, 200);
+			yellowCrabButton.setBounds(left + Constants.TILE_LENGTH, bottom, Constants.TILE_LENGTH, Constants.TILE_LENGTH);
 			yellowSparrowButton.setBounds(left + Constants.TILE_LENGTH  * 2, bottom, Constants.TILE_LENGTH, Constants.TILE_LENGTH);
+			yellowCraneButton.setBounds(left + Constants.TILE_LENGTH  * 3, bottom, Constants.TILE_LENGTH, Constants.TILE_LENGTH);
+			yellowHorseButton.setBounds(left + Constants.TILE_LENGTH  * 4, bottom, Constants.TILE_LENGTH, Constants.TILE_LENGTH);
+			yellowDoveButton.setBounds(left + Constants.TILE_LENGTH  * 5, bottom, Constants.TILE_LENGTH, Constants.TILE_LENGTH);
 			blueButterflyButton.setBounds(0, 0, 0, 0);
 			blueCrabButton.setBounds(0, 0, 0, 0);
 			blueSparrowButton.setBounds(0, 0, 0, 0);
+			blueCraneButton.setBounds(0, 0, 0, 0);
+			blueHorseButton.setBounds(0, 0, 0, 0);
+			blueDoveButton.setBounds(0, 0, 0, 0);
 		}
 		else{
 			blueButterflyButton.setBounds(left, bottom, Constants.TILE_LENGTH, Constants.TILE_LENGTH);
 			blueCrabButton.setBounds(left + Constants.TILE_LENGTH, bottom, Constants.TILE_LENGTH, Constants.TILE_LENGTH);
 			blueSparrowButton.setBounds(left + Constants.TILE_LENGTH * 2, bottom, Constants.TILE_LENGTH, Constants.TILE_LENGTH);
+			blueCraneButton.setBounds(left + Constants.TILE_LENGTH * 3, bottom, Constants.TILE_LENGTH, Constants.TILE_LENGTH);
+			blueHorseButton.setBounds(left + Constants.TILE_LENGTH * 4, bottom, Constants.TILE_LENGTH, Constants.TILE_LENGTH);
+			blueDoveButton.setBounds(left + Constants.TILE_LENGTH * 5, bottom, Constants.TILE_LENGTH, Constants.TILE_LENGTH);
 			yellowButterflyButton.setBounds(0, 0, 0, 0);
 			yellowCrabButton.setBounds(0, 0, 0, 0);
 			yellowSparrowButton.setBounds(0, 0, 0, 0);
+			yellowCraneButton.setBounds(0, 0, 0, 0);
+			yellowHorseButton.setBounds(0, 0, 0, 0);
+			yellowDoveButton.setBounds(0, 0, 0, 0);
 		}
 		
 		yellowButterflyButton.toFront();
 		yellowCrabButton.toFront();
 		yellowSparrowButton.toFront();
+		yellowCraneButton.toFront();
+		yellowHorseButton.toFront();
+		yellowDoveButton.toFront();
 		blueButterflyButton.toFront();
 		blueCrabButton.toFront();
 		blueSparrowButton.toFront();
+		blueCraneButton.toFront();
+		blueHorseButton.toFront();
+		blueDoveButton.toFront();
 
 		if(Hanto.gameInstance.getGameState().getPlayerOnMove() == HantoPlayerColor.BLUE){
 			turnLabel.setText("BLUE");
@@ -248,6 +343,24 @@ public class GameScreen implements Screen {
 			stage.addActor(yellowSparrowButton);
 			yellowSparrowButtonChanged = true;
 		}
+		else if(!yellowCraneButtonChanged && Hanto.gameInstance.getGameState().getNumberTypeForPlayer(HantoPieceType.CRANE, HantoPlayerColor.RED) == 4){
+			yellowCraneButton.remove();
+			yellowCraneButton = new ImageButton(Assets.hantoSkin, "greyCrane");
+			stage.addActor(yellowCraneButton);
+			yellowCraneButtonChanged = true;
+		}
+		else if(!yellowHorseButtonChanged && Hanto.gameInstance.getGameState().getNumberTypeForPlayer(HantoPieceType.HORSE, HantoPlayerColor.RED) == 4){
+			yellowHorseButton.remove();
+			yellowHorseButton = new ImageButton(Assets.hantoSkin, "greyHorse");
+			stage.addActor(yellowHorseButton);
+			yellowHorseButtonChanged = true;
+		}
+		else if(!yellowDoveButtonChanged && Hanto.gameInstance.getGameState().getNumberTypeForPlayer(HantoPieceType.DOVE, HantoPlayerColor.RED) == 4){
+			yellowDoveButton.remove();
+			yellowDoveButton = new ImageButton(Assets.hantoSkin, "greyDove");
+			stage.addActor(yellowDoveButton);
+			yellowDoveButtonChanged = true;
+		}
 		else if(!blueButterflyButtonChanged && Hanto.gameInstance.getGameState().getBlueButterflyPlaced() == 1){
 			blueButterflyButton.remove();
 			blueButterflyButton = new ImageButton(Assets.hantoSkin, "greyButterfly");
@@ -265,6 +378,24 @@ public class GameScreen implements Screen {
 			blueSparrowButton = new ImageButton(Assets.hantoSkin, "greySparrow");
 			stage.addActor(blueSparrowButton);
 			blueSparrowButtonChanged = true;
+		}
+		else if(!blueCraneButtonChanged && Hanto.gameInstance.getGameState().getNumberTypeForPlayer(HantoPieceType.CRANE, HantoPlayerColor.BLUE) == 4){
+			blueCraneButton.remove();
+			blueCraneButton = new ImageButton(Assets.hantoSkin, "greyCrane");
+			stage.addActor(blueCraneButton);
+			blueCraneButtonChanged = true;
+		}
+		else if(!blueHorseButtonChanged && Hanto.gameInstance.getGameState().getNumberTypeForPlayer(HantoPieceType.HORSE, HantoPlayerColor.BLUE) == 4){
+			blueHorseButton.remove();
+			blueHorseButton = new ImageButton(Assets.hantoSkin, "greyHorse");
+			stage.addActor(blueHorseButton);
+			blueHorseButtonChanged = true;
+		}
+		else if(!blueDoveButtonChanged && Hanto.gameInstance.getGameState().getNumberTypeForPlayer(HantoPieceType.DOVE, HantoPlayerColor.BLUE) == 4){
+			blueDoveButton.remove();
+			blueDoveButton = new ImageButton(Assets.hantoSkin, "greyDove");
+			stage.addActor(blueDoveButton);
+			blueDoveButtonChanged = true;
 		}
 	}
 	
