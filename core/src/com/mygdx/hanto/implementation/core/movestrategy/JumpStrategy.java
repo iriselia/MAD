@@ -1,19 +1,16 @@
 package com.mygdx.hanto.implementation.core.movestrategy;
 
 import com.mygdx.hanto.implementation.common.Coordinate;
-import com.mygdx.hanto.implementation.common.HantoBoard;
-import com.mygdx.hanto.implementation.common.HantoPiece;
 import com.mygdx.hanto.implementation.common.PieceMoveStrategy;
+import com.mygdx.hanto.implementation.common.PieceMoveStrategyImpl;
 import com.mygdx.hanto.implementation.core.HantoStateDevelopment;
 
 /**
  * This class specifies the jump rule that defined in the hanto game.
  * 
  */
-public class JumpStrategy implements PieceMoveStrategy {
-	
-	private final HantoStateDevelopment gameState;
-	
+public class JumpStrategy extends PieceMoveStrategyImpl implements PieceMoveStrategy {
+		
 	/**
 	 * Constructor for the walkStratgy that import the game state of the game
 	 * @param gameState the current state of Delta hanto game
@@ -24,27 +21,11 @@ public class JumpStrategy implements PieceMoveStrategy {
 
 	@Override
 	public boolean canIMove(Coordinate from, Coordinate to) {
-		// TODO Auto-generated method stub
 		final boolean result;
-		final HantoPiece pieceTo = gameState.getBoard().getPieceAt(to);
-		if(pieceTo != null){
-			result = false;
-		}
-		else{
-			//TODO
-			if (!inStraightLineAndNoEmptyHexInBetween(from, to)) {
-				return false;
-			} else {
-				final HantoBoard virtualBoard = gameState.getBoard();
-				virtualBoard.movePiece(from, to);
-				if(virtualBoard.isConnected()){
-					result = true;
-				}
-				else{
-					result = false;
-				}
-				virtualBoard.movePiece(to, from);
-			}
+		if (!inStraightLineAndNoEmptyHexInBetween(from, to)) {
+			return false;
+		} else {
+			result = ifConnectedAfterMove(from, to);
 		}
 		return result;
 	}
@@ -90,5 +71,5 @@ public class JumpStrategy implements PieceMoveStrategy {
 		}
 		return true;
 	}
-
+	
 }
