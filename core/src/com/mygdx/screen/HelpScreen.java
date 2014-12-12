@@ -52,7 +52,7 @@ public class HelpScreen implements Screen {
 
 	@Override
 	public void show() {
-		Assets.loadMainMenuOrSettings();
+		Assets.loadAssets();
 		Assets.loadHelp();
 		currentImage = new Image(Assets.helpImages[0]);
 		addButtons();
@@ -89,11 +89,11 @@ public class HelpScreen implements Screen {
 	 * Add buttons (Return, Previous, Next) to the HelpScreen
 	 */
 	private void addButtons() {
-		table = new Table(Assets.menuSkin);
+		table = new Table(Assets.hantoSkin);
 		table.setFillParent(true);
 		table.setBounds(0, 0, w, h);
 		
-		TextButton btnReturn = new TextButton("Return", Assets.menuSkin);
+		TextButton btnReturn = new TextButton("Return", Assets.hantoSkin);
 		btnReturn.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -103,7 +103,7 @@ public class HelpScreen implements Screen {
         });
 		btnReturn.pad(10);
 		
-		TextButton btnPrevious = new TextButton("Previous", Assets.menuSkin);
+		TextButton btnPrevious = new TextButton("Previous", Assets.hantoSkin);
 		btnPrevious.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -116,7 +116,7 @@ public class HelpScreen implements Screen {
         });
 		btnPrevious.pad(10);
 		
-		TextButton btnNext = new TextButton("Next", Assets.menuSkin);
+		TextButton btnNext = new TextButton("Next", Assets.hantoSkin);
 		btnNext.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {

@@ -1,5 +1,7 @@
 package com.mygdx.hanto.implementation;
 
+import java.util.Deque;
+
 import com.mygdx.hanto.implementation.common.HantoPiece;
 
 /**
@@ -19,5 +21,5 @@ public interface InternalHantoGame {
 	 * @return the piece at coordinate (x, y) or
 	 *         null if there is no piece at that position
 	 */
-	 HantoPiece getPieceAt(int x, int y);
+	 Deque<HantoPiece> getPieceAt(int x, int y);
 }

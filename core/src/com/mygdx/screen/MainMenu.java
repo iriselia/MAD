@@ -55,13 +55,13 @@ public class MainMenu implements Screen {
 	public void show() {
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
-		Assets.loadMainMenuOrSettings();
-		table = new Table(Assets.menuSkin);
+		Assets.loadAssets();
+		table = new Table(Assets.hantoSkin);
 		table.setFillParent(true);
 		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		// creating buttons
-		buttonExit = new TextButton("EXIT", Assets.menuSkin);
+		buttonExit = new TextButton("EXIT", Assets.hantoSkin);
 		buttonExit.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -70,7 +70,7 @@ public class MainMenu implements Screen {
 		});
 		buttonExit.pad(50);
 
-		buttonSettings = new TextButton("Settings", Assets.menuSkin);
+		buttonSettings = new TextButton("Settings", Assets.hantoSkin);
 		buttonSettings.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -80,7 +80,7 @@ public class MainMenu implements Screen {
 		});
 		buttonSettings.pad(50);
 
-		buttonPlay = new TextButton("PLAY", Assets.menuSkin);
+		buttonPlay = new TextButton("PLAY", Assets.hantoSkin);
 		buttonPlay.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -90,7 +90,7 @@ public class MainMenu implements Screen {
 		});
 		buttonPlay.pad(50);
 
-		buttonHelp = new TextButton("Help", Assets.menuSkin);
+		buttonHelp = new TextButton("Help", Assets.hantoSkin);
 		buttonHelp.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -101,7 +101,7 @@ public class MainMenu implements Screen {
 		buttonHelp.pad(50);
 		
 		// creating heading
-		heading = new Label(Hanto.TITLE, Assets.menuSkin);
+		heading = new Label(Hanto.TITLE, Assets.hantoSkin);
 		heading.setFontScale(6);
 
 		// putting stuff together
@@ -189,7 +189,7 @@ public class MainMenu implements Screen {
 	@Override
 	public void dispose() {
 		stage.dispose();
-		Assets.disposeMainMenuOrSettings();
+		Assets.disposeAssets();
 	}
 
 }

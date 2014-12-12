@@ -1,6 +1,7 @@
 package com.mygdx.game.util;
 
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 
 import static com.mygdx.hanto.util.HantoPieceType.*;
@@ -23,10 +24,10 @@ import com.mygdx.hanto.util.HantoPlayerColor;
  *
  */
 public class GameStateHandler {
-	
+
 	private final HantoPlayerColor playerColor;
 	private final HantoStateDevelopment gameState;
-	
+
 	/**
 	 * This is the constructor for GameStateHandler
 	 * 
@@ -37,7 +38,7 @@ public class GameStateHandler {
 		this.playerColor = playerColor;
 		this.gameState = gameState;
 	}
-	
+
 	/**
 	 * This is a helper function that generates all possible and valid placement for
 	 * the given piece type available in delta hanto game.
@@ -50,9 +51,9 @@ public class GameStateHandler {
 		final List<HantoMoveRecord> validButterflyPlacements = new ArrayList<HantoMoveRecord>();
 		final List<HantoMoveRecord> validSparrowPlacements = new ArrayList<HantoMoveRecord>();
 		final List<HantoMoveRecord> validCrabPlacements = new ArrayList<HantoMoveRecord>();
-	
+
 		final List<Coordinate> validPlaceCoords = getAvailableCoordinateForPlace();
-		
+
 		for(int i = 0; i < validPlaceCoords.size(); i++){
 			HantoMoveRecord butterflyPlace, sparrowPlace, crabPlace;
 			butterflyPlace = new HantoMoveRecord(BUTTERFLY, null, validPlaceCoords.get(i));
@@ -62,7 +63,7 @@ public class GameStateHandler {
 			validSparrowPlacements.add(sparrowPlace);
 			validCrabPlacements.add(crabPlace);
 		}
-		
+
 		final int pieceTypeNum = gameState.getNumberTypeForPlayer(pieceType, playerColor);
 		if(pieceType == BUTTERFLY && pieceTypeNum != 1){
 			validPlacements = validButterflyPlacements;
@@ -77,7 +78,7 @@ public class GameStateHandler {
 		}
 		return validPlacements;
 	}
-	
+
 	/**
 	 * This is a helper function that generates all possible and valid Movement for
 	 * that type of piece in the delta hanto game.
@@ -87,36 +88,36 @@ public class GameStateHandler {
 	 */
 	public List<HantoMoveRecord> generatePiecesAvailableMoves(HantoPieceType pieceType){
 		List<HantoMoveRecord> validMovements = new ArrayList<HantoMoveRecord>();
-		
+
 		final List<HantoPieceDevelopment> ownButterfly = getOwnPiecesOnBoardByType(BUTTERFLY);
 		final List<HantoPieceDevelopment> ownSparrows = getOwnPiecesOnBoardByType(SPARROW);
 		final List<HantoPieceDevelopment> ownCrabs = getOwnPiecesOnBoardByType(CRAB);
-		
+
 		final List<HantoMoveRecord> butterflyValidMoves = new ArrayList<HantoMoveRecord>();
 		final List<HantoMoveRecord> crabValidMoves = new ArrayList<HantoMoveRecord>();
 		final List<HantoMoveRecord> sparrowValidMoves = new ArrayList<HantoMoveRecord>();
-		
+
 		for(int i = 0; i < ownButterfly.size(); i++){
 			HantoPieceDevelopment butterfly = ownButterfly.get(i);
 			butterfly.setPieceMoveStrategy(new WalkStrategy(gameState));
 			List<HantoMoveRecord> butterflyValidDests = getWalkPieceValidMoveDestination(butterfly);
 			butterflyValidMoves.addAll(butterflyValidDests);
 		}
-		
+
 		for(int i = 0; i < ownSparrows.size(); i++){
 			HantoPieceDevelopment sparrow = ownSparrows.get(i);
 			sparrow.setPieceMoveStrategy(new FlyStrategy(gameState));
 			List<HantoMoveRecord> sparrowValidDests = getFlyPieceValidMoveDestination(sparrow);
 			sparrowValidMoves.addAll(sparrowValidDests);
 		}
-		
+
 		for(int i = 0; i < ownCrabs.size(); i++){
 			HantoPieceDevelopment crab = ownCrabs.get(i);
 			crab.setPieceMoveStrategy(new WalkStrategy(gameState));
 			List<HantoMoveRecord> crabValidDests = getWalkPieceValidMoveDestination(crab);
 			crabValidMoves.addAll(crabValidDests);
 		}
-		
+
 		if(pieceType == BUTTERFLY){
 			validMovements = butterflyValidMoves;
 		}
@@ -128,7 +129,7 @@ public class GameStateHandler {
 		}
 		return validMovements;
 	}
-	
+
 	/**
 	 * This is a helper function to get all the player's own pieces on board.
 	 * 
@@ -144,7 +145,7 @@ public class GameStateHandler {
 		}
 		return ownPieces;
 	}
-	
+
 	/**
 	 * This is a helper function to get all the player's opponent's pieces on board.
 	 * 
@@ -160,7 +161,7 @@ public class GameStateHandler {
 		}
 		return ownPieces;
 	}
-	
+
 
 	/**
 	 * This is the helper function to get the available hex for player to place pieces.
@@ -177,19 +178,19 @@ public class GameStateHandler {
 			final Coordinate[] pieceNeighbors = pieceCoord.getNeighbors();
 			for(Coordinate neighbor : pieceNeighbors){
 				boolean valid = true;
-				final HantoPieceDevelopment piece = 
-						(HantoPieceDevelopment) gameState.getBoard().getPieceAt(neighbor);
-				if(piece != null){
+				final Deque<HantoPiece> pieces = gameState.getBoard().getPieceAt(neighbor);
+				if(pieces != null){
 					valid = false;
 				}
 				else{
 					final Coordinate[] secNeighbors = neighbor.getNeighbors();
 					for(Coordinate secNeighbor : secNeighbors){
-						final HantoPieceDevelopment secNeighborPiece = 
-								(HantoPieceDevelopment) gameState.getBoard().getPieceAt(secNeighbor);
-						if(secNeighborPiece != null 
-								&& secNeighborPiece.getPlayer() != gameState.getPlayerOnMove()){
-							valid = false;
+						final Deque<HantoPiece> secNeighborPieces = gameState.getBoard().getPieceAt(secNeighbor);
+						if(secNeighborPieces != null){
+							if(secNeighborPieces.peekFirst().getPlayer() != gameState.getPlayerOnMove()){
+								valid = false;
+								break;
+							}
 						}
 					}
 				}
@@ -200,7 +201,7 @@ public class GameStateHandler {
 		}
 		return validPlaceCoords;
 	}
-	
+
 	/**
 	 * This is the helper function to get the available hexes adjacent 
 	 * to the current pieces on board.
@@ -221,7 +222,7 @@ public class GameStateHandler {
 		}
 		return adjacentCoords;
 	}
-	
+
 	/**
 	 * This is a helper function to get the player's own pieces on the board by their type.
 	 * 
@@ -256,7 +257,7 @@ public class GameStateHandler {
 		}
 		return thatOwnTypePieces;
 	}
-	
+
 	/**
 	 * This is the helper function to get the available hex for player to place pieces.
 	 * 
@@ -268,7 +269,7 @@ public class GameStateHandler {
 		validPlacements.addAll(coordinates);
 		return validPlacements;
 	}
-	
+
 	/**
 	 * generates a list of valid destinations for given piece
 	 * @param pieceType Type of the given piece
@@ -300,7 +301,7 @@ public class GameStateHandler {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Gets all valid destinations for the piece given if it were to walk on board
 	 * @param walkPiece piece that is going to walk
@@ -319,7 +320,7 @@ public class GameStateHandler {
 		}
 		return walkPieceValidCoordinates;
 	}
-	
+
 	/**
 	 * This is a helper function to get all available movements for sparrow to move.
 	 * 
@@ -339,7 +340,7 @@ public class GameStateHandler {
 		}
 		return flyPieceValidCoordinates;
 	}
-	
+
 	/**
 	 * This is a helper function to get all available movements for butterfly or crab to move.
 	 * 
@@ -360,7 +361,7 @@ public class GameStateHandler {
 		}
 		return walkPieceValidMoves;
 	}
-	
+
 	/**
 	 * This is a helper function to get all available movements for sparrow to move.
 	 * 
@@ -382,7 +383,7 @@ public class GameStateHandler {
 		}
 		return flyPieceValidMoves;
 	}
-	
+
 	/**
 	 * Generate all valid placement locations for the given piece type
 	 * @param pieceType the piece type to check
@@ -393,13 +394,13 @@ public class GameStateHandler {
 		final List<HantoCoordinate> validButterflyPlacements = new ArrayList<HantoCoordinate>();
 		final List<HantoCoordinate> validSparrowPlacements = new ArrayList<HantoCoordinate>();
 		final List<HantoCoordinate> validCrabPlacements = new ArrayList<HantoCoordinate>();
-	
+
 		final List<Coordinate> validPlaceCoords = getAvailableCoordinateForPlace();
-		
+
 		validButterflyPlacements.addAll(validPlaceCoords);
 		validSparrowPlacements.addAll(validPlaceCoords);
 		validCrabPlacements.addAll(validPlaceCoords);
-		
+
 		final int pieceTypeNum = gameState.getNumberTypeForPlayer(pieceType, playerColor);
 		if(pieceType == BUTTERFLY && pieceTypeNum != 1){
 			validPlacements = validButterflyPlacements;
@@ -430,6 +431,6 @@ public class GameStateHandler {
 	public HantoStateDevelopment getGameState() {
 		return gameState;
 	}
-	
+
 }
 

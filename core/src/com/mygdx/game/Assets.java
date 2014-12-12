@@ -16,59 +16,18 @@ import com.mygdx.game.util.Constants;
  */
 public class Assets {
 
-	public static Skin menuSkin;
-	public static Skin pieceSkin;
-	public static TextureAtlas menuAtlas;
-	public static TextureAtlas gameAtlas;
-	public static TextureAtlas pieceAtlas;
+	public static Skin hantoSkin;
+	public static TextureAtlas hantoAtlas;
 	public static TextureRegionDrawable[] helpImages;
 
-	/**
-	 * Load Assets for the MainMenu and SettingsScreen
-	 */
-	public static void loadMainMenuOrSettings() {
-		menuAtlas = new TextureAtlas("ui/atlas.pack");
-		menuSkin = new Skin(Gdx.files.internal("ui/mainmenuSkin.json"), menuAtlas);
-	}
-	
-	/**
-	 * Load Assets for game pieces
-	 */
-	public static void loadPieces() {
-		pieceAtlas = new TextureAtlas("ui/pieces.pack");
-		pieceSkin = new Skin(Gdx.files.internal("ui/gameSkin.json"), pieceAtlas);
+	public static void loadAssets() {
+		hantoAtlas = new TextureAtlas("ui/pieces.pack");
+		hantoSkin = new Skin(Gdx.files.internal("ui/gameSkin.json"), hantoAtlas);
 	}
 
-	/**
-	 * Dispose Assets used for MainMenu and SettingsScreen 
-	 */
-	public static void disposeMainMenuOrSettings() {
-		menuAtlas.dispose();
-		menuSkin.dispose();
-	}
-	
-	/**
-	 * Dispose Assets used for game pieces
-	 */
-	public static void disposePieces() {
-		pieceAtlas.dispose();
-		pieceSkin.dispose();
-	}
-
-	/**
-	 * Load Assets used for GameScreen
-	 */
-	public static void loadGame() {
-		gameAtlas = new TextureAtlas(Gdx.files.internal(""));
-		menuSkin = new Skin(Gdx.files.internal(""), gameAtlas);
-	}
-
-	/**
-	 * Dispose Assests used for GameScreen
-	 */
-	public static void disposeGame() {
-		gameAtlas.dispose();
-		menuSkin.dispose();
+	public static void disposeAssets() {
+		hantoAtlas.dispose();
+		hantoSkin.dispose();
 	}
 	
 	/**

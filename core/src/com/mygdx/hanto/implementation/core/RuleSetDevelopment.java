@@ -12,8 +12,11 @@
 package com.mygdx.hanto.implementation.core;
 
 
+import java.util.Deque;
+
 import com.mygdx.hanto.common.HantoException;
 import com.mygdx.hanto.implementation.common.Coordinate;
+import com.mygdx.hanto.implementation.common.HantoPiece;
 import com.mygdx.hanto.implementation.common.HantoRuleSet;
 import com.mygdx.hanto.implementation.common.HantoState;
 import com.mygdx.hanto.implementation.common.PieceMoveStrategy;
@@ -220,7 +223,9 @@ public class RuleSetDevelopment extends HantoRuleSet{
 	 */
 	protected void ensurePieceIsValid(HantoPieceType pieceType) throws HantoException{
 		if(pieceType != HantoPieceType.BUTTERFLY && 
-				pieceType != HantoPieceType.SPARROW && pieceType != HantoPieceType.CRAB){
+				pieceType != HantoPieceType.SPARROW && pieceType != HantoPieceType.CRAB
+				&& pieceType != HantoPieceType.CRANE && pieceType != HantoPieceType.DOVE
+				&& pieceType != HantoPieceType.HORSE){
 			throw new HantoException("The piece type cannot be used in this game.");
 		}
 	}
@@ -237,13 +242,16 @@ public class RuleSetDevelopment extends HantoRuleSet{
 		boolean result = false;
 		final Coordinate[] neighbors = coordinate.getNeighbors();
 		for(Coordinate c : neighbors){
-			HantoPieceDevelopment piece = (HantoPieceDevelopment) gameState.getBoard().getPieceAt(c);
-			if(piece != null && piece.getPlayer() != gameState.getPlayerOnMove()){
-				result = false;
-				break;
-			}
-			else if (piece != null && piece.getPlayer() == gameState.getPlayerOnMove()){
-				result = true;
+			Deque<HantoPiece> pieces = gameState.getBoard().getPieceAt(c);
+			if(pieces != null){
+				final HantoPiece piece = pieces.peekFirst();
+				if(piece != null && piece.getPlayer() != gameState.getPlayerOnMove()){
+					result = false;
+					break;
+				}
+				else if (piece != null && piece.getPlayer() == gameState.getPlayerOnMove()){
+					result = true;
+				}
 			}
 		}
 		return result;
@@ -278,7 +286,8 @@ public class RuleSetDevelopment extends HantoRuleSet{
 	 */
 	private void checkPieceValidMove(HantoPieceType pieceType, Coordinate from, Coordinate to) 
 			throws HantoException{
-		final HantoPieceDevelopment piece = (HantoPieceDevelopment) gameState.getBoard().getPieceAt(from);
+		final Deque<HantoPiece> pieces = gameState.getBoard().getPieceAt(from);
+		final HantoPieceDevelopment piece = (HantoPieceDevelopment) pieces.peekFirst();
 		if (piece.getPiece() != pieceType) {
 			throw new HantoException("There is no" + pieceType.toString() + "at the source hex");
 		}
