@@ -55,6 +55,7 @@ public class HelpScreen implements Screen {
 		Assets.loadAssets();
 		Assets.loadHelp();
 		currentImage = new Image(Assets.helpImages[0]);
+		currentImage.setBounds(0, 0, Constants.w, Constants.h);
 		addButtons();
 		stage.addActor(currentImage);
 		stage.addActor(table);
