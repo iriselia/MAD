@@ -271,12 +271,12 @@ public class GameScreen implements Screen {
 		final float bottom = stage.getCamera().position.y - h / 2;
 		
 		if(Hanto.gameInstance.getGameState().getPlayerOnMove() == HantoPlayerColor.RED){
-			yellowButterflyButton.setBounds(left, bottom, Constants.TILE_LENGTH, Constants.TILE_LENGTH);
-			yellowCrabButton.setBounds(left + Constants.TILE_LENGTH, bottom, Constants.TILE_LENGTH, Constants.TILE_LENGTH);
-			yellowSparrowButton.setBounds(left + Constants.TILE_LENGTH  * 2, bottom, Constants.TILE_LENGTH, Constants.TILE_LENGTH);
-			yellowCraneButton.setBounds(left + Constants.TILE_LENGTH  * 3, bottom, Constants.TILE_LENGTH, Constants.TILE_LENGTH);
-			yellowHorseButton.setBounds(left + Constants.TILE_LENGTH  * 4, bottom, Constants.TILE_LENGTH, Constants.TILE_LENGTH);
-			yellowDoveButton.setBounds(left + Constants.TILE_LENGTH  * 5, bottom, Constants.TILE_LENGTH, Constants.TILE_LENGTH);
+			yellowButterflyButton.setBounds(left, bottom, Constants.BUTTON_SIZE, Constants.BUTTON_SIZE);
+			yellowCrabButton.setBounds(left + Constants.BUTTON_SIZE, bottom, Constants.BUTTON_SIZE, Constants.BUTTON_SIZE);
+			yellowSparrowButton.setBounds(left + Constants.BUTTON_SIZE  * 2, bottom, Constants.BUTTON_SIZE, Constants.BUTTON_SIZE);
+			yellowCraneButton.setBounds(left + Constants.BUTTON_SIZE  * 3, bottom, Constants.BUTTON_SIZE, Constants.BUTTON_SIZE);
+			yellowHorseButton.setBounds(left + Constants.BUTTON_SIZE  * 4, bottom, Constants.BUTTON_SIZE, Constants.BUTTON_SIZE);
+			yellowDoveButton.setBounds(left + Constants.BUTTON_SIZE  * 5, bottom, Constants.BUTTON_SIZE, Constants.BUTTON_SIZE);
 			blueButterflyButton.setBounds(0, 0, 0, 0);
 			blueCrabButton.setBounds(0, 0, 0, 0);
 			blueSparrowButton.setBounds(0, 0, 0, 0);
@@ -285,12 +285,12 @@ public class GameScreen implements Screen {
 			blueDoveButton.setBounds(0, 0, 0, 0);
 		}
 		else{
-			blueButterflyButton.setBounds(left, bottom, Constants.TILE_LENGTH, Constants.TILE_LENGTH);
-			blueCrabButton.setBounds(left + Constants.TILE_LENGTH, bottom, Constants.TILE_LENGTH, Constants.TILE_LENGTH);
-			blueSparrowButton.setBounds(left + Constants.TILE_LENGTH * 2, bottom, Constants.TILE_LENGTH, Constants.TILE_LENGTH);
-			blueCraneButton.setBounds(left + Constants.TILE_LENGTH * 3, bottom, Constants.TILE_LENGTH, Constants.TILE_LENGTH);
-			blueHorseButton.setBounds(left + Constants.TILE_LENGTH * 4, bottom, Constants.TILE_LENGTH, Constants.TILE_LENGTH);
-			blueDoveButton.setBounds(left + Constants.TILE_LENGTH * 5, bottom, Constants.TILE_LENGTH, Constants.TILE_LENGTH);
+			blueButterflyButton.setBounds(left, bottom, Constants.BUTTON_SIZE, Constants.BUTTON_SIZE);
+			blueCrabButton.setBounds(left + Constants.BUTTON_SIZE, bottom, Constants.BUTTON_SIZE, Constants.BUTTON_SIZE);
+			blueSparrowButton.setBounds(left + Constants.BUTTON_SIZE * 2, bottom, Constants.BUTTON_SIZE, Constants.BUTTON_SIZE);
+			blueCraneButton.setBounds(left + Constants.BUTTON_SIZE * 3, bottom, Constants.BUTTON_SIZE, Constants.BUTTON_SIZE);
+			blueHorseButton.setBounds(left + Constants.BUTTON_SIZE * 4, bottom, Constants.BUTTON_SIZE, Constants.BUTTON_SIZE);
+			blueDoveButton.setBounds(left + Constants.BUTTON_SIZE * 5, bottom, Constants.BUTTON_SIZE, Constants.BUTTON_SIZE);
 			yellowButterflyButton.setBounds(0, 0, 0, 0);
 			yellowCrabButton.setBounds(0, 0, 0, 0);
 			yellowSparrowButton.setBounds(0, 0, 0, 0);

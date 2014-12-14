@@ -43,6 +43,13 @@ public class HantoBoard {
 	public HantoBoard(){
 		board = new HashMap<HantoCoordinate, Deque<HantoPiece>>();
 	}
+	
+	/**
+	 * Default constructor. Initializes an empty board.
+	 */
+	public HantoBoard(Map<HantoCoordinate, Deque<HantoPiece>> board){
+		this.board = board;
+	}
 
 	/**
 	 * Places a piece at the specified coordinate. It also updates the specified
@@ -244,5 +251,10 @@ public class HantoBoard {
 	public void remove(HantoPiece piece){
 		final Coordinate key = Coordinate.guarrenteedCoordinate(piece.getCoordinate());
 		board.remove(key);
+	}
+	
+	public HantoBoard clone(){
+		Map<HantoCoordinate, Deque<HantoPiece>> newBoard = new HashMap<HantoCoordinate, Deque<HantoPiece>>(board);
+		return new HantoBoard(newBoard);
 	}
 }

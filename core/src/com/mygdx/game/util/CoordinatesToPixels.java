@@ -26,11 +26,11 @@ public class CoordinatesToPixels {
 		final int x = coord.getX();
 		final int y = coord.getY();
 		
-		final int pixelX = x * 150 + originX;;
-		final int pixelY = y * 200 + x * 100 + originY;
+		final int pixelX = x * Constants.TILE_LENGTH * 3 / 4 + originX;;
+		final int pixelY = y * Constants.TILE_LENGTH + x * Constants.TILE_LENGTH / 2 + originY;
 		
 		//TODO:check boundary
-		return new Pixels(pixelX - 100, pixelY - 100);
+		return new Pixels(pixelX - Constants.TILE_LENGTH / 2, pixelY - Constants.TILE_LENGTH / 2);
 	}
 	
 	/**
@@ -42,8 +42,8 @@ public class CoordinatesToPixels {
 		final int x = pixels.x;
 		final int y = pixels.y;
 		
-		final int coordX = (x + 100 - originX) / 150;;
-		final int coordY = (y + 100 - originY - coordX * 100) / 200;
+		final int coordX = (x + Constants.TILE_LENGTH / 2 - originX) / (Constants.TILE_LENGTH * 3 / 4);
+		final int coordY = (y + Constants.TILE_LENGTH / 2 - originY - coordX * Constants.TILE_LENGTH / 2) / Constants.TILE_LENGTH;
 		
 		//TODO:check boundary
 		return new Coordinate(coordX, coordY);
@@ -54,7 +54,7 @@ public class CoordinatesToPixels {
 	 * @return Pixel coordinate for Blue's first piece
 	 */
 	public static Pixels getInitialPixelsForBlue(){
-		return new Pixels(originX - 100, originY - 100);
+		return new Pixels(originX - Constants.TILE_LENGTH / 2, originY - Constants.TILE_LENGTH / 2);
 	}
 	
 	/**
@@ -62,7 +62,7 @@ public class CoordinatesToPixels {
 	 * @return Pixel coordinate for Yellow's first piece
 	 */
 	public static Pixels getInitialPixelsForYellow(){
-		return new Pixels(originX - 100, originY + 100);
+		return new Pixels(originX - Constants.TILE_LENGTH / 2, originY + Constants.TILE_LENGTH / 2);
 	}
 
 }
