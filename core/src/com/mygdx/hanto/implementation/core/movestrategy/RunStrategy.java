@@ -3,18 +3,19 @@ package com.mygdx.hanto.implementation.core.movestrategy;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import com.mygdx.hanto.implementation.common.Coordinate;
-import com.mygdx.hanto.implementation.common.HantoBoard;
 import com.mygdx.hanto.implementation.common.HantoPiece;
 import com.mygdx.hanto.implementation.common.PieceMoveStrategy;
 import com.mygdx.hanto.implementation.common.PieceMoveStrategyImpl;
+import com.mygdx.hanto.implementation.core.HantoPieceDevelopment;
 import com.mygdx.hanto.implementation.core.HantoStateDevelopment;
 
 public class RunStrategy extends PieceMoveStrategyImpl implements PieceMoveStrategy{
-		
+
 	/**
 	 * Constructor for the runStratgy that import the game state of the game
 	 * @param gameState the current state of hanto game
@@ -25,37 +26,56 @@ public class RunStrategy extends PieceMoveStrategyImpl implements PieceMoveStrat
 
 	@Override
 	public boolean canIMove(Coordinate from, Coordinate to) {
-		Map<Coordinate, Boolean> ifMarked = new HashMap<Coordinate, Boolean>();
-		final HantoBoard virtualBoard = gameState.getBoard().clone();
-		return canIMoveHelper(from, to, ifMarked, 0, virtualBoard);
+		final boolean result;
+		final Map<Coordinate, Boolean> ifMarked = new HashMap<Coordinate, Boolean>();
+		final HantoPiece originPiece = gameState.getBoard().getPieceAt(from).peekFirst();
+		gameState.getBoard().remove(originPiece);
+		result = canIMoveHelper(from, to, ifMarked);
+		gameState.getBoard().putPieceAt(originPiece, from);
+		return result;
 	}
-	
-	private boolean canIMoveHelper(Coordinate from, Coordinate to, Map<Coordinate, Boolean> ifMarked, int stepNum, HantoBoard virtualBoard){
-		//if(stepNum == 4){
-		//	return false;
-		//}
-		final Coordinate[] fromNeighbors = from.getNeighbors();
-		for(Coordinate neighbor : fromNeighbors){
-			if(virtualBoard.getPieceAt(neighbor) == null && !ifMarked.containsKey(neighbor) && canIWalk(from, neighbor, virtualBoard)){
-				ifMarked.put(neighbor, true);
-				if(stepNum == 3){
-					if(neighbor == to){
-						return true;
-					}
-					else{
-						return false;
+
+	private boolean canIMoveHelper(Coordinate from, Coordinate to, Map<Coordinate, Boolean> ifMarked){
+		final Deque<Coordinate> queue = new LinkedList<Coordinate>();
+		int level = 0;
+		Coordinate levelPointer = null;
+		ifMarked.put(from, true);
+		queue.addLast(from);
+		while(!queue.isEmpty()){
+			final Coordinate current = queue.removeFirst();
+			if(current.equals(levelPointer)){
+				level++;
+			}
+			if(level == 3 && current.equals(to)){
+				return true;
+			}
+			else if(level == 4){
+				return false;
+			}
+			else{
+				final Coordinate[] currentNeighbors = current.getNeighbors();
+				for(Coordinate neighbor : currentNeighbors){
+					if(gameState.getBoard().getPieceAt(neighbor) == null && !ifMarked.containsKey(neighbor) && canIWalk(current, neighbor)){
+						if(levelPointer == null || current.equals(levelPointer)){
+							levelPointer = neighbor;
+						}
+						queue.addLast(neighbor);
 					}
 				}
-				HantoBoard nextBoard = virtualBoard.clone();
-				nextBoard.movePiece(from, neighbor);
-				return canIMoveHelper(neighbor, to, ifMarked, stepNum + 1, nextBoard);
+				ifMarked.put(current, true);
 			}
 		}
 		return false;
 	}
-	
-	
-	public boolean canIWalk(Coordinate from, Coordinate to, HantoBoard virtualBoard) {
+
+
+	public boolean canIWalk(Coordinate from, Coordinate to) {
+		boolean ifPutPiece = false;
+		final HantoPiece fakePiece = new HantoPieceDevelopment(from, gameState.getFirstPlayer(), null);
+		if(gameState.getBoard().getPieceAt(from) == null){
+			ifPutPiece = true;
+			gameState.getBoard().putPieceAt(fakePiece, from);
+		}
 		final boolean result;
 		final List<Coordinate> jointNeighbors = new ArrayList<Coordinate>();
 		if(!from.isAdjacentTo(to)){
@@ -73,32 +93,31 @@ public class RunStrategy extends PieceMoveStrategyImpl implements PieceMoveStrat
 					}
 				}
 			}
-			jointPiece1 = virtualBoard.getPieceAt(jointNeighbors.get(0));
-			jointPiece2 = virtualBoard.getPieceAt(jointNeighbors.get(1));
+			jointPiece1 = gameState.getBoard().getPieceAt(jointNeighbors.get(0));
+			jointPiece2 = gameState.getBoard().getPieceAt(jointNeighbors.get(1));
 			if(jointPiece1 != null && jointPiece2 != null){
 				result = false;
 			}
 			else{
-				result = ifConnectedAfterMove(from, to, virtualBoard);
+				result = ifConnectedAfterMove(from, to);
+			}
+			if(ifPutPiece){
+				gameState.getBoard().remove(fakePiece);
 			}
 		}
 		return result;
 	}
 
-	public boolean ifConnectedAfterMove(Coordinate from, Coordinate to, HantoBoard virtualBoard){
+	public boolean ifConnectedAfterMove(Coordinate from, Coordinate to){
 		final boolean result;
-		System.out.println("Virtual:");
-		System.out.println(virtualBoard.getPrintableBoard());
-		System.out.println("Game Board:");
-		System.out.println(gameState.getBoard().getPrintableBoard());
-		virtualBoard.movePiece(from, to);
-		if(virtualBoard.isConnected()){
+		gameState.getBoard().movePiece(from, to);
+		if(gameState.getBoard().isConnected()){
 			result = true;
 		}
 		else{
 			result = false;
 		}
-		virtualBoard.movePiece(to, from);
+		gameState.getBoard().movePiece(to, from);
 		return result;
 	}
 

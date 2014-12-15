@@ -94,7 +94,7 @@ public class HantoBoard {
 			board.remove(from);
 		}
 	}
-
+	
 	/**
 	 * Get the Hanto Piece at the given coordinate.
 	 * 
@@ -253,8 +253,4 @@ public class HantoBoard {
 		board.remove(key);
 	}
 	
-	public HantoBoard clone(){
-		Map<HantoCoordinate, Deque<HantoPiece>> newBoard = new HashMap<HantoCoordinate, Deque<HantoPiece>>(board);
-		return new HantoBoard(newBoard);
-	}
 }
