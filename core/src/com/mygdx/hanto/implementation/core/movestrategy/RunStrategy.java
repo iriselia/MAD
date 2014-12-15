@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.mygdx.hanto.implementation.common.Coordinate;
+import com.mygdx.hanto.implementation.common.HantoBoard;
 import com.mygdx.hanto.implementation.common.HantoPiece;
 import com.mygdx.hanto.implementation.common.PieceMoveStrategy;
 import com.mygdx.hanto.implementation.common.PieceMoveStrategyImpl;
@@ -25,28 +26,36 @@ public class RunStrategy extends PieceMoveStrategyImpl implements PieceMoveStrat
 	@Override
 	public boolean canIMove(Coordinate from, Coordinate to) {
 		Map<Coordinate, Boolean> ifMarked = new HashMap<Coordinate, Boolean>();
-		return canIMoveHelper(from, to, ifMarked, 0);
+		final HantoBoard virtualBoard = gameState.getBoard().clone();
+		return canIMoveHelper(from, to, ifMarked, 0, virtualBoard);
 	}
 	
-	private boolean canIMoveHelper(Coordinate from, Coordinate to, Map<Coordinate, Boolean> ifMarked, int stepNum){
-		if(stepNum == 4){
-			return false;
-		}
+	private boolean canIMoveHelper(Coordinate from, Coordinate to, Map<Coordinate, Boolean> ifMarked, int stepNum, HantoBoard virtualBoard){
+		//if(stepNum == 4){
+		//	return false;
+		//}
 		final Coordinate[] fromNeighbors = from.getNeighbors();
 		for(Coordinate neighbor : fromNeighbors){
-			if(gameState.getBoard().getPieceAt(neighbor) == null && !ifMarked.get(neighbor) && canIWalk(from, neighbor)){
+			if(virtualBoard.getPieceAt(neighbor) == null && !ifMarked.containsKey(neighbor) && canIWalk(from, neighbor, virtualBoard)){
 				ifMarked.put(neighbor, true);
-				if(neighbor == to && stepNum == 3){
-					return true;
+				if(stepNum == 3){
+					if(neighbor == to){
+						return true;
+					}
+					else{
+						return false;
+					}
 				}
-				return canIMoveHelper(neighbor, to, ifMarked, stepNum + 1);
+				HantoBoard nextBoard = virtualBoard.clone();
+				nextBoard.movePiece(from, neighbor);
+				return canIMoveHelper(neighbor, to, ifMarked, stepNum + 1, nextBoard);
 			}
 		}
 		return false;
 	}
 	
 	
-	public boolean canIWalk(Coordinate from, Coordinate to) {
+	public boolean canIWalk(Coordinate from, Coordinate to, HantoBoard virtualBoard) {
 		final boolean result;
 		final List<Coordinate> jointNeighbors = new ArrayList<Coordinate>();
 		if(!from.isAdjacentTo(to)){
@@ -64,15 +73,32 @@ public class RunStrategy extends PieceMoveStrategyImpl implements PieceMoveStrat
 					}
 				}
 			}
-			jointPiece1 = gameState.getBoard().getPieceAt(jointNeighbors.get(0));
-			jointPiece2 = gameState.getBoard().getPieceAt(jointNeighbors.get(1));
+			jointPiece1 = virtualBoard.getPieceAt(jointNeighbors.get(0));
+			jointPiece2 = virtualBoard.getPieceAt(jointNeighbors.get(1));
 			if(jointPiece1 != null && jointPiece2 != null){
 				result = false;
 			}
 			else{
-				result = ifConnectedAfterMove(from, to);
+				result = ifConnectedAfterMove(from, to, virtualBoard);
 			}
 		}
+		return result;
+	}
+
+	public boolean ifConnectedAfterMove(Coordinate from, Coordinate to, HantoBoard virtualBoard){
+		final boolean result;
+		System.out.println("Virtual:");
+		System.out.println(virtualBoard.getPrintableBoard());
+		System.out.println("Game Board:");
+		System.out.println(gameState.getBoard().getPrintableBoard());
+		virtualBoard.movePiece(from, to);
+		if(virtualBoard.isConnected()){
+			result = true;
+		}
+		else{
+			result = false;
+		}
+		virtualBoard.movePiece(to, from);
 		return result;
 	}
 

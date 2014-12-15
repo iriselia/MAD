@@ -594,7 +594,7 @@ public class GameStateHandler {
 		final int x = coord.getX();
 		final int y = coord.getY();
 		for(int i = x - n; i <= x + n; i++){
-			for(int j = y - n; j <= j + n; j++){
+			for(int j = y - n; j <= y + n; j++){
 				final HantoCoordinate coordWithinRange = new Coordinate(i, j);
 				result.add(coordWithinRange);
 			}

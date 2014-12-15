@@ -13,6 +13,7 @@ public class Constants {
     public final static float aspectRatio = h / w;
     public final static float WORLD_WIDTH = w * 3;
     public final static float WORLD_HEIGHT = h * 3;
-    public final static int TILE_LENGTH = 200;
+    public final static int TILE_LENGTH = 150;
+    public final static int BUTTON_SIZE = (int) (w / 6);
     public final static int numberOfHelpImages = 5;
 }

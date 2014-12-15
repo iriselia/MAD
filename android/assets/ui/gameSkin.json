@@ -25,11 +25,20 @@
 		"yellowButterfly": { "up": "butterfly1", "down": "butterfly-red-pressed", "checked": "butterfly1" },
 		"yellowCrab": { "up": "crab1", "down": "crab-red-pressed", "checked": "crab1" },
 		"yellowSparrow": { "up": "sparrow1", "down": "sparrow-red-pressed", "checked": "sparrow1" },
+		"yellowCrane": { "up": "crane-yellow", "down": "crane-yellow-pressed", "checked": "crane-yellow" },
+		"yellowHorse": { "up": "horse-yellow", "down": "horse-yellow-pressed", "checked": "horse-yellow" },
+		"yellowDove": { "up": "dove-yellow", "down": "dove-yellow-pressed", "checked": "dove-yellow" },
 		"blueButterfly": { "up": "butterfly2", "down": "butterfly-blue-pressed", "checked": "butterfly2" },
 		"blueCrab": { "up": "crab2", "down": "crab-blue-pressed", "checked": "crab2" },
 		"blueSparrow": { "up": "sparrow2", "down": "sparrow-blue-pressed", "checked": "sparrow2" },
+		"blueCrane": { "up": "crane-blue", "down": "crane-blue-pressed", "checked": "crane-blue" },
+		"blueHorse": { "up": "horse-blue", "down": "horse-blue.pressed", "checked": "horse-blue" },
+		"blueDove": { "up": "dove-blue", "down": "dove-blue-pressed", "checked": "dove-blue" },	
 		"greyButterfly": { "up": "butterfly-invalid", "down": "butterfly-invalid", "checked": "butterfly-invalid" },
 		"greyCrab": { "up": "crab-invalid", "down": "crab-invalid", "checked": "crab-invalid" },
-		"greySparrow": { "up": "sparrow-invalid", "down": "sparrow-invalid", "checked": "sparrow-invalid" }
+		"greySparrow": { "up": "sparrow-invalid", "down": "sparrow-invalid", "checked": "sparrow-invalid" },
+		"greyCrane": { "up": "crane-invalid", "down": "crane-invalid", "checked": "crane-invalid" },
+		"greyHorse": { "up": "horse-invalid", "down": "horse-invalid", "checked": "horse-invalid" },
+		"greyDove": { "up": "dove-invalid", "down": "dove-invalid", "checked": "dove-invalid" }	
 	}
 } 

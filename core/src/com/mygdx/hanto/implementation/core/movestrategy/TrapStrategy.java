@@ -43,10 +43,10 @@ public class TrapStrategy extends PieceMoveStrategyImpl implements PieceMoveStra
 			jointPiece2 = gameState.getBoard().getPieceAt(jointNeighbors.get(1));
 			if(jointPiece1 != null && jointPiece2 != null){
 				final int currentStackSize = gameState.getBoard().getPieceAt(from).size();
-				final int toStackSize = gameState.getBoard().getPieceAt(to).size();
+				final Deque<HantoPiece> toStack = gameState.getBoard().getPieceAt(to);
 				final int oneStackSize = jointPiece1.size();
 				final int anotherStackSize = jointPiece2.size();
-				if(toStackSize == 0 && oneStackSize > 0 && oneStackSize > 0){
+				if(toStack == null && oneStackSize > 0 && oneStackSize > 0){
 					result = false;
 				}
 				else if(currentStackSize < oneStackSize && currentStackSize < anotherStackSize){
