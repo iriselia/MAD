@@ -28,6 +28,7 @@ import com.mygdx.game.util.CameraController;
 import com.mygdx.game.util.Constants;
 import com.mygdx.game.util.GameController;
 import com.mygdx.game.util.GameStateHandler;
+import com.mygdx.hanto.common.HantoException;
 import com.mygdx.hanto.implementation.core.HantoGameDevelopment;
 import com.mygdx.hanto.util.HantoPieceType;
 import com.mygdx.hanto.util.HantoPlayerColor;
@@ -432,7 +433,7 @@ public class GameScreen implements Screen {
 	}
 
 	/**
-	 * Adds buttons (Return, Quit) to the GameScreen
+	 * Adds buttons (Return, Resign) to the GameScreen
 	 */
 	private void addButtons() {
 		table = new Table(Assets.hantoSkin);
@@ -449,11 +450,22 @@ public class GameScreen implements Screen {
 		});
 		btnReturn.pad(10);
 
-		TextButton btnQuit = new TextButton("Quit", Assets.hantoSkin);
+		TextButton btnQuit = new TextButton("Resign", Assets.hantoSkin);
 		btnQuit.addListener(new ClickListener(){
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				Gdx.app.exit();
+				try {
+					Hanto.gameInstance.makeMove(null, null, null);
+				} catch (HantoException e) {
+					System.out.println(e.getMessage());
+					e.printStackTrace();
+				}
+				if(Hanto.gameInstance.getGameState().getPlayerOnMove() == HantoPlayerColor.BLUE){
+						((Game) Gdx.app.getApplicationListener()).setScreen(new ResultScreen("yellow"));
+				}
+				else{
+						((Game) Gdx.app.getApplicationListener()).setScreen(new ResultScreen("blue"));
+				}
 			}
 		});
 		btnQuit.pad(10);
