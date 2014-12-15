@@ -87,6 +87,10 @@ public class RunStrategy extends PieceMoveStrategyImpl implements PieceMoveStrat
 
 	public boolean ifConnectedAfterMove(Coordinate from, Coordinate to, HantoBoard virtualBoard){
 		final boolean result;
+		System.out.println("Virtual:");
+		System.out.println(virtualBoard.getPrintableBoard());
+		System.out.println("Game Board:");
+		System.out.println(gameState.getBoard().getPrintableBoard());
 		virtualBoard.movePiece(from, to);
 		if(virtualBoard.isConnected()){
 			result = true;
