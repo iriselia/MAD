@@ -11,6 +11,8 @@
  *******************************************************************/
 package com.mygdx.hanto.implementation.common;
 
+import java.util.Deque;
+
 import com.mygdx.hanto.common.HantoException;
 import com.mygdx.hanto.implementation.InternalHantoGame;
 import com.mygdx.hanto.util.HantoCoordinate;
@@ -29,7 +31,7 @@ public abstract class HantoGameImpl implements InternalHantoGame{
 	protected HantoState gameState;
 		
 	/**
-	 * @see hanto.common.HantoGame#initialize(hanto.util.HantoPlayerColor)
+	 * @see com.mygdx.hanto.common.HantoGame#initialize(hanto.util.HantoPlayerColor)
 	 */
 	public void initialize(HantoPlayerColor firstPlayer){
 		gameState.setInitialCoordinate(new Coordinate(0, 0));
@@ -43,8 +45,7 @@ public abstract class HantoGameImpl implements InternalHantoGame{
 	}
 
 	/**
-	 * @see hanto.common.HantoGame#makeMove(hanto.util.HantoPieceType, 
-	 * hanto.util.HantoCoordinate, hanto.util.HantoCoordinate)
+	 * @see com.mygdx.hanto.common.HantoGame#makeMove
 	 */
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws HantoException {
@@ -60,20 +61,20 @@ public abstract class HantoGameImpl implements InternalHantoGame{
 	}
 	
 	/**
-	 * @see hanto.common.HantoGame#getPrintableBoard()
+	 * @see com.mygdx.hanto.common.HantoGame#getPrintableBoard()
 	 */
 	public String getPrintableBoard() {
 		return gameState.getBoard().getPrintableBoard();
 	}
 
 	/**
-	 * @see hanto.studentpren.InternalHantoGame#getPieceAt(int, int)
+	 * @see com.mygdx.hanto.implementation.InternalHantoGame#getPieceAt(int, int)
 	 */
-	public HantoPiece getPieceAt(int x, int y) {
-		final HantoPiece piece;
+	public Deque<HantoPiece> getPieceAt(int x, int y) {
+		final Deque<HantoPiece> pieces;
 		final HantoCoordinate coordinate;
 		coordinate = new Coordinate(x, y);
-		piece = gameState.getBoard().getPieceAt((Coordinate) coordinate);
-		return piece;
+		pieces = gameState.getBoard().getPieceAt((Coordinate) coordinate);
+		return pieces;
 	}
 }

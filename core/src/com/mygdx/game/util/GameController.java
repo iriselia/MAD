@@ -138,6 +138,15 @@ public class GameController {
 					else if(name.contains("Sparrow")){
 						pieceType = HantoPieceType.SPARROW;
 					}
+					else if(name.contains("Crane")){
+						pieceType = HantoPieceType.CRANE;
+					}
+					else if(name.contains("Horse")){
+						pieceType = HantoPieceType.HORSE;
+					}
+					else if(name.contains("Dove")){
+						pieceType = HantoPieceType.DOVE;
+					}
 					else{
 						pieceType = null;
 					}

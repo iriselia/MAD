@@ -35,7 +35,7 @@ public class HantoGameDevelopment extends HantoGameImpl implements HantoGame{
 	}
 	
 	/**
-	 * @see hanto.common.HantoGame#initialize(hanto.util.HantoPlayerColor)
+	 * @see com.mygdx.hanto.common.HantoGame#initialize
 	 */
 	public void initialize(HantoPlayerColor firstPlayer){
 		super.initialize(firstPlayer);
@@ -43,12 +43,17 @@ public class HantoGameDevelopment extends HantoGameImpl implements HantoGame{
 		((HantoStateDevelopment) gameState).setRedSparrowPlaced(0);
 		((HantoStateDevelopment) gameState).setBlueCrabPlaced(0);
 		((HantoStateDevelopment) gameState).setRedCrabPlaced(0);
+		((HantoStateDevelopment) gameState).setBlueCranePlaced(0);
+		((HantoStateDevelopment) gameState).setRedCranePlaced(0);
+		((HantoStateDevelopment) gameState).setBlueHorsePlaced(0);
+		((HantoStateDevelopment) gameState).setRedHorsePlaced(0);
+		((HantoStateDevelopment) gameState).setBlueDovePlaced(0);
+		((HantoStateDevelopment) gameState).setRedDovePlaced(0);
 	}
 
 	
 	/**
-	 * @see hanto.common.HantoGame#makeMove(hanto.util.HantoPieceType, 
-	 * hanto.util.HantoCoordinate, hanto.util.HantoCoordinate)
+	 * @see com.mygdx.hanto.common.HantoGame#makeMove
 	 */
 	public MoveResult makeMove(HantoPieceType pieceType, HantoCoordinate from,
 			HantoCoordinate to) throws HantoException {

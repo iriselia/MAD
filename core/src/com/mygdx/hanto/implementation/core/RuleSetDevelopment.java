@@ -12,12 +12,18 @@
 package com.mygdx.hanto.implementation.core;
 
 
+import java.util.Deque;
+
 import com.mygdx.hanto.common.HantoException;
 import com.mygdx.hanto.implementation.common.Coordinate;
+import com.mygdx.hanto.implementation.common.HantoPiece;
 import com.mygdx.hanto.implementation.common.HantoRuleSet;
 import com.mygdx.hanto.implementation.common.HantoState;
 import com.mygdx.hanto.implementation.common.PieceMoveStrategy;
 import com.mygdx.hanto.implementation.core.movestrategy.FlyStrategy;
+import com.mygdx.hanto.implementation.core.movestrategy.JumpStrategy;
+import com.mygdx.hanto.implementation.core.movestrategy.RunStrategy;
+import com.mygdx.hanto.implementation.core.movestrategy.TrapStrategy;
 import com.mygdx.hanto.implementation.core.movestrategy.WalkStrategy;
 import com.mygdx.hanto.util.HantoPieceType;
 import com.mygdx.hanto.util.HantoPlayerColor;
@@ -142,6 +148,42 @@ public class RuleSetDevelopment extends HantoRuleSet{
 					throw new HantoException("You don't have a Crab left");
 				}
 			}
+			if(gameState.getPlayerOnMove() == HantoPlayerColor.BLUE 
+					&& pieceType == HantoPieceType.CRANE){
+				if(gameState.blueCranePlaced == 4){
+					throw new HantoException("You don't have a Crane left");
+				}
+			}
+			else if(gameState.getPlayerOnMove() == HantoPlayerColor.RED 
+					&& pieceType == HantoPieceType.CRANE){
+				if(gameState.redCranePlaced == 4){
+					throw new HantoException("You don't have a Crane left");
+				}
+			}
+			if(gameState.getPlayerOnMove() == HantoPlayerColor.BLUE 
+					&& pieceType == HantoPieceType.HORSE){
+				if(gameState.blueHorsePlaced == 4){
+					throw new HantoException("You don't have a Horse left");
+				}
+			}
+			else if(gameState.getPlayerOnMove() == HantoPlayerColor.RED 
+					&& pieceType == HantoPieceType.HORSE){
+				if(gameState.redHorsePlaced == 4){
+					throw new HantoException("You don't have a Horse left");
+				}
+			}
+			if(gameState.getPlayerOnMove() == HantoPlayerColor.BLUE 
+					&& pieceType == HantoPieceType.DOVE){
+				if(gameState.blueDovePlaced == 4){
+					throw new HantoException("You don't have a Dove left");
+				}
+			}
+			else if(gameState.getPlayerOnMove() == HantoPlayerColor.RED 
+					&& pieceType == HantoPieceType.DOVE){
+				if(gameState.redDovePlaced == 4){
+					throw new HantoException("You don't have a Dove left");
+				}
+			}
 		}
 			}
 
@@ -208,6 +250,30 @@ public class RuleSetDevelopment extends HantoRuleSet{
 				gameState.redCrabPlaced++;
 			}
 		}
+		if(piece == HantoPieceType.CRANE){
+			if(player == HantoPlayerColor.BLUE){
+				gameState.blueCranePlaced++;
+			}
+			else{
+				gameState.redCranePlaced++;
+			}
+		}
+		if(piece == HantoPieceType.HORSE){
+			if(player == HantoPlayerColor.BLUE){
+				gameState.blueHorsePlaced++;
+			}
+			else{
+				gameState.redHorsePlaced++;
+			}
+		}
+		if(piece == HantoPieceType.DOVE){
+			if(player == HantoPlayerColor.BLUE){
+				gameState.blueDovePlaced++;
+			}
+			else{
+				gameState.redDovePlaced++;
+			}
+		}
 	}
 
 	/**
@@ -220,7 +286,9 @@ public class RuleSetDevelopment extends HantoRuleSet{
 	 */
 	protected void ensurePieceIsValid(HantoPieceType pieceType) throws HantoException{
 		if(pieceType != HantoPieceType.BUTTERFLY && 
-				pieceType != HantoPieceType.SPARROW && pieceType != HantoPieceType.CRAB){
+				pieceType != HantoPieceType.SPARROW && pieceType != HantoPieceType.CRAB
+				&& pieceType != HantoPieceType.CRANE && pieceType != HantoPieceType.DOVE
+				&& pieceType != HantoPieceType.HORSE){
 			throw new HantoException("The piece type cannot be used in this game.");
 		}
 	}
@@ -237,13 +305,16 @@ public class RuleSetDevelopment extends HantoRuleSet{
 		boolean result = false;
 		final Coordinate[] neighbors = coordinate.getNeighbors();
 		for(Coordinate c : neighbors){
-			HantoPieceDevelopment piece = (HantoPieceDevelopment) gameState.getBoard().getPieceAt(c);
-			if(piece != null && piece.getPlayer() != gameState.getPlayerOnMove()){
-				result = false;
-				break;
-			}
-			else if (piece != null && piece.getPlayer() == gameState.getPlayerOnMove()){
-				result = true;
+			Deque<HantoPiece> pieces = gameState.getBoard().getPieceAt(c);
+			if(pieces != null){
+				final HantoPiece piece = pieces.peekFirst();
+				if(piece != null && piece.getPlayer() != gameState.getPlayerOnMove()){
+					result = false;
+					break;
+				}
+				else if (piece != null && piece.getPlayer() == gameState.getPlayerOnMove()){
+					result = true;
+				}
 			}
 		}
 		return result;
@@ -264,6 +335,15 @@ public class RuleSetDevelopment extends HantoRuleSet{
 		else if(pieceType == HantoPieceType.SPARROW){
 			moveStrategy = new FlyStrategy(gameState);
 		}
+		else if(pieceType == HantoPieceType.CRANE){
+			moveStrategy = new TrapStrategy(gameState);
+		}
+		else if(pieceType == HantoPieceType.HORSE){
+			moveStrategy = new RunStrategy(gameState);
+		}
+		else if(pieceType == HantoPieceType.DOVE){
+			moveStrategy = new JumpStrategy(gameState);
+		}
 		return moveStrategy;
 	}
 
@@ -278,9 +358,10 @@ public class RuleSetDevelopment extends HantoRuleSet{
 	 */
 	private void checkPieceValidMove(HantoPieceType pieceType, Coordinate from, Coordinate to) 
 			throws HantoException{
-		final HantoPieceDevelopment piece = (HantoPieceDevelopment) gameState.getBoard().getPieceAt(from);
+		final Deque<HantoPiece> pieces = gameState.getBoard().getPieceAt(from);
+		final HantoPieceDevelopment piece = (HantoPieceDevelopment) pieces.peekFirst();
 		if (piece.getPiece() != pieceType) {
-			throw new HantoException("There is no" + pieceType.toString() + "at the source hex");
+			throw new HantoException("There is no " + pieceType.toString() + " at the source hex");
 		}
 		if (piece.getPlayer() != gameState.getPlayerOnMove()) {
 			throw new HantoException

@@ -91,7 +91,7 @@ crab2
   orig: 64, 64
   offset: 0, 0
   index: -1
-sparrow-blue-pressed
+crane-blue-pressed
   rotate: false
   xy: 265, 167
   size: 64, 64
@@ -99,7 +99,7 @@ sparrow-blue-pressed
   orig: 64, 64
   offset: 0, 0
   index: -1
-sparrow-invalid
+crane-blue
   rotate: false
   xy: 199, 35
   size: 64, 64
@@ -107,7 +107,7 @@ sparrow-invalid
   orig: 64, 64
   offset: 0, 0
   index: -1
-sparrow-red-pressed
+crane-invalid
   rotate: false
   xy: 265, 101
   size: 64, 64
@@ -115,7 +115,7 @@ sparrow-red-pressed
   orig: 64, 64
   offset: 0, 0
   index: -1
-sparrow1
+crane-yellow-pressed
   rotate: false
   xy: 331, 167
   size: 64, 64
@@ -123,9 +123,129 @@ sparrow1
   orig: 64, 64
   offset: 0, 0
   index: -1
-sparrow2
+crane-yellow
   rotate: false
   xy: 265, 35
+  size: 64, 64
+  split: 0, 0, 0, 9
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+dove-blue-pressed
+  rotate: false
+  xy: 331, 101
+  size: 64, 64
+  split: 0, 0, 0, 9
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+dove-blue
+  rotate: false
+  xy: 397, 167
+  size: 64, 64
+  split: 0, 0, 0, 9
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+dove-invalid
+  rotate: false
+  xy: 331, 35
+  size: 64, 64
+  split: 0, 0, 0, 9
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+dove-yellow-pressed
+  rotate: false
+  xy: 397, 101
+  size: 64, 64
+  split: 0, 0, 0, 9
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+dove-yellow
+  rotate: false
+  xy: 463, 167
+  size: 64, 64
+  split: 0, 0, 0, 9
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+horse-blue
+  rotate: false
+  xy: 397, 35
+  size: 64, 64
+  split: 0, 0, 0, 9
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+horse-blue.pressed
+  rotate: false
+  xy: 463, 101
+  size: 64, 64
+  split: 0, 0, 0, 9
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+horse-invalid
+  rotate: false
+  xy: 529, 167
+  size: 64, 64
+  split: 0, 0, 0, 9
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+horse-yellow-pressed
+  rotate: false
+  xy: 463, 35
+  size: 64, 64
+  split: 0, 0, 0, 9
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+horse-yellow
+  rotate: false
+  xy: 529, 101
+  size: 64, 64
+  split: 0, 0, 0, 9
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+sparrow-blue-pressed
+  rotate: false
+  xy: 595, 167
+  size: 64, 64
+  split: 0, 0, 0, 9
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+sparrow-invalid
+  rotate: false
+  xy: 529, 35
+  size: 64, 64
+  split: 0, 0, 0, 9
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+sparrow-red-pressed
+  rotate: false
+  xy: 595, 101
+  size: 64, 64
+  split: 0, 0, 0, 9
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+sparrow1
+  rotate: false
+  xy: 661, 167
+  size: 64, 64
+  split: 0, 0, 0, 9
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+sparrow2
+  rotate: false
+  xy: 595, 35
   size: 64, 64
   split: 0, 0, 0, 9
   orig: 64, 64
@@ -141,7 +261,7 @@ button0
   index: -1
 button1
   rotate: false
-  xy: 331, 133
+  xy: 661, 133
   size: 32, 32
   split: 0, 0, 0, 0
   orig: 32, 32
@@ -149,7 +269,7 @@ button1
   index: -1
 checkbox0
   rotate: false
-  xy: 397, 199
+  xy: 727, 199
   size: 32, 32
   split: 0, 0, 0, 0
   orig: 32, 32
