@@ -19,12 +19,12 @@ public class Assets {
 	public static Skin hantoSkin;
 	public static TextureAtlas hantoAtlas;
 	public static TextureRegionDrawable[] helpImages;
-
+	
 	public static void loadAssets() {
 		hantoAtlas = new TextureAtlas("ui/pieces.pack");
 		hantoSkin = new Skin(Gdx.files.internal("ui/gameSkin.json"), hantoAtlas);
 	}
-
+	
 	public static void disposeAssets() {
 		hantoAtlas.dispose();
 		hantoSkin.dispose();

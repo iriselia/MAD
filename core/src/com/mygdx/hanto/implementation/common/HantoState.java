@@ -11,6 +11,7 @@
  *******************************************************************/
 package com.mygdx.hanto.implementation.common;
 
+import com.mygdx.game.util.GameController;
 import com.mygdx.hanto.util.HantoCoordinate;
 import com.mygdx.hanto.util.HantoPlayerColor;
 
@@ -30,15 +31,24 @@ public abstract class HantoState {
 	protected int blueButterflyPlaced;
 	protected int redButterflyPlaced;
 	protected boolean isGameOver;
-	
+
 	protected HantoState(){
+		if(GameController.isMultiplayer ){
+			if (GameController.isHost) {
+				firstPlayer = HantoPlayerColor.BLUE;
+			} else {
+				firstPlayer = HantoPlayerColor.RED;
+			}
+		}else{
+			firstPlayer = HantoPlayerColor.BLUE;
+		}
 		initialCoordinate = new Coordinate(0, 0);
 		turnNum = 1;
-		firstPlayer = HantoPlayerColor.BLUE;
+
 		playerOnMove = firstPlayer;
 		board = new HantoBoard();
 	}
-	
+
 	/**
 	 * @param initialCoordinate the initialCoordinate to set
 	 */
@@ -101,7 +111,7 @@ public abstract class HantoState {
 	public void setBoard(HantoBoard board) {
 		this.board = board;
 	}
-	
+
 	/**
 	 * @return the blueButterflyPlaced
 	 */
@@ -143,6 +153,6 @@ public abstract class HantoState {
 	public void setGameOver(boolean isGameOver) {
 		this.isGameOver = isGameOver;
 	}
-	
-	
+
+
 }

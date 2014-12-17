@@ -7,6 +7,7 @@ import java.util.Map;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import network.HantoClient;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -38,17 +39,22 @@ public class GameController {
 	public static GameStateHandler gameHandlerBlue;
 	private static Group validGroups = new Group();
 	public static Image warningButterfly = new Image(new Texture("tags/butterflymustbeplaced.png"));
+	public static HantoClient hantoClient;
+	public static boolean isMultiplayer = false;
+	public static boolean isHost = false;
 
 	public static DragAndDrop getDragAndDrop(){
 		return dragAndDrop;
 	}
-
+	public static void addClient(HantoClient hantoClient) {
+		GameController.hantoClient = hantoClient;
+	}
 	public static void addTouchAndDrag(final Stage stage, final ImageButton sourceImage, final HantoCoordinate from, List<Pixels> validPositions) {
 		final String name = sourceImage.getName();
 		final boolean isYellow = Hanto.gameInstance.getGameState().getPlayerOnMove() == HantoPlayerColor.RED;
 
 		validGroups = new Group();
-
+	
 		if(Hanto.gameInstance.getGameState().getTurnNum() == 1){
 			if(!isYellow){
 				validPositions.add(CoordinatesToPixels.getInitialPixelsForBlue());
@@ -114,7 +120,7 @@ public class GameController {
 				}
 
 				public void drop (Source source, Payload payload, float x, float y, int pointer) {
-					System.out.println("Accepted: " + payload.getObject() + " " + x + ", " + y);
+					//System.out.println("Accepted: " + payload.getObject() + " " + x + ", " + y);
 					final String name = (String) payload.getObject(); 
 					final ImageButton newPiece = new ImageButton(Assets.hantoSkin, name);
 					newPiece.setName(name);
