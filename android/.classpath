@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry kind="lib" path="libs/kryo-2.23.1-SNAPSHOT-all-debug.jar"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/my-gdx-game-core"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry exported="true" kind="con" path="org.springsource.ide.eclipse.gradle.classpathcontainer"/>

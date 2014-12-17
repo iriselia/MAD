@@ -1,10 +1,13 @@
 package com.mygdx.game.util;
 
+import network.NetworkUtils;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.input.GestureDetector.GestureAdapter;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.esotericsoftware.kryonet.examples.chat.Network.CameraUpdateMessage;
 
 public class CameraController extends GestureAdapter {
 	private float velX, velY;
@@ -13,13 +16,17 @@ public class CameraController extends GestureAdapter {
 	private OrthographicCamera camera;
 	private float effectiveViewportWidth;
 	private float effectiveViewportHeight;
-	
+	public void setCameraPosition(float _x, float _y) {
+		this.camera.position.x = _x;
+		this.camera.position.y = _y;
+	}
 	public CameraController(OrthographicCamera camera){
 		this.camera = camera;
 		//effectiveViewportWidth = camera.viewportWidth * camera.zoom;
 		//effectiveViewportHeight = camera.viewportHeight * camera.zoom;
 		effectiveViewportWidth = camera.viewportWidth;
 		effectiveViewportHeight = camera.viewportHeight;
+		NetworkUtils.cameraController = this;
 	}
 	
 	private void keepCameraWithinViewport() {
@@ -60,6 +67,12 @@ public class CameraController extends GestureAdapter {
 	public boolean pan (float x, float y, float deltaX, float deltaY) {
 		if(!GameController.getDragAndDrop().isDragging()) {
 			camera.position.add(-deltaX * camera.zoom * 1f, deltaY * camera.zoom * 1f, 0);
+			if (NetworkUtils.hantoClient != null) {
+				CameraUpdateMessage msg = new CameraUpdateMessage();
+				msg.x = camera.position.x;
+				msg.y = camera.position.y;
+				NetworkUtils.hantoClient.client.sendTCP(msg);
+			}
 		}
 		return false;
 	}

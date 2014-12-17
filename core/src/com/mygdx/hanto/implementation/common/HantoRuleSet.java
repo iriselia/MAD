@@ -10,6 +10,7 @@
  *    feierqi
  *******************************************************************/
 package com.mygdx.hanto.implementation.common;
+import com.mygdx.game.util.GameController;
 import com.mygdx.hanto.common.HantoException;
 import com.mygdx.hanto.util.HantoPieceType;
 import com.mygdx.hanto.util.HantoPlayerColor;
@@ -92,7 +93,9 @@ public abstract class HantoRuleSet {
 		else{
 			result = MoveResult.OK;
 		}
+		
 		switchTurn();
+		
 		return result;
 	}
 	/**
@@ -243,6 +246,11 @@ public abstract class HantoRuleSet {
 	 * end of each turn.
 	 */
 	protected void switchTurn(){
+		if (!GameController.isMultiplayer) {
+			final int initialTurnNum = state.getTurnNum();;
+			state.setTurnNum(initialTurnNum + 1);
+			return;
+		}
 		final int initialTurnNum;
 		initialTurnNum = state.getTurnNum();
 		if(state.getPlayerOnMove() == HantoPlayerColor.BLUE){

@@ -11,6 +11,7 @@
  *******************************************************************/
 package com.mygdx.hanto.implementation.common;
 
+import com.mygdx.game.util.GameController;
 import com.mygdx.hanto.util.HantoCoordinate;
 import com.mygdx.hanto.util.HantoPlayerColor;
 
@@ -34,9 +35,14 @@ public abstract class HantoState {
 	protected boolean isGameOver;
 	
 	protected HantoState(){
+		if (GameController.isHost) {
+			firstPlayer = HantoPlayerColor.BLUE;
+		} else {
+			firstPlayer = HantoPlayerColor.RED;
+		}
 		initialCoordinate = new Coordinate(0, 0);
 		turnNum = 1;
-		firstPlayer = HantoPlayerColor.BLUE;
+		
 		playerOnMove = firstPlayer;
 		board = new HantoBoard();
 	}

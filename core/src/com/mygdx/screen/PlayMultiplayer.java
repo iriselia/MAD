@@ -1,8 +1,10 @@
 package com.mygdx.screen;
 
-import java.awt.EventQueue;
 import java.io.IOException;
 
+import network.HantoClient;
+import network.HantoServer;
+import network.NetworkUtils;
 import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenManager;
@@ -19,31 +21,24 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.esotericsoftware.kryonet.Client;
-import com.esotericsoftware.kryonet.Connection;
-import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.examples.chat.ChatServer;
-import com.esotericsoftware.kryonet.examples.chat.Network;
-import com.esotericsoftware.kryonet.examples.chat.Network.ChatMessage;
-import com.esotericsoftware.kryonet.examples.chat.Network.JoinLobbyRequest;
-import com.esotericsoftware.kryonet.examples.chat.Network.UpdateNames;
-import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.Assets;
 import com.mygdx.game.Hanto;
+import com.mygdx.game.util.GameController;
 import com.mygdx.tween.ActorAccessor;
 
-public class MainMenu implements Screen {
-	Client client;
+public class PlayMultiplayer implements Screen {
+
 	private Stage stage;
 	private Table table;
-	private TextButton buttonPlay, buttonMultiplayer, buttonSettings, buttonExit, buttonHelp;
+	private TextButton buttonPlayAsHost, buttonPlayAsGuest;
 	private Label heading;
 	private TweenManager tweenManager;
-
+	
 	@Override
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
 		stage.act(delta);
 		stage.draw();
 
@@ -67,50 +62,47 @@ public class MainMenu implements Screen {
 		table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		// creating buttons
-		buttonExit = new TextButton("EXIT", Assets.menuSkin);
-		buttonExit.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				Gdx.app.exit();
-				//TODO
-				
-			}
-		});
-		buttonExit.pad(50);
-
-		buttonSettings = new TextButton("Settings", Assets.menuSkin);
-		buttonSettings.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				//TODO
-				
-				/*
-				((Game) Gdx.app.getApplicationListener())
-						.setScreen(new SettingsScreen());
-						*/
-			}
-		});
-		buttonSettings.pad(50);
-
-		buttonPlay = new TextButton("PLAY", Assets.menuSkin);
-		buttonPlay.addListener(new ClickListener() {
+		buttonPlayAsHost = new TextButton("Play as host", Assets.menuSkin);
+		buttonPlayAsHost.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				((Game) Gdx.app.getApplicationListener())
-						.setScreen(new PlayOption());
+				.setScreen(new LobbyScreen());
+				// TODO play as host
+				// Create server
+				String ip = NetworkUtils.getIpAddress();
+				System.out.println("PlayMultiPlayer----" + ip);
+
+				try {
+					NetworkUtils.hantoServer = new HantoServer();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				// Create Client
+				NetworkUtils.hantoClient = new HantoClient("Host");
+				GameController.isMultiplayer = true;
+				GameController.isHost = true;
+				
+				//((Game) Gdx.app.getApplicationListener()).setScreen(new GameScreen());
+				
 			}
 		});
-		buttonPlay.pad(50);
+		buttonPlayAsHost.pad(50);
+		buttonPlayAsGuest = new TextButton("Play as guest", Assets.menuSkin);
+		buttonPlayAsGuest.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				//TODO player as guest
+				((Game) Gdx.app.getApplicationListener())
+				.setScreen(new LoginScreen());
+				
+				
+			}
+		});
+		buttonPlayAsGuest.pad(50);
 		
-		buttonHelp = new TextButton("Help", Assets.menuSkin);
-		buttonHelp.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				((Game) Gdx.app.getApplicationListener())
-						.setScreen(new HelpScreen());
-			}
-		});
-		buttonHelp.pad(50);
+		
 		
 		// creating heading
 		heading = new Label(Hanto.TITLE, Assets.menuSkin);
@@ -118,18 +110,15 @@ public class MainMenu implements Screen {
 
 		// putting stuff together
 		table.add(heading);
-		table.getCell(heading).spaceBottom(200);
+		table.getCell(heading).spaceBottom(300);
 		table.row();
-		table.add(buttonPlay);
-		table.getCell(buttonPlay).spaceBottom(100);
+		table.add(buttonPlayAsHost);
+		table.getCell(buttonPlayAsHost).spaceBottom(100);
 		table.row();
-		table.add(buttonHelp);
-		table.getCell(buttonHelp).spaceBottom(100);
-		table.row();
-		table.add(buttonSettings);
-		table.getCell(buttonSettings).spaceBottom(100);
-		table.row();
-		table.add(buttonExit);
+		table.add(buttonPlayAsGuest);
+		table.getCell(buttonPlayAsGuest).spaceBottom(100);
+//		table.row();
+//		table.add(buttonMultiplayerNetwork);
 		stage.addActor(table);
 
 		// create animation
@@ -158,19 +147,15 @@ public class MainMenu implements Screen {
 		// heading and buttons fade-in
 		Timeline.createSequence()
 				.beginSequence()
-				.push(Tween.set(buttonPlay, ActorAccessor.ALPHA).target(0))
-				.push(Tween.set(buttonHelp, ActorAccessor.ALPHA).target(0))
-				.push(Tween.set(buttonSettings, ActorAccessor.ALPHA).target(0))
-				.push(Tween.set(buttonExit, ActorAccessor.ALPHA).target(0))
+				.push(Tween.set(buttonPlayAsHost, ActorAccessor.ALPHA).target(0))
+				.push(Tween.set(buttonPlayAsGuest, ActorAccessor.ALPHA).target(0))
+				
 				.push(Tween.from(heading, ActorAccessor.ALPHA, 0.5f).target(0))
-				.push(Tween.to(buttonPlay, ActorAccessor.ALPHA, 0.25f)
+				.push(Tween.to(buttonPlayAsHost, ActorAccessor.ALPHA, 0.25f)
 						.target(1))
-				.push(Tween.to(buttonHelp, ActorAccessor.ALPHA, 0.25f)
+				.push(Tween.to(buttonPlayAsGuest, ActorAccessor.ALPHA, 0.25f)
 						.target(1))
-				.push(Tween.to(buttonSettings, ActorAccessor.ALPHA, 0.25f)
-						.target(1))
-				.push(Tween.to(buttonExit, ActorAccessor.ALPHA, 0.25f)
-						.target(1)).end().start(tweenManager);
+				.end().start(tweenManager);
 
 		// table fade-in
 		Tween.from(table, ActorAccessor.ALPHA, 0.5f).target(0);
@@ -182,7 +167,7 @@ public class MainMenu implements Screen {
 
 	@Override
 	public void hide() {
-		dispose();
+		// TODO Auto-generated method stub
 
 	}
 
@@ -200,10 +185,9 @@ public class MainMenu implements Screen {
 
 	@Override
 	public void dispose() {
-		stage.dispose();
-		Assets.disposeMainMenuOrSettings();
+		// TODO Auto-generated method stub
+
 	}
 
+
 }
-
-

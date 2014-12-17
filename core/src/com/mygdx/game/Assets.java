@@ -17,6 +17,7 @@ public class Assets {
 
 	public static Skin menuSkin;
 	public static Skin pieceSkin;
+	public static Skin textFieldSkin;
 	public static TextureAtlas menuAtlas;
 	public static TextureAtlas gameAtlas;
 	public static TextureAtlas pieceAtlas;
@@ -30,6 +31,11 @@ public class Assets {
 	public static void loadPieces() {
 		pieceAtlas = new TextureAtlas("ui/pieces.pack");
 		pieceSkin = new Skin(Gdx.files.internal("ui/gameSkin.json"), pieceAtlas);
+	}
+	
+	public static void loadTextFieldSkin()
+	{
+		textFieldSkin = new Skin(Gdx.files.internal("ui/textFieldSkin.json"), menuAtlas);
 	}
 	
 	public static void loadHelp() {
