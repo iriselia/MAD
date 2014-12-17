@@ -13,7 +13,6 @@ import com.mygdx.hanto.util.HantoPlayerColor;
 /**
  * This is the AI player to play the delta version of hanto game.
  * 
- * @author Peng Ren
  */
 public class HantoAIPlayer implements HantoGamePlayer{
 
@@ -97,6 +96,7 @@ public class HantoAIPlayer implements HantoGamePlayer{
 				}
 			}
 		}
+		bestMove.setColor(playerColor);
 		return bestMove;
 	}
 

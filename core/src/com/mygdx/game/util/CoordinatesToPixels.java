@@ -1,5 +1,8 @@
 package com.mygdx.game.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.mygdx.hanto.implementation.common.Coordinate;
 import com.mygdx.hanto.util.HantoCoordinate;
 
@@ -61,8 +64,14 @@ public class CoordinatesToPixels {
 	 * Get the initial Pixel coordinate for Player Yellow
 	 * @return Pixel coordinate for Yellow's first piece
 	 */
-	public static Pixels getInitialPixelsForYellow(){
-		return new Pixels(originX - Constants.TILE_LENGTH / 2, originY + Constants.TILE_LENGTH / 2);
+	public static List<Pixels> getInitialPixelsForYellow(){
+		final List<Pixels> result = new ArrayList<Pixels>();
+		Coordinate origin = new Coordinate(0, 0);
+		for(Coordinate coord : origin.getNeighbors()){
+			final Pixels pixels = convertCooridnatesToPixels(coord);
+			result.add(pixels);
+		}
+		return result;
 	}
 
 }

@@ -33,6 +33,7 @@ public class GameController {
 
 	private static DragAndDrop dragAndDrop = new DragAndDrop();
 	private static Map<ImageButton, HantoMoveRecord> buttonsColor = new HashMap<ImageButton, HantoMoveRecord>();
+	private static Map<HantoCoordinate, ImageButton> aIPieces = new HashMap<HantoCoordinate, ImageButton>();
 	public static GameStateHandler gameHandlerYellow;
 	public static GameStateHandler gameHandlerBlue;
 	private static Group validGroups = new Group();
@@ -53,7 +54,7 @@ public class GameController {
 				validPositions.add(CoordinatesToPixels.getInitialPixelsForBlue());
 			}
 			else{
-				validPositions.add(CoordinatesToPixels.getInitialPixelsForYellow());
+				validPositions.addAll(CoordinatesToPixels.getInitialPixelsForYellow());
 			}
 		}
 		if(Hanto.gameInstance.getGameState().getTurnNum() == 4 
@@ -79,7 +80,7 @@ public class GameController {
 		//Image invalidTargetImage = new Image(Assets.pieceSkin, "position");
 		//invalidTargetImage.setBounds(invalidPosition.x, invalidPosition.y, GameScreen.TILE_LENGTH, GameScreen.TILE_LENGTH);
 		//stage.addActor(invalidTargetImage);
-		
+
 		dragAndDrop.addSource(new Source(sourceImage) {
 			public Payload dragStart (InputEvent event, float x, float y, int pointer) {
 				Payload payload = new Payload();
@@ -191,6 +192,33 @@ public class GameController {
 
 					validGroups.remove();
 					stage.addActor(newPiece);
+					if(Hanto.ifPlayWithAI){
+						final HantoMoveRecord AIMovement = Hanto.AIPlayer.makeMove(newPieceRecord);
+						try {
+							final MoveResult aiMoveResult = Hanto.gameInstance.makeMove(AIMovement.getPiece(), AIMovement.getFrom(), AIMovement.getTo());
+							if(aiMoveResult == MoveResult.BLUE_WINS){
+								((Game) Gdx.app.getApplicationListener()).setScreen(new ResultScreen("blue"));
+							}
+							else if(aiMoveResult == MoveResult.RED_WINS){
+								((Game) Gdx.app.getApplicationListener()).setScreen(new ResultScreen("yellow"));
+							}
+							else if(aiMoveResult == MoveResult.DRAW){
+								((Game) Gdx.app.getApplicationListener()).setScreen(new ResultScreen("draw"));
+							}
+						} catch (HantoException e) {
+							System.out.println(e.getMessage());
+							e.printStackTrace();
+						}
+						final Pixels aiPiecePlace = CoordinatesToPixels.convertCooridnatesToPixels(AIMovement.getTo());
+						final ImageButton aiButton = generateAIPieceButton(AIMovement.getPiece(), AIMovement.getColor(), AIMovement.getTo());
+						aIPieces.put(AIMovement.getTo(), aiButton);
+						if(AIMovement.getFrom() != null){
+							final ImageButton fromButton = aIPieces.get(AIMovement.getFrom());
+							fromButton.remove();
+						}
+						stage.addActor(aiButton);
+						aiButton.setBounds(aiPiecePlace.x, aiPiecePlace.y, Constants.TILE_LENGTH, Constants.TILE_LENGTH);
+					}
 				}
 			});
 		}
@@ -232,9 +260,60 @@ public class GameController {
 		}
 		return pixelsList;
 	}
-	
+
 	public static void clearAll(){
 		validGroups.remove();
+	}
+
+	private static ImageButton generateAIPieceButton(HantoPieceType type, HantoPlayerColor player, HantoCoordinate coordinate){
+		final String buttonAsset;
+		if(player == HantoPlayerColor.RED){
+			if(type == HantoPieceType.BUTTERFLY){
+				buttonAsset = "yellowButterfly";
+			}
+			else if(type == HantoPieceType.CRAB){
+				buttonAsset = "yellowCrab";
+			}
+			else if(type == HantoPieceType.SPARROW){
+				buttonAsset = "yellowSparrow";
+			}
+			else if(type == HantoPieceType.CRANE){
+				buttonAsset = "yellowCrane";
+			}
+			else if(type == HantoPieceType.HORSE){
+				buttonAsset = "yellowHorse";
+			}
+			else if(type == HantoPieceType.DOVE){
+				buttonAsset = "yellowDove";
+			}
+			else{
+				buttonAsset = "";
+			}
+		}
+		else{
+			if(type == HantoPieceType.BUTTERFLY){
+				buttonAsset = "blueButterfly";
+			}
+			else if(type == HantoPieceType.CRAB){
+				buttonAsset = "blueCrab";
+			}
+			else if(type == HantoPieceType.SPARROW){
+				buttonAsset = "blueSparrow";
+			}
+			else if(type == HantoPieceType.CRANE){
+				buttonAsset = "blueCrane";
+			}
+			else if(type == HantoPieceType.HORSE){
+				buttonAsset = "blueHorse";
+			}
+			else if(type == HantoPieceType.DOVE){
+				buttonAsset = "blueDove";
+			}
+			else{
+				buttonAsset = "";
+			}
+		}
+		return new ImageButton(Assets.hantoSkin, buttonAsset);		
 	}
 
 }

@@ -64,4 +64,8 @@ public class HantoMoveRecord
 	public HantoPlayerColor getColor(){
 		return color;
 	}
+	
+	public void setColor(HantoPlayerColor color){
+		this.color = color;
+	}
 }
