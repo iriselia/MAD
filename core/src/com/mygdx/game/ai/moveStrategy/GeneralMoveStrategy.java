@@ -29,7 +29,6 @@ import com.mygdx.hanto.util.HantoMoveRecord;
  * the first turn.
  * 
  * @author Peng Ren
- * @version Feb 25, 2013
  */
 public class GeneralMoveStrategy implements PlayerMoveStrategy{
 
