@@ -15,5 +15,5 @@ public class Constants {
     public final static float WORLD_HEIGHT = h * 3;
     public final static int TILE_LENGTH = 150;
     public final static int BUTTON_SIZE = (int) (w / 6);
-    public final static int numberOfHelpImages = 5;
+    public final static int numberOfHelpImages = 8;
 }

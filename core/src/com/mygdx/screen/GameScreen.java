@@ -50,6 +50,7 @@ public class GameScreen implements Screen {
 		this.ifPlayWithAI = ifPlayWithAI;
 		Hanto.gameInstance = new HantoGameDevelopment();
 		if(!ifPlayWithAI){
+			Hanto.ifPlayWithAI = false;
 			GameController.gameHandlerYellow = new GameStateHandler(HantoPlayerColor.RED, Hanto.gameInstance.getGameState());
 		}
 		else{

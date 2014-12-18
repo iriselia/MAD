@@ -24,7 +24,7 @@ public class PlayOption implements Screen {
 	Client client;
 	private Stage stage;
 	private Table table;
-	private TextButton buttonSinglePlayer, buttonMultiplayerLocal, buttonMultiplayerNetwork;
+	private TextButton buttonSinglePlayer, buttonMultiplayerLocal, buttonMultiplayerNetwork, buttonReturn;
 	private Label heading;
 	private TweenManager tweenManager;
 	
@@ -84,13 +84,23 @@ public class PlayOption implements Screen {
 		});
 		buttonMultiplayerNetwork.pad(50);
 		
+		buttonReturn = new TextButton("Return", Assets.hantoSkin);
+		buttonReturn.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				((Game) Gdx.app.getApplicationListener())
+						.setScreen(new MainMenu());
+			}
+		});
+		buttonReturn.pad(50);
+		
 		// creating heading
 		heading = new Label(Hanto.TITLE, Assets.hantoSkin);
 		heading.setFontScale(6);
 
 		// putting stuff together
 		table.add(heading);
-		table.getCell(heading).spaceBottom(300);
+		table.getCell(heading).spaceBottom(200);
 		table.row();
 		table.add(buttonSinglePlayer);
 		table.getCell(buttonSinglePlayer).spaceBottom(100);
@@ -99,6 +109,9 @@ public class PlayOption implements Screen {
 		table.getCell(buttonMultiplayerLocal).spaceBottom(100);
 		table.row();
 		table.add(buttonMultiplayerNetwork);
+		table.getCell(buttonMultiplayerNetwork).spaceBottom(100);
+		table.row();
+		table.add(buttonReturn);
 		stage.addActor(table);
 
 		// create animation
